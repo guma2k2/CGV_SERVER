@@ -43,10 +43,15 @@ public class CinemaService {
     private CinemaRepository cinemaRepository;
 
     public List<CinemaDTO> findByDateAndCity( LocalDate date ,
-                                             String cityName ,
+                                              String cityName ,
                                               Long movieId ,
                                               String subType)  {
 
+
+        if(date == null || cityName == null || cityName == null) {
+            throw new CinemaException("Date, cityName , subType cannot be null");
+        }
+        // Get list cinema base on these params
         List<Cinema> cinemas = eventRepository
                 .findByDateAndCity(date,cityName, movieId , subType)
                 .stream()
@@ -64,6 +69,9 @@ public class CinemaService {
     }
 
     public List<CinemaDTO> findByCity(Integer cityId) {
+        if (cityId == null) {
+            throw  new CinemaException("The id of city not found");
+        }
         return cinemaRepository.findByCity(cityId)
                 .stream()
                 .map(cinema -> modelMapper.map(cinema, CinemaDTO.class))
@@ -77,13 +85,14 @@ public class CinemaService {
                 .collect(Collectors.toList());
     }
     public Cinema saveCinema(CinemaDTO cinemaDTO, Long cinemaId) {
+
         boolean update = cinemaId != null ;
-        String requestName = cinemaDTO.getName();
-        Cinema checkCinema = cinemaRepository.findByName(requestName) ;
+        Cinema checkCinema = cinemaRepository.findByName(cinemaDTO.getName()) ;
         if(update) {
             if(checkCinema != null ) {
                 if (checkCinema.getId() != cinemaId) {
-                    System.out.println("fuck you ");
+//                    log.info(String.valueOf(cinemaId));
+//                    log.info(String.valueOf(checkCinema.getId()));
                     throw new CinemaException("Name of cinema  not valid") ;
                 }
             }
@@ -98,8 +107,6 @@ public class CinemaService {
         String phone_number = cinemaDTO.getPhone_number();
         String cinemaType = cinemaDTO.getCinema_type() ;
         City city = modelMapper.map(cinemaDTO.getCity(), City.class) ;
-
-
 
         if(update) {
             Cinema oldCinema =   cinemaRepository.findById(cinemaId).get() ;
@@ -120,16 +127,19 @@ public class CinemaService {
         return cinemaRepository.save(newCinema) ;
     }
     public CinemaDTO get(Long cinemaId) {
+        if (cinemaId == null) {
+            throw  new CinemaException("The id of cinema not found");
+        }
         Cinema cinema = cinemaRepository.findById(cinemaId).orElseThrow(() -> new CinemaException("Cinema not found !!")) ;
         return modelMapper.map(cinema, CinemaDTO.class) ;
     }
 
     public void saveImages(MultipartFile mainImageMultipart, MultipartFile[] extraImageMultiparts, String[] imageIDs, String[] imageNames, Long cinemaId) throws IOException {
         Cinema cinema = cinemaRepository.findById(cinemaId).orElseThrow(() -> new CinemaException("Cinema not found"));
-        log.info(mainImageMultipart.getOriginalFilename());
-        for(MultipartFile multipartFile : extraImageMultiparts) {
-            log.info(multipartFile.getOriginalFilename());
-        }
+//        log.info(mainImageMultipart.getOriginalFilename());
+//        for(MultipartFile multipartFile : extraImageMultiparts) {
+//            log.info(multipartFile.getOriginalFilename());
+//        }
         setMainImageName(mainImageMultipart, cinema);
         setExistingExtraImageNames(imageIDs, imageNames, cinema);
         setNewExtraImageNames(extraImageMultiparts, cinema);

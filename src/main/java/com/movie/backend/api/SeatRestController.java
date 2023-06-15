@@ -18,19 +18,13 @@ public class SeatRestController {
     private ModelMapper modelMapper;
 
     @PostMapping("/admin/seat/save")
-    public Seat save(@RequestBody  Seat seat) {
-        return seatService.save(seat) ;
+    public Seat save(@RequestBody  SeatDTO seat) {
+        return seatService.save(seat , null) ;
     }
 
     @PutMapping("/admin/seat/update/{seatId}")
-    public Seat update(@RequestBody  Seat seat , @PathVariable("seatId") Long seatId) {
-        Seat seatDTO = seatService.get(seatId) ;
-        if(seatDTO.getSeat_name() != seat.getSeat_name()){
-            if (seatService.checkExitNameInRoom(seat.getSeat_name() , seatDTO.getRoom().getId() )) {
-                   seatDTO.setSeat_name(seat.getSeat_name());
-            }
-        }
-        return seatService.save(seatDTO) ;
+    public Seat update(@RequestBody  SeatDTO seat , @PathVariable("seatId") Long seatId) {
+        return seatService.save(seat, seatId) ;
     }
 
     @DeleteMapping("/admin/seat/delete/{seatId}")

@@ -116,6 +116,9 @@ public class MovieService {
        return movieRepository.save(newMovie) ;
     }
     public void savePoster(Long movieId, MultipartFile multipartFile) throws IOException {
+        if (movieId == null) {
+            throw new MovieException("The id of movie cannot null");
+        }
         Movie movie = movieRepository.findById(movieId).orElseThrow(() -> new UserException("Movie not found")) ;
         if (!multipartFile.isEmpty()) {
             String fileName = StringUtils.cleanPath(multipartFile.getOriginalFilename());
@@ -147,7 +150,10 @@ public class MovieService {
         return findAll(1 , "desc" , "id" , null) ;
     }
 
-    public DataContent findAll(int pageNum , String sortDir , String sortField, String keyword) {
+    public DataContent findAll(Integer pageNum , String sortDir , String sortField, String keyword) {
+        if (pageNum == null || sortDir == null || sortField == null) {
+            throw new MovieException("The pageNum or sortDir or sortField cannot null");
+        }
         Sort sort = Sort.by(sortField) ;
         sort =  sortDir.equals("asc") ? sort.ascending() : sort.descending();
         Pageable pageable = PageRequest.of(pageNum - 1 , moviePerPage , sort );
@@ -177,8 +183,11 @@ public class MovieService {
         return new DataContent(paginate , movies);
     }
 
-    public MovieDTO findById(Long id) {
-        Movie movie = movieRepository.findById(id).orElseThrow();
+    public MovieDTO findById(Long movieId) {
+        if (movieId == null) {
+            throw  new MovieException("The movieId cannot null");
+        }
+        Movie movie = movieRepository.findById(movieId).orElseThrow();
         return modelMapper.map(movie,MovieDTO.class);
     }
     public List<MovieDTO> findBeforeDate() {

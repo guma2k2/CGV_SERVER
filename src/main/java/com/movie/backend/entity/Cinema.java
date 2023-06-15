@@ -1,11 +1,9 @@
 package com.movie.backend.entity;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.movie.backend.ultity.FileUploadUtil;
 import jakarta.persistence.*;
 import lombok.*;
-import org.hibernate.annotations.Fetch;
 
 import java.util.*;
 
@@ -22,6 +20,8 @@ public class Cinema {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id ;
     private String name ;
+
+    @Column(length = 1000)
     private String address ;
 
     @Column(name = "main_image" )
@@ -46,8 +46,8 @@ public class Cinema {
 
     @Transient
     public String getPhotosImagePath() {
-        String baseUrl = "http://localhost:8080" ;
-        if (id == null || image_url == null) return "https://www.pngitem.com/pimgs/m/150-1503945_transparent-user-png-default-user-image-png-png.png";
+        String baseUrl = FileUploadUtil.baseUrl ;
+        if (id == null || image_url == null) return "https://www.cgv.vn/media/imax/goldclass-2.png";
         return baseUrl + "/cinema-images/" + this.id + "/" + this.image_url;
     }
     public boolean containsImageName(String imageName) {

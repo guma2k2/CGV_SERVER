@@ -2,6 +2,7 @@ package com.movie.backend.service;
 
 import com.movie.backend.dto.*;
 import com.movie.backend.entity.*;
+import com.movie.backend.exception.UserException;
 import com.movie.backend.repository.BookingComboRepository;
 import com.movie.backend.repository.BookingRepository;
 import com.movie.backend.repository.TicketRepository;
@@ -36,6 +37,9 @@ public class TicketService {
     @Autowired
     private BookingComboRepository bookingComboRepository;
     public List<TicketDTO> findByUserId(Long userId) {
+        if (userId == null) {
+            throw new UserException("The id of user cannot found");
+        }
         List<Ticket> tickets = ticketRepository.findByUser(userId);
         List<TicketDTO> ticketDTOS = tickets.stream().map(ticket -> {
             TicketDTO ticketDTO = modelMapper.map(ticket, TicketDTO.class);
@@ -59,6 +63,7 @@ public class TicketService {
         User user = userRepository.findById(userId).orElseThrow() ;
         Booking booking = bookingRepository.findById(bookingId).orElseThrow();
         Ticket ticket = Ticket.builder()
+                .bank(ticketDTO.getBank())
                 .booking(booking)
                 .user(user)
                 .qrCode(qrCode)
@@ -102,7 +107,7 @@ public class TicketService {
         List<SalesByCinema> sales = new ArrayList<>();
 
         // when you use googleChart, in case of the request with `startDate and endDate`
-        // but in one day of these request and ticket was not have this day so the chat will  not have one of day
+        // but in one day of those request and ticket was not have this day so the chart will not have one of day
         // in request
         // So you need to add all day in range of request in response
         while (!startDate.isAfter(endDate)) {

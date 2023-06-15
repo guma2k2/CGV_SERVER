@@ -19,6 +19,8 @@ public class TicketDTO {
     private Long userId;
 
     private String seats ;
+    private String phoneNumber;
+    private String bank;
     private Long totalAmount ;
 
 }

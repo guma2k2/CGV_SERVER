@@ -44,7 +44,6 @@ public class UserService {
 
     @Autowired
     private UserRepository userRepository ;
-
     @Autowired SettingService settingService;
     @Value("${application.service.user.userPerPage}")
     public int userPerPage ;
@@ -183,13 +182,13 @@ public class UserService {
             throws MessagingException, UnsupportedEncodingException {
         JavaMailSenderImpl mailSender = MailUtil.prepareMailSender(settingService);
         String toAddress = email;
-        String subject = "Xác nhân email và thay đổi mật khẩu " ;
-        String content = "<p>Xin chào,</p>" +
-                "<p> Bạn đã yêu cầu thay đổi mật khẩu </p>" +
-                "Vui lòng chọn link bên dưới để thay đổi mật khẩu:" +
-                "<p> <a href =\"" +link+ "\">Thay doi mat khau</a> </p>" +
+        String subject = "Confirm and change password" ;
+        String content = "<p>Hi,</p>" +
+                "<p> You requested to change your password successful </p>" +
+                "Please click the link below to change your password:" +
+                "<p> <a href =\"" +link+ "\">Change password</a> </p>" +
                 "<br>" +
-                "<p>Xóa mail nếu bạn muốn, ngay khi thay đổi được mật khẩu</p>";
+                "<p>Delete this email if you want, after you change your password successful</p>";
 
         MimeMessage message = mailSender.createMimeMessage();
         MimeMessageHelper helper = new MimeMessageHelper(message,true, "UTF-8");

@@ -9,5 +9,4 @@ class BackendCinemaApplicationTests {
 	@Test
 	void contextLoads() {
 	}
-
 }

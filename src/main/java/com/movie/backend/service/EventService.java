@@ -81,7 +81,7 @@ public class EventService {
             else if (!(newStartTime.isBefore(oldStartTime) && newEndTime.isBefore(oldStartTime)
                         || (newStartTime.isAfter(oldEndTime) && newEndTime.isAfter(oldEndTime)))) {
                 log.error("err");
-                throw  new EventValidException("Thời gian bắt đầu đã bị trùng với event với id :" + e.getId()) ;
+                throw new EventValidException("Thời gian bắt đầu đã bị trùng với event với id :" + e.getId()) ;
             }
         }
         if(updateEvent) {
@@ -118,8 +118,13 @@ public class EventService {
                                                 Long movieId ,
                                                 String cinemaName,
                                                 String type) {
+        if (date == null || movieId == null || cinemaName == null || type == null) {
+            throw new EventValidException("The date or movieId or cinemaName or type cannot be null");
+        }
+        // Get list event base on these params
         List<Event> events = eventRepository.listByDateCinemaMovie(date, cinemaName , movieId , type) ;
 
+        // Convert Event to EventDTO to send response to client
         return events
                 .stream()
                 .map(event -> {
@@ -137,10 +142,15 @@ public class EventService {
                 .collect(Collectors.toList());
     }
 
-    public EventDTO getById(Long id) {
-        Event event = eventRepository.findById(id).orElseThrow();
+    public EventDTO getById(Long eventId) {
+        if(eventId == null) {
+            throw new EventValidException("The id of event cannot found");
+        }
+        Event event = eventRepository.findById(eventId).orElseThrow(() -> new EventValidException("The Event not found"));
         EventDTO eventDTO = modelMapper.map(event, EventDTO.class) ;
         List<SeatDTO> seatDTOS = seatService.findByEvent(event.getId());
+
+        // Set all field in Movie which client want to get
         MovieDTO movieDTO = new MovieDTO() ;
         movieDTO.setPhotosImagePath(event.getMovie().getPhotosImagePath());
         movieDTO.setId(event.getMovie().getId());
@@ -152,6 +162,9 @@ public class EventService {
     }
 
     public List<SubtitleTypeDTO> findByMovieDateCity(Long movieId , LocalDate date , String cityName) {
+        if(movieId == null || date == null || cityName == null) {
+            throw new EventValidException("The movieId or date or cityName cannot null");
+        }
         return eventRepository.listSubByDateMovieCity(date, cityName , movieId)
                 .stream()
                 .map(event -> {
@@ -163,7 +176,13 @@ public class EventService {
     }
 
     public Map<MovieDTO , Map<SubtitleTypeDTO , List<EventDTO>>> findByCinemaAndDate(Long cinemaId ,
-                                                                                     LocalDate date) {
+                                                                                     LocalDate date ) {
+
+        if(cinemaId == null || date == null) {
+            throw new EventValidException("The cinemaId or date cannot null");
+        }
+
+        // Get all event by date and cinemaId.
         List<EventDTO> eventDTOS = eventRepository.listByDateCinema(date, cinemaId)
                 .stream()
                 .map(event ->
@@ -174,6 +193,8 @@ public class EventService {
                    return eventDTO;
                 })
                 .collect(Collectors.toList());
+
+        // Convert List event above to Map.
         Map<MovieDTO , Map<SubtitleTypeDTO , List<EventDTO>>> events =
                 eventDTOS.stream()
                         .collect(Collectors.groupingBy(
@@ -187,6 +208,9 @@ public class EventService {
     }
 
     public List<EventDTO> findRoomDate(Long roomId , LocalDate date) {
+        if(roomId == null || date == null) {
+            throw new EventValidException("The roomId or date cannot null");
+        }
         List<EventDTO> events = eventRepository.listByDateRoom(roomId, date)
                 .stream()
                 .map(event -> {
@@ -200,6 +224,9 @@ public class EventService {
     }
 
     public void deleteEvent(Long eventId) {
+        if(eventId == null ) {
+            throw  new EventValidException("The eventId cannot null");
+        }
         Event event = eventRepository.findById(eventId).orElseThrow(()-> new EventValidException("event not found"));
         eventRepository.delete(event);
     }

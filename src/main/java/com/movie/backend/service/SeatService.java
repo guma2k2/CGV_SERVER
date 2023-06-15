@@ -1,9 +1,8 @@
 package com.movie.backend.service;
 
 import com.movie.backend.dto.SeatDTO;
-import com.movie.backend.entity.Booking;
-import com.movie.backend.entity.Seat;
-import com.movie.backend.entity.Ticket;
+import com.movie.backend.dto.SeatTypeDTO;
+import com.movie.backend.entity.*;
 import com.movie.backend.exception.SeatException;
 import com.movie.backend.repository.*;
 import lombok.extern.slf4j.Slf4j;
@@ -13,6 +12,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 @Service
@@ -21,6 +21,8 @@ public class SeatService {
 
     @Autowired
     private BookingSeatRepository bookingSeatRepository;
+    @Autowired
+    private RoomRepository roomRepository;
     @Autowired
     private SeatRepository seatRepository;
 
@@ -36,7 +38,7 @@ public class SeatService {
     private ModelMapper modelMapper ;
 
     public List<SeatDTO> findByEvent(Long eventId) {
-        // get List seat by event with seat reserved is false // default
+        // get List seat by event with seat.reserved is false // default
         List<Seat> listSeatByEvent = seatRepository.findByEvent(eventId);
 
         // get list ticket by event
@@ -114,7 +116,7 @@ public class SeatService {
                 .stream()
                 .map(ticket -> ticket.getSeats())
                 .collect(Collectors.toList());
-        // convert List of String to String array
+        // convert List of seatName (type: String) to String array
         String[] seatNameIsPaid = listNameSeatIsPaid.stream()
                 .flatMap(s -> Arrays.stream(s.split(",\\s*")))
                 .toArray(String[]::new);
@@ -135,16 +137,47 @@ public class SeatService {
                 .collect(Collectors.toList());
     }
 
-    public Seat save(Seat seat) {
-        return seatRepository.save(seat) ;
-    }
-    public boolean checkExitNameInRoom(String name , Long roomId) {
-        if(seatRepository.findByRoomName(name , roomId) != null) {
-            throw new SeatException("The name of this seat was exited") ;
+    public Seat save(SeatDTO seat, Long seatId) {
+        boolean update = seatId != null ;
+        String seat_name = seat.getSeat_name();
+        Long roomId = seat.getRoomId();
+        Seat checkSeatExit = seatRepository.findByRoomName(seat_name,roomId);
+        if(update) {
+            if(checkSeatExit != null) {
+                if(!Objects.equals(checkSeatExit.getId(), seatId)) {
+                    log.info(String.valueOf(checkSeatExit.getId()));
+                    log.info(String.valueOf(seatId));
+                    throw new SeatException("The name of this seat was exited") ;
+                }
+            }
+        } else {
+            if(checkSeatExit != null) {
+                throw new SeatException("The name of this seat was exited") ;
+            }
         }
-        return true ;
-    }
+        int row_num = seat.getRow_num();
+        int column_num = seat.getColumn_num();
+        Room room = roomRepository.findById(roomId).get();
+        SeatType type = modelMapper.map(seat.getType(), SeatType.class) ;
+        if (update) {
+            Seat savedSeat = seatRepository.findById(seatId).get() ;
+            savedSeat.setSeat_name(seat_name);
+            savedSeat.setType(type);
+            savedSeat.setColumn_num(column_num);
+            savedSeat.setRow_num(row_num);
+            savedSeat.setRoom(room);
+            return seatRepository.save(savedSeat) ;
+        }
 
+        Seat savedSeat = Seat.builder()
+                .seat_name(seat_name)
+                .column_num(column_num)
+                .row_num(row_num)
+                .type(type)
+                .room(room)
+                .build();
+        return seatRepository.save(savedSeat) ;
+    }
     public Seat get(Long id) {
         Seat seat = seatRepository.findById(id).orElseThrow(() -> new SeatException("Seat not found"));
         return seat;

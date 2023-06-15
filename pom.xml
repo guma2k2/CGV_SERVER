@@ -87,7 +87,6 @@
 			<artifactId>spring-boot-starter-mail</artifactId>
 			<version>3.0.4</version>
 		</dependency>
-
 	</dependencies>
 
 	<build>

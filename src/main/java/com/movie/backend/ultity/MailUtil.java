@@ -9,6 +9,8 @@ import java.util.Properties;
 
 public class MailUtil {
 
+
+
     @Autowired
     private SettingService settingService;
     public static JavaMailSenderImpl prepareMailSender(SettingService settings) {

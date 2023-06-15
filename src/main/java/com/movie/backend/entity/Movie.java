@@ -1,9 +1,7 @@
 package com.movie.backend.entity;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
-import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+import com.movie.backend.ultity.FileUploadUtil;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -68,7 +66,7 @@ public class Movie {
 
     @Transient
     public String getPhotosImagePath() {
-        String baseUrl = "http://localhost:8080" ;
+        String baseUrl = FileUploadUtil.baseUrl ;
         if (id == null || poster_url == null) return "https://www.pngitem.com/pimgs/m/150-1503945_transparent-user-png-default-user-image-png-png.png";
         return baseUrl + "/movie-posters/" + this.id + "/" + this.poster_url;
     }

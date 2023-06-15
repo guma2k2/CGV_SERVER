@@ -14,7 +14,7 @@ import java.nio.file.StandardCopyOption;
 
 @Slf4j
 public class FileUploadUtil {
-
+	public static String baseUrl = "http://localhost:8080";
 	public static void saveFile(String uploadDir, String fileName, 
 			MultipartFile multipartFile) throws IOException {
 		Path uploadPath = Paths.get(uploadDir);

@@ -3,6 +3,7 @@ package com.movie.backend.entity;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.movie.backend.security.token.Token;
+import com.movie.backend.ultity.FileUploadUtil;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -102,7 +103,7 @@ public class User implements UserDetails {
     }
     @Transient
     public String getPhotosImagePath() {
-        String baseUrl = "http://localhost:8080" ;
+        String baseUrl = FileUploadUtil.baseUrl ;
         if (id == null || photo == null) return "https://www.pngitem.com/pimgs/m/150-1503945_transparent-user-png-default-user-image-png-png.png";
         return baseUrl + "/user-photos/" + this.id + "/" + this.photo;
     }

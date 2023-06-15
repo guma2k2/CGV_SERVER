@@ -18,7 +18,7 @@ public interface UserRepository extends JpaRepository<User, Long> {
     public User findByVerificationCode(@Param("verificationCode") String verificationCode);
     public Page<User> findAll(Pageable pageable) ;
 
-    @Query("SELECT u FROM User u WHERE CONCAT(u.id, ',' , u.firstName, ',' , u.lastName, ',' , u.email) LIKE %:keyword%")
+    @Query("SELECT u FROM User u WHERE CONCAT(u.firstName, ',' , u.lastName) LIKE %:keyword% OR u.email  LIKE %:keyword%")
     public Page<User> listAll(@Param("keyword") String keyword , Pageable pageable) ;
 
 

@@ -3,6 +3,7 @@ package com.movie.backend.service;
 
 import com.movie.backend.dto.RoomDTO;
 import com.movie.backend.entity.*;
+import com.movie.backend.exception.MovieException;
 import com.movie.backend.exception.RoomException;
 import com.movie.backend.repository.RoomRepository;
 import com.movie.backend.dto.DataContent;
@@ -87,7 +88,10 @@ public class RoomService {
 
 
 
-    public DataContent findAll(int pageNum , String sortDir , String sortField) {
+    public DataContent findAll(Integer pageNum , String sortDir , String sortField) {
+        if (pageNum == null || sortDir == null || sortField == null) {
+            throw new RoomException("The pageNum or sortDir or sortField cannot null");
+        }
         Sort sort = Sort.by(sortField) ;
         sort =  sortDir.equals("asc") ? sort.ascending() : sort.descending();
         Pageable pageable = PageRequest.of(pageNum - 1 , roomPerPage , sort );

@@ -9,6 +9,8 @@ public class SeatDTO {
     private int row_num;
     private int column_num;
     private SeatTypeDTO type;
+
+    private Long roomId ;
     private boolean isReserved;
     private boolean isPaid;
 }
