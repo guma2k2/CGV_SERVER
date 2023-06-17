@@ -18,7 +18,7 @@
 ## Step 1 : Use cmd : docker pull thuanvn2002/movie-frontend:latest
 ## Step 2 : Use cmd : docker run -p 8000:8000 --net backend_movie-app-net thuanvn2002/movie-frontend
 ## Step 2.5: if the terminal tell you dont have any network `backend_movie-app-net` , you can use cmd : docker network ls . Now you need to find a network with name with prefix or suffix have `%movie%` -> copy this name and pass to the older net of `Step2`
-## Step 3 : Check success, past the link: http://localhost:8000/vincinema 
+## Step 3 : Check success, paste the link: http://localhost:8000/vincinema 
 ### If you were successful, you can login with :
 #### + Customer => Account: thu2k2@gmail.com / Pass : thuan2023
 #### + Admin => Account: thuanngo307202@gmail.com / Pass : thuan2023
