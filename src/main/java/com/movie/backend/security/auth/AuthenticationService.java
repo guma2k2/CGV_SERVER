@@ -96,33 +96,6 @@ public class AuthenticationService {
         }
 
     }
-
-    public AuthenticationResponse confirmRegister(RegisterRequest request) throws Exception {
-        Role role = roleRepository.findByName("CLIENT");
-        String randomCode = RandomString.make(64);
-        var user = User.builder()
-                .firstName(request.getFirstName())
-                .lastName(request.getLastName())
-                .email(request.getEmail())
-                .verificationCode(randomCode)
-                .password(passwordEncoder.encode(request.getPassword()))
-                .status(false)
-                .build();
-        userRepository.save(user);
-        UserDTO userDTO = modelMapper.map(user , UserDTO.class);
-        user.addRole(role);
-        var savedUser = repository.save(user);
-        System.out.println(savedUser.getId());
-        var jwtToken = jwtService.generateToken(user);
-        var refreshToken = jwtService.generateRefreshToken(user);
-        saveUserToken(savedUser, jwtToken);
-        return AuthenticationResponse.builder()
-                .accessToken(jwtToken)
-                .refreshToken(refreshToken)
-                .user(userDTO)
-                .build();
-    }
-
     public AuthenticationResponse authenticate(AuthenticationRequest request) {
         authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(

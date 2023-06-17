@@ -244,7 +244,7 @@ public class UserService {
         if(customer == null){
             throw new UserException("Lấy lại mật khẩu thất bại");
         }
-        String newPassword =   passwordEncoder.encode(customer.getPassword());
+        String newPassword =   passwordEncoder.encode(password);
         customer.setPassword(newPassword);
         userRepository.save(customer);
     }
