@@ -4,6 +4,8 @@
 ### Frontend: Html, css, js(jquery), Thymeleaf
 ### Other: Docker(Deploy), MySQL(DATABASE)
 
+# Link demo in youtube : https://www.youtube.com/watch?v=rFPXV3SIjfA&feature=youtu.be&ab_channel=thuanngo
+
 # How to clone this project(SERVER) 
 ## Step 0 : Run Docker
 ## Step 1 : use cmd : git clone https://github.com/guma2k2/CGV_SERVER.git backend_movie
@@ -16,9 +18,8 @@
 # How to clone this project(Client)
 ## Step 0 : You need to out project in server 
 ## Step 1 : Use cmd : docker pull thuanvn2002/movie-frontend:latest
-## Step 2 : Use cmd : docker run -p 8000:8000 --net backend_movie-app-net thuanvn2002/movie-frontend
-## Step 2.5: if the terminal tell you dont have any network `backend_movie-app-net` , you can use cmd : docker network ls . Now you need to find a network with name with prefix or suffix have `%movie%` -> copy this name network and use cmd : 
-## docker run -p 8000:8000 --net [new name of network] thuanvn2002/movie-frontend
+## Step 2 : Use cmd(Dont copy this cmd in terminal, Typing only): 
+### docker run -p 8000:8000 --net backend_movie-app-net thuanvn2002/movie-frontend
 ## Step 3 : Check success, paste the link: http://localhost:8000/vincinema 
 ### If you were successful, you can login with :
 #### + Customer => Account: thu2k2@gmail.com / Pass : thuan2023
