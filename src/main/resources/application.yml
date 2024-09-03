@@ -22,6 +22,6 @@ spring:
       ddl-auto: update
     show-sql: 'false'
   datasource:
-    password: '123456789'
-    username: admin
-    url: jdbc:mysql://mysqldb:3306/movie_app
+    password: 'password'
+    username: root
+    url: jdbc:mysql://localhost:3306/movie_app

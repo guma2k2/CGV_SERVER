@@ -1,5 +1,3 @@
-version: '3.8'
-
 services:
   mysql:
     container_name: mysqldb
@@ -17,17 +15,27 @@ services:
       - ./movie_app.sql:/docker-entrypoint-initdb.d/init.sql
     networks:
       - app-net
-  web:
+  backend:
     image: thuanvn2002/movie-backend
     restart: always
     ports:
       - "8080:8080"
+    environment:
+      - SPRING_PROFILES_ACTIVE=prod
     networks:
       - app-net
     depends_on:
       - mysql
+  frontend:
+    image: thuanvn2002/movie-frontend
+    restart: always
+    ports:
+      - "8000:8000"
+    networks:
+      - app-net
 volumes:
   mysql-data:
+
 
 networks:
   app-net:
