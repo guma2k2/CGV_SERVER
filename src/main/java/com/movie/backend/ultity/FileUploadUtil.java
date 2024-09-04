@@ -3,6 +3,7 @@ package com.movie.backend.ultity;
 import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
@@ -14,7 +15,8 @@ import java.nio.file.StandardCopyOption;
 
 @Slf4j
 public class FileUploadUtil {
-	public static String baseUrl = "http://localhost:8080";
+
+	public static String baseUrl = "http://localhost:8082";
 	public static void saveFile(String uploadDir, String fileName, 
 			MultipartFile multipartFile) throws IOException {
 		Path uploadPath = Paths.get(uploadDir);

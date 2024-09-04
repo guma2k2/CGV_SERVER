@@ -19,7 +19,7 @@ services:
     image: thuanvn2002/movie-backend
     restart: always
     ports:
-      - "8080:8080"
+      - "8082:8082"
     environment:
       - SPRING_PROFILES_ACTIVE=prod
     networks:
@@ -31,8 +31,12 @@ services:
     restart: always
     ports:
       - "8000:8000"
+    environment:
+      - SPRING_PROFILES_ACTIVE=prod
     networks:
       - app-net
+    depends_on:
+      - backend
 volumes:
   mysql-data:
 
