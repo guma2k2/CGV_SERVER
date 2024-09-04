@@ -3,6 +3,7 @@ package com.movie.backend.entity;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.movie.backend.ultity.FileUploadUtil;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -37,7 +38,7 @@ public class CinemaImage {
 
     @Transient
     public String getExtraImagePath() {
-        String baseUrl = "http://localhost:8080" ;
+        String baseUrl = FileUploadUtil.baseUrl;
         return baseUrl + "/cinema-images/" + cinema.getId() + "/extras/" + this.name;
     }
 }
