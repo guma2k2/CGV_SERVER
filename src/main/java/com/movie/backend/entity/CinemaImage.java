@@ -38,7 +38,6 @@ public class CinemaImage {
 
     @Transient
     public String getExtraImagePath() {
-        String baseUrl = FileUploadUtil.baseUrl;
-        return baseUrl + "/cinema-images/" + cinema.getId() + "/extras/" + this.name;
+        return this.name;
     }
 }

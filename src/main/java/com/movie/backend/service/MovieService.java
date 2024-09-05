@@ -1,6 +1,7 @@
 package com.movie.backend.service;
 
 
+import com.cloudinary.Cloudinary;
 import com.movie.backend.dto.GenreDTO;
 import com.movie.backend.dto.MovieDTO;
 
@@ -28,8 +29,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.time.LocalDate;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
@@ -47,6 +47,9 @@ public class MovieService {
 
     @Value("${application.service.movie.moviePerPage}")
     private int moviePerPage ;
+
+    @Autowired
+    private Cloudinary cloudinary;
 
     public List<GenreDTO> listAllGenre() {
         return genreRepository.findAll()
@@ -121,21 +124,27 @@ public class MovieService {
         }
         Movie movie = movieRepository.findById(movieId).orElseThrow(() -> new UserException("Movie not found")) ;
         if (!multipartFile.isEmpty()) {
-            String fileName = StringUtils.cleanPath(multipartFile.getOriginalFilename());
-
-            movie.setPoster_url(fileName);
-
-            String uploadDir = "movie-posters/" + movieId;
-
-            FileUploadUtil.cleanDir(uploadDir);
-            FileUploadUtil.saveFile(uploadDir, fileName, multipartFile);
-
+            HashMap<String, String> map = new HashMap<>();
+            String fileId = UUID.randomUUID().toString();
+            map.put("public_id", fileId);
+            map.put("resource_type", "auto");
+            Map uploadResult = null;
+            try {
+                uploadResult = cloudinary.uploader()
+                        .upload(multipartFile.getBytes(), map);
+            } catch (IOException e) {
+                log.error(e.getMessage());
+            }
+            String url = uploadResult
+                    .get("url")
+                    .toString();
+            movie.setPoster_url(url);
         } else {
             if (movie.getPoster_url().isEmpty()){
-                log.info("wtf");
                 movie.setPoster_url(null);
             }
         }
+
         movieRepository.save(movie);
     }
 

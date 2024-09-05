@@ -66,9 +66,8 @@ public class Movie {
 
     @Transient
     public String getPhotosImagePath() {
-        String baseUrl = FileUploadUtil.baseUrl ;
         if (id == null || poster_url == null) return "https://www.pngitem.com/pimgs/m/150-1503945_transparent-user-png-default-user-image-png-png.png";
-        return baseUrl + "/movie-posters/" + this.id + "/" + this.poster_url;
+        return this.poster_url;
     }
 
 

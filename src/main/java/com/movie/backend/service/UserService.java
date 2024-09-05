@@ -1,5 +1,6 @@
 package com.movie.backend.service;
 
+import com.cloudinary.Cloudinary;
 import com.movie.backend.dto.RoleDTO;
 import com.movie.backend.dto.UserDTO;
 import com.movie.backend.entity.Role;
@@ -32,10 +33,7 @@ import org.springframework.util.StringUtils;
 import org.springframework.web.multipart.MultipartFile;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Optional;
-import java.util.Set;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
@@ -55,6 +53,9 @@ public class UserService {
 
     @Autowired
     private RoleRepository roleRepository;
+
+    @Autowired
+    private Cloudinary cloudinary;
 
     public DataContent getFirstPage() {
         return findAll(1, "desc" , "id" , null ) ;
@@ -92,13 +93,21 @@ public class UserService {
     public void savePhoTo(Long userId, MultipartFile multipartFile) throws IOException {
         User user = userRepository.findById(userId).orElseThrow(() -> new UserException("User not found")) ;
         if (!multipartFile.isEmpty()) {
-            String fileName = StringUtils.cleanPath(multipartFile.getOriginalFilename());
-            user.setPhoto(fileName);
-
-            String uploadDir = "user-photos/" + userId;
-
-            FileUploadUtil.cleanDir(uploadDir);
-            FileUploadUtil.saveFile(uploadDir, fileName, multipartFile);
+            HashMap<String, String> map = new HashMap<>();
+            String fileId = UUID.randomUUID().toString();
+            map.put("public_id", fileId);
+            map.put("resource_type", "auto");
+            Map uploadResult = null;
+            try {
+                uploadResult = cloudinary.uploader()
+                        .upload(multipartFile.getBytes(), map);
+            } catch (IOException e) {
+                log.error(e.getMessage());
+            }
+            String url = uploadResult
+                    .get("url")
+                    .toString();
+            user.setPhoto(url);
 
         } else {
             if (user.getPhoto().isEmpty()) user.setPhoto(null);
