@@ -103,9 +103,8 @@ public class User implements UserDetails {
     }
     @Transient
     public String getPhotosImagePath() {
-        String baseUrl = FileUploadUtil.baseUrl ;
         if (id == null || photo == null) return "https://www.pngitem.com/pimgs/m/150-1503945_transparent-user-png-default-user-image-png-png.png";
-        return baseUrl + "/user-photos/" + this.id + "/" + this.photo;
+        return this.photo;
     }
 }
 

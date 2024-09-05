@@ -25,5 +25,10 @@ spring:
     password: 'password'
     username: root
     url: jdbc:mysql://localhost:3306/movie_app
+  cloudinary:
+    api:
+      secret: u3aoCSJzt31lcqOJBsgykwTq81o
+      key: '593637822396816'
+    name: di6h4mtfa
 server:
   port : 8080

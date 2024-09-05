@@ -46,9 +46,8 @@ public class Cinema {
 
     @Transient
     public String getPhotosImagePath() {
-        String baseUrl = FileUploadUtil.baseUrl ;
         if (id == null || image_url == null) return "https://www.cgv.vn/media/imax/goldclass-2.png";
-        return baseUrl + "/cinema-images/" + this.id + "/" + this.image_url;
+        return this.image_url;
     }
     public boolean containsImageName(String imageName) {
         Iterator<CinemaImage> iterator = images.iterator();

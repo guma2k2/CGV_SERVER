@@ -18,22 +18,21 @@
 --
 -- Table structure for table `booking`
 --
-
 DROP TABLE IF EXISTS `booking`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `booking` (
-  `id` bigint NOT NULL AUTO_INCREMENT,
-  `created_time` datetime(6) DEFAULT NULL,
-  `seats` varchar(255) DEFAULT NULL,
-  `total_amount` bigint DEFAULT NULL,
-  `event_id` bigint DEFAULT NULL,
-  `user_id` bigint DEFAULT NULL,
-  PRIMARY KEY (`id`),
-  KEY `FKiy2tdi4vrw2mljj6rqwmd698q` (`event_id`),
-  KEY `FKlhxtmc0dd85lvrdfgtitxua4y` (`user_id`),
-  CONSTRAINT `FKiy2tdi4vrw2mljj6rqwmd698q` FOREIGN KEY (`event_id`) REFERENCES `event` (`id`),
-  CONSTRAINT `FKlhxtmc0dd85lvrdfgtitxua4y` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`)
+                           `id` bigint NOT NULL AUTO_INCREMENT,
+                           `created_time` datetime(6) DEFAULT NULL,
+                           `seats` varchar(255) DEFAULT NULL,
+                           `total_amount` bigint DEFAULT NULL,
+                           `event_id` bigint DEFAULT NULL,
+                           `user_id` bigint DEFAULT NULL,
+                           PRIMARY KEY (`id`),
+                           KEY `FKiy2tdi4vrw2mljj6rqwmd698q` (`event_id`),
+                           KEY `FKlhxtmc0dd85lvrdfgtitxua4y` (`user_id`),
+                           CONSTRAINT `FKiy2tdi4vrw2mljj6rqwmd698q` FOREIGN KEY (`event_id`) REFERENCES `event` (`id`),
+                           CONSTRAINT `FKlhxtmc0dd85lvrdfgtitxua4y` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=72 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -55,15 +54,15 @@ DROP TABLE IF EXISTS `booking_combo`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `booking_combo` (
-  `id` bigint NOT NULL AUTO_INCREMENT,
-  `quantity` int NOT NULL,
-  `booking_id` bigint DEFAULT NULL,
-  `combo_id` bigint DEFAULT NULL,
-  PRIMARY KEY (`id`),
-  KEY `FKbwek06jap4aqyxw7tj1nv9r3a` (`booking_id`),
-  KEY `FKle9c5oa3ethga0frtk2yimo86` (`combo_id`),
-  CONSTRAINT `FKbwek06jap4aqyxw7tj1nv9r3a` FOREIGN KEY (`booking_id`) REFERENCES `booking` (`id`),
-  CONSTRAINT `FKle9c5oa3ethga0frtk2yimo86` FOREIGN KEY (`combo_id`) REFERENCES `combo` (`id`)
+                                 `id` bigint NOT NULL AUTO_INCREMENT,
+                                 `quantity` int NOT NULL,
+                                 `booking_id` bigint DEFAULT NULL,
+                                 `combo_id` bigint DEFAULT NULL,
+                                 PRIMARY KEY (`id`),
+                                 KEY `FKbwek06jap4aqyxw7tj1nv9r3a` (`booking_id`),
+                                 KEY `FKle9c5oa3ethga0frtk2yimo86` (`combo_id`),
+                                 CONSTRAINT `FKbwek06jap4aqyxw7tj1nv9r3a` FOREIGN KEY (`booking_id`) REFERENCES `booking` (`id`),
+                                 CONSTRAINT `FKle9c5oa3ethga0frtk2yimo86` FOREIGN KEY (`combo_id`) REFERENCES `combo` (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -85,17 +84,17 @@ DROP TABLE IF EXISTS `booking_seat`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `booking_seat` (
-  `id` bigint NOT NULL AUTO_INCREMENT,
-  `booking_id` bigint DEFAULT NULL,
-  `event_id` bigint DEFAULT NULL,
-  `seat_id` bigint DEFAULT NULL,
-  PRIMARY KEY (`id`),
-  KEY `FK3gcy7w2me25kc4qp8nobmg4q6` (`booking_id`),
-  KEY `FKtaw673bh7dupc635hllxjrju4` (`event_id`),
-  KEY `FK3y806wtfhomwvu02t1u7u2136` (`seat_id`),
-  CONSTRAINT `FK3gcy7w2me25kc4qp8nobmg4q6` FOREIGN KEY (`booking_id`) REFERENCES `booking` (`id`),
-  CONSTRAINT `FK3y806wtfhomwvu02t1u7u2136` FOREIGN KEY (`seat_id`) REFERENCES `seat` (`id`),
-  CONSTRAINT `FKtaw673bh7dupc635hllxjrju4` FOREIGN KEY (`event_id`) REFERENCES `event` (`id`)
+                                `id` bigint NOT NULL AUTO_INCREMENT,
+                                `booking_id` bigint DEFAULT NULL,
+                                `event_id` bigint DEFAULT NULL,
+                                `seat_id` bigint DEFAULT NULL,
+                                PRIMARY KEY (`id`),
+                                KEY `FK3gcy7w2me25kc4qp8nobmg4q6` (`booking_id`),
+                                KEY `FKtaw673bh7dupc635hllxjrju4` (`event_id`),
+                                KEY `FK3y806wtfhomwvu02t1u7u2136` (`seat_id`),
+                                CONSTRAINT `FK3gcy7w2me25kc4qp8nobmg4q6` FOREIGN KEY (`booking_id`) REFERENCES `booking` (`id`),
+                                CONSTRAINT `FK3y806wtfhomwvu02t1u7u2136` FOREIGN KEY (`seat_id`) REFERENCES `seat` (`id`),
+                                CONSTRAINT `FKtaw673bh7dupc635hllxjrju4` FOREIGN KEY (`event_id`) REFERENCES `event` (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=99 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -117,16 +116,16 @@ DROP TABLE IF EXISTS `cinema`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `cinema` (
-  `id` bigint NOT NULL AUTO_INCREMENT,
-  `address` varchar(1000) DEFAULT NULL,
-  `name` varchar(50) DEFAULT NULL,
-  `phone_number` varchar(20) DEFAULT NULL,
-  `city_id` int DEFAULT NULL,
-  `cinema_type` varchar(30) DEFAULT NULL,
-  `main_image` varchar(255) DEFAULT NULL,
-  PRIMARY KEY (`id`),
-  KEY `FK2lxd9v0mo9e6r5aq9qpadm19s` (`city_id`),
-  CONSTRAINT `FK2lxd9v0mo9e6r5aq9qpadm19s` FOREIGN KEY (`city_id`) REFERENCES `city` (`id`)
+                          `id` bigint NOT NULL AUTO_INCREMENT,
+                          `address` varchar(1000) DEFAULT NULL,
+                          `name` varchar(50) DEFAULT NULL,
+                          `phone_number` varchar(20) DEFAULT NULL,
+                          `city_id` int DEFAULT NULL,
+                          `cinema_type` varchar(30) DEFAULT NULL,
+                          `main_image` varchar(255) DEFAULT NULL,
+                          PRIMARY KEY (`id`),
+                          KEY `FK2lxd9v0mo9e6r5aq9qpadm19s` (`city_id`),
+                          CONSTRAINT `FK2lxd9v0mo9e6r5aq9qpadm19s` FOREIGN KEY (`city_id`) REFERENCES `city` (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=39 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -136,7 +135,7 @@ CREATE TABLE `cinema` (
 
 LOCK TABLES `cinema` WRITE;
 /*!40000 ALTER TABLE `cinema` DISABLE KEYS */;
-INSERT INTO `cinema` VALUES (1,'Tầng 5, Trung tâm thương mại Vincom Bà Triệu, Số 191 Bà Triệu, Hai Bà Trưng, Hà Nội','CGV Vincom Bà Triệu','02436333333',1,'Rạp 2D','cinema1anh1.jpeg'),(2,'Tầng 5, Vincom Mega Mall Times City, Số 458 Minh Khai, Hai Bà Trưng, Hà Nội','CGV Times City','02473086666',1,'Rạp 2D','time-cgv-1_4.png'),(3,'Tầng B2-Royal City, Số 72A Nguyễn Trãi, Thanh Xuân, Hà Nội','CGV Royal City','02466666666',1,'Rạp 2D','_lhh2535.jpg'),(4,'Tầng 3, Trung tâm thương mại AEON Long Biên, Số 27 Co Linh, Long Biên, Hà Nội','CGV Aeon Long Biên','02473005566',1,'Rạp 2D','cgv-vincom-long-bien.jpg'),(5,'Tầng 4, Mipec Tower, Số 229 Tây Sơn, Đống Đa, Hà Nội','CGV Mipec Tower','02471055000',1,'Rạp 2D','fasade_layer-1.jpg'),(6,'Tầng 5, Crescent Mall, Số 101 Tôn Dật Tiên, Tân Phú, Hồ Chí Minh','CGV Crescent Mall','02854134999',2,'Rạp 2D','cgv-vincom-long-bien.jpg'),(7,'Tầng 5, Pearl Plaza, Số 561A Điện Biên Phủ, Bình Thạnh, Hồ Chí Minh','CGV Pearl Plaza','02873085588',2,'Rạp 2D','cgv-vincom-long-bien.jpg'),(8,'Tầng 7, Parkson Đồng Khởi, Số 35Bis - 45 Lê Thánh Tôn, Quận 1, Hồ Chí Minh','CGV Parkson Đồng Khởi','02838242828',2,'Rạp 2D','cgv-vincom-long-bien.jpg'),(9,'Tầng 5, Vincom Center B, Số 72 Lê Thánh Tôn, Quận 1, Hồ Chí Minh','CGV Vincom Center Landmark 81','02862914000',2,'Rạp 2D','ticket_box_layer-1.jpg'),(10,'Tầng 7, SC VivoCity, Số 1058 Nguyễn Văn Linh, Tân Phong, Quận 7, Hồ Chí Minh','CGV SC VivoCity','02854124300',2,'Rạp 2D','cgv-vincom-long-bien.jpg'),(11,'L5, Vincom Center Đồng Khởi, 72 Lê Thánh Tôn, Bến Nghé, Quận 1, Hồ Chí Minh','CGV Vincom Đồng Khởi','(028) 3939 0909',2,'Rạp 2D','https://www.cgv.vn/media/imax/goldclass-2.png'),(12,'Lầu 3, TTTM Aeon Mall Bình Dương Canary, KCN VSIP II, P. Bình Hòa, Thị xã Thuận An, Bình Dương','CGV Aeon Bình Dương Canary','(0274) 221 0777',3,'Rạp 2D','https://www.cgv.vn/media/imax/goldclass-2.png'),(13,'L5, Parkson Mall Đà Nẵng, 30 Hùng Vương, Q. Hải Châu, Đà Nẵng','CGV Parkson Đà Nẵng','(0236) 363 3555',4,'Rạp 2D','https://www.cgv.vn/media/imax/goldclass-2.png'),(14,'Tầng 5, Parkson TD Plaza Hải Phòng, số 15 Thái Phiên, P. Lê Chân, Hải Phòng','CGV Parkson Hải Phòng','(0225) 382 2566',5,'Rạp 2D','https://www.cgv.vn/media/imax/goldclass-2.png'),(15,'Tầng 2, TTTM Big C Biên Hòa, 1217 Phạm Văn Thuận, P. Tam Hiệp, TP. Biên Hòa, Đồng Nai','CGV Big C Biên Hòa','(0251) 382 8777',6,'Rạp 2D','https://www.cgv.vn/media/imax/goldclass-2.png'),(16,'Tầng 3, TTTM Big C Nha Trang, 2 Trần Phú, P. Lộc Thọ, TP. Nha Trang, Khánh Hòa','CGV Big C Nha Trang','(0258) 383 3999',7,'Rạp 2D','https://www.cgv.vn/media/site/cache/1/980x415/b58515f018eb873dafa430b6f9ae0c1e/b/t/bth_3314.jpg'),(27,'G18-20, Tầng 3, Siêu thị Co.opmart, Số 239-245 Phạm Văn Thuận, P. Tân Tiến, TP. Biên Hòa, Đồng Nai','CGV Coopmart Bien Hoa','0274 655 4888',6,'Rạp PREMIUM','https://www.cgv.vn/media/imax/goldclass-2.png'),(28,'910A Ngo Quyen, An Hai Bac Ward, Son Tra District, Da Nang','CGV Vincom Da Nang','19006067',4,'Rạp PREMIUM','https://www.cgv.vn/media/imax/goldclass-2.png'),(29,'06 Nai Nam, Hoa Cuong Nam Ward, Hai Chau District, Da Nang','CGV Da Nang Lotte Mart','19006067',4,'Rạp 2D','https://www.cgv.vn/media/imax/goldclass-2.png'),(30,'Tầng 5, TTTM Vincom Thủ Đức, 216 Võ Văn Ngân, Phường Bình Thọ, Quận Thủ Đức','CGV Vincom Thủ Đức','0462755240',2,'Rạp 2D','fasade_layer-1.jpg'),(31,'255-257 đường Hùng Vương Quận Thanh Khê Tp. Đà Nẵng','CGV Vĩnh Trung Plaza','0462755240',3,'Rạp 2D','cinema2anh1.jpeg'),(32,'Tầng 4 , TTTM Vincom Thái Nguyên 286 Lương Ngọc Quyến, Phường Quang Trung, Thành phố Thái Nguyên','CGV Vincom Thái Nguyên','+84 4 6 275 5240',12,'Rạp 2D','cgv-vincom-thai-nguyen1.png'),(33,'Tầng 4, TTTM Vincom Center Hạ Long, Khu Cột Đồng Hồ, P.Bạch Đằng, Hạ Long, Quảng Ninh','CGV Vincom Hạ Long','+84 4 6 275 5240',17,'Rạp 2D','10877450_10152609257423546_268436616_n.jpg'),(34,'Tầng 4, Lam Sơn Square 9 Lê Lợi Tp. Vũng Tàu','CGV Lam Sơn Square','+84 4 6 275 5240',16,'Rạp PREMIUM','alobby_ceiling_view-low-_hinh_dai_diena_1.jpg'),(35,'Tầng 4, TTTM Vincom Plaza Trà Vinh, số 24 Đường Nguyễn Thị Minh Khai, ','CGV Vincom Trà Vinh','+84 4 6 275 5240',10,'Rạp 2D','tra-vinh-1_1.png'),(36,'Tầng 5 – TTTM VINCOM CAO LÃNH, 02 Đường 30.04, Phường 01, TP. Cao Lãnh, Đồng Tháp','CGV Vincom Cao Lãnh','+84 4 6 275 5240',40,'Rạp 2D','tra-vinh-1_1.png'),(37,'Tầng 3, Trung tâm Thương mại Vincom Plaza Hà Tĩnh,','CGV Vincom Hà Tĩnh','+84 4 6 275 5240',19,'Rạp 2D','ht1fix.jpg'),(38,'Tầng 3 & 4, Vincom Plaza Kon Tum, 02 đường Phan Đình Phùng, P. Quyết Thắng, TP. Kon Tum, Tỉnh Kon Tum','CGV Vincom Kon Tum','+84 4 6 275 5240',8,'Rạp 2D','cgv-vincom-lang-son-1_1.png');
+INSERT INTO `cinema` VALUES (1,'Tầng 5, Trung tâm thương mại Vincom Bà Triệu, Số 191 Bà Triệu, Hai Bà Trưng, Hà Nội','CGV Vincom Bà Triệu','02436333333',1,'Rạp 2D','https://res.cloudinary.com/di6h4mtfa/image/upload/v1725537303/cinema-images/1/cinema1anh1_kqpdcm.jpg'),(2,'Tầng 5, Vincom Mega Mall Times City, Số 458 Minh Khai, Hai Bà Trưng, Hà Nội','CGV Times City','02473086666',1,'Rạp 2D','https://res.cloudinary.com/di6h4mtfa/image/upload/v1725537305/cinema-images/2/time-cgv-1_4_xmfzh7.png'),(3,'Tầng B2-Royal City, Số 72A Nguyễn Trãi, Thanh Xuân, Hà Nội','CGV Royal City','02466666666',1,'Rạp 2D','https://res.cloudinary.com/di6h4mtfa/image/upload/v1725537304/cinema-images/3/_lhh2535_a3oqfi.jpg'),(4,'Tầng 3, Trung tâm thương mại AEON Long Biên, Số 27 Co Linh, Long Biên, Hà Nội','CGV Aeon Long Biên','02473005566',1,'Rạp 2D','https://res.cloudinary.com/di6h4mtfa/image/upload/v1725537435/cinema-images/4/cgv-vincom-long-bien_bvekob.jpg'),(5,'Tầng 4, Mipec Tower, Số 229 Tây Sơn, Đống Đa, Hà Nội','CGV Mipec Tower','02471055000',1,'Rạp 2D','https://res.cloudinary.com/di6h4mtfa/image/upload/v1725537435/cinema-images/5/fasade_layer-1_c2gyzp.jpg'),(6,'Tầng 5, Crescent Mall, Số 101 Tôn Dật Tiên, Tân Phú, Hồ Chí Minh','CGV Crescent Mall','02854134999',2,'Rạp 2D','https://res.cloudinary.com/di6h4mtfa/image/upload/v1725537435/cinema-images/6/cgv-vincom-long-bien_mc0psr.jpg'),(7,'Tầng 5, Pearl Plaza, Số 561A Điện Biên Phủ, Bình Thạnh, Hồ Chí Minh','CGV Pearl Plaza','02873085588',2,'Rạp 2D','https://res.cloudinary.com/di6h4mtfa/image/upload/v1725537437/cinema-images/7/cgv-vincom-long-bien_c4j4u5.jpg'),(8,'Tầng 7, Parkson Đồng Khởi, Số 35Bis - 45 Lê Thánh Tôn, Quận 1, Hồ Chí Minh','CGV Parkson Đồng Khởi','02838242828',2,'Rạp 2D','https://res.cloudinary.com/di6h4mtfa/image/upload/v1725537437/cinema-images/8/cgv-vincom-long-bien_mocaab.jpg'),(9,'Tầng 5, Vincom Center B, Số 72 Lê Thánh Tôn, Quận 1, Hồ Chí Minh','CGV Vincom Center Landmark 81','02862914000',2,'Rạp 2D','https://res.cloudinary.com/di6h4mtfa/image/upload/v1725537438/cinema-images/9/ticket_box_layer-1_d3ueyj.jpg'),(10,'Tầng 7, SC VivoCity, Số 1058 Nguyễn Văn Linh, Tân Phong, Quận 7, Hồ Chí Minh','CGV SC VivoCity','02854124300',2,'Rạp 2D','https://res.cloudinary.com/di6h4mtfa/image/upload/v1725537304/cinema-images/10/cgv-vincom-long-bien_miqtdd.jpg'),(11,'L5, Vincom Center Đồng Khởi, 72 Lê Thánh Tôn, Bến Nghé, Quận 1, Hồ Chí Minh','CGV Vincom Đồng Khởi','(028) 3939 0909',2,'Rạp 2D','https://www.cgv.vn/media/imax/goldclass-2.png'),(12,'Lầu 3, TTTM Aeon Mall Bình Dương Canary, KCN VSIP II, P. Bình Hòa, Thị xã Thuận An, Bình Dương','CGV Aeon Bình Dương Canary','(0274) 221 0777',3,'Rạp 2D','https://www.cgv.vn/media/imax/goldclass-2.png'),(13,'L5, Parkson Mall Đà Nẵng, 30 Hùng Vương, Q. Hải Châu, Đà Nẵng','CGV Parkson Đà Nẵng','(0236) 363 3555',4,'Rạp 2D','https://www.cgv.vn/media/imax/goldclass-2.png'),(14,'Tầng 5, Parkson TD Plaza Hải Phòng, số 15 Thái Phiên, P. Lê Chân, Hải Phòng','CGV Parkson Hải Phòng','(0225) 382 2566',5,'Rạp 2D','https://www.cgv.vn/media/imax/goldclass-2.png'),(15,'Tầng 2, TTTM Big C Biên Hòa, 1217 Phạm Văn Thuận, P. Tam Hiệp, TP. Biên Hòa, Đồng Nai','CGV Big C Biên Hòa','(0251) 382 8777',6,'Rạp 2D','https://www.cgv.vn/media/imax/goldclass-2.png'),(16,'Tầng 3, TTTM Big C Nha Trang, 2 Trần Phú, P. Lộc Thọ, TP. Nha Trang, Khánh Hòa','CGV Big C Nha Trang','(0258) 383 3999',7,'Rạp 2D','https://www.cgv.vn/media/site/cache/1/980x415/b58515f018eb873dafa430b6f9ae0c1e/b/t/bth_3314.jpg'),(27,'G18-20, Tầng 3, Siêu thị Co.opmart, Số 239-245 Phạm Văn Thuận, P. Tân Tiến, TP. Biên Hòa, Đồng Nai','CGV Coopmart Bien Hoa','0274 655 4888',6,'Rạp PREMIUM','https://www.cgv.vn/media/imax/goldclass-2.png'),(28,'910A Ngo Quyen, An Hai Bac Ward, Son Tra District, Da Nang','CGV Vincom Da Nang','19006067',4,'Rạp PREMIUM','https://www.cgv.vn/media/imax/goldclass-2.png'),(29,'06 Nai Nam, Hoa Cuong Nam Ward, Hai Chau District, Da Nang','CGV Da Nang Lotte Mart','19006067',4,'Rạp 2D','https://www.cgv.vn/media/imax/goldclass-2.png'),(30,'Tầng 5, TTTM Vincom Thủ Đức, 216 Võ Văn Ngân, Phường Bình Thọ, Quận Thủ Đức','CGV Vincom Thủ Đức','0462755240',2,'Rạp 2D','https://res.cloudinary.com/di6h4mtfa/image/upload/v1725537305/cinema-images/30/fasade_layer-1_nf5it4.jpg'),(31,'255-257 đường Hùng Vương Quận Thanh Khê Tp. Đà Nẵng','CGV Vĩnh Trung Plaza','0462755240',3,'Rạp 2D','https://res.cloudinary.com/di6h4mtfa/image/upload/v1725537305/cinema-images/31/cinema2anh1_zbenka.jpg'),(32,'Tầng 4 , TTTM Vincom Thái Nguyên 286 Lương Ngọc Quyến, Phường Quang Trung, Thành phố Thái Nguyên','CGV Vincom Thái Nguyên','+84 4 6 275 5240',12,'Rạp 2D','https://res.cloudinary.com/di6h4mtfa/image/upload/v1725537382/cinema-images/32/cgv-vincom-thai-nguyen1_uor1gp.png'),(33,'Tầng 4, TTTM Vincom Center Hạ Long, Khu Cột Đồng Hồ, P.Bạch Đằng, Hạ Long, Quảng Ninh','CGV Vincom Hạ Long','+84 4 6 275 5240',17,'Rạp 2D','https://res.cloudinary.com/di6h4mtfa/image/upload/v1725537382/cinema-images/33/10877450_10152609257423546_268436616_n_lslvpx.jpg'),(34,'Tầng 4, Lam Sơn Square 9 Lê Lợi Tp. Vũng Tàu','CGV Lam Sơn Square','+84 4 6 275 5240',16,'Rạp PREMIUM','https://res.cloudinary.com/di6h4mtfa/image/upload/v1725537430/cinema-images/35/tra-vinh-1_1_daenwi.png'),(35,'Tầng 4, TTTM Vincom Plaza Trà Vinh, số 24 Đường Nguyễn Thị Minh Khai, ','CGV Vincom Trà Vinh','+84 4 6 275 5240',10,'Rạp 2D','https://res.cloudinary.com/di6h4mtfa/image/upload/v1725537430/cinema-images/35/tra-vinh-1_1_daenwi.png'),(36,'Tầng 5 – TTTM VINCOM CAO LÃNH, 02 Đường 30.04, Phường 01, TP. Cao Lãnh, Đồng Tháp','CGV Vincom Cao Lãnh','+84 4 6 275 5240',40,'Rạp 2D','https://res.cloudinary.com/di6h4mtfa/image/upload/v1725537430/cinema-images/35/tra-vinh-1_1_daenwi.png'),(37,'Tầng 3, Trung tâm Thương mại Vincom Plaza Hà Tĩnh,','CGV Vincom Hà Tĩnh','+84 4 6 275 5240',19,'Rạp 2D','https://res.cloudinary.com/di6h4mtfa/image/upload/v1725537430/cinema-images/35/tra-vinh-1_1_daenwi.png'),(38,'Tầng 3 & 4, Vincom Plaza Kon Tum, 02 đường Phan Đình Phùng, P. Quyết Thắng, TP. Kon Tum, Tỉnh Kon Tum','CGV Vincom Kon Tum','+84 4 6 275 5240',8,'Rạp 2D','https://res.cloudinary.com/di6h4mtfa/image/upload/v1725537430/cinema-images/35/tra-vinh-1_1_daenwi.png');
 /*!40000 ALTER TABLE `cinema` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -148,12 +147,12 @@ DROP TABLE IF EXISTS `cinema_images`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `cinema_images` (
-  `id` bigint NOT NULL AUTO_INCREMENT,
-  `name` varchar(255) DEFAULT NULL,
-  `cinema_id` bigint DEFAULT NULL,
-  PRIMARY KEY (`id`),
-  KEY `FKme2kgva34eerb0tv0bruv7lmo` (`cinema_id`),
-  CONSTRAINT `FKme2kgva34eerb0tv0bruv7lmo` FOREIGN KEY (`cinema_id`) REFERENCES `cinema` (`id`)
+                                 `id` bigint NOT NULL AUTO_INCREMENT,
+                                 `name` varchar(255) DEFAULT NULL,
+                                 `cinema_id` bigint DEFAULT NULL,
+                                 PRIMARY KEY (`id`),
+                                 KEY `FKme2kgva34eerb0tv0bruv7lmo` (`cinema_id`),
+                                 CONSTRAINT `FKme2kgva34eerb0tv0bruv7lmo` FOREIGN KEY (`cinema_id`) REFERENCES `cinema` (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=41 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -163,7 +162,7 @@ CREATE TABLE `cinema_images` (
 
 LOCK TABLES `cinema_images` WRITE;
 /*!40000 ALTER TABLE `cinema_images` DISABLE KEYS */;
-INSERT INTO `cinema_images` VALUES (15,'cinema1anh2.jpeg',1),(17,'cinema2anh3.jpeg',31),(18,'cinema2anh2.jpeg',31),(19,'cgv-vincom-thai-nguyen-3.png',32),(20,'cgv-vincom-thai-nguyen-2.png',32),(21,'10872476_10152609273538546_166226703_n.jpg',33),(22,'10841730_10152609256298546_1564428434_n.jpg',33),(23,'lounge-low-a_1.jpg',34),(24,'lobby-low-a_1.jpg',34),(25,'tra-vinh-3_1.png',35),(26,'tra-vinh-2_1.png',35),(27,'tra-vinh-2_1.png',36),(28,'tra-vinh-3_1.png',36),(29,'ht2fix.jpg',37),(30,'cgv-vincom-lang-son-3_1.png',38),(31,'cgv-vincom-lang-son-2_1.png',38),(32,'cgv_tra_vinh_v2_170304_15.jpg',1),(33,'cgv_tra_vinh_v3_170304_15.jpg',1),(34,'time-cgv-2_4.png',2),(35,'_lhh2439.jpg',3),(36,'ticket_box_layer-1.jpg',5),(37,'popcorn_pactory_layer-1.jpg',5),(38,'popcorn_pactory_layer-1.jpg',9),(39,'ticket_box_layer-1.jpg',10),(40,'ticket_box_layer-1.jpg',30);
+INSERT INTO `cinema_images` VALUES (15,'https://res.cloudinary.com/di6h4mtfa/image/upload/v1725537429/cinema-images/35/extras/tra-vinh-3_1_sqrzie.png',1),(17,'https://res.cloudinary.com/di6h4mtfa/image/upload/v1725537429/cinema-images/35/extras/tra-vinh-3_1_sqrzie.png',31),(18,'https://res.cloudinary.com/di6h4mtfa/image/upload/v1725537429/cinema-images/35/extras/tra-vinh-3_1_sqrzie.png',31),(19,'https://res.cloudinary.com/di6h4mtfa/image/upload/v1725537429/cinema-images/35/extras/tra-vinh-3_1_sqrzie.png',32),(20,'https://res.cloudinary.com/di6h4mtfa/image/upload/v1725537429/cinema-images/35/extras/tra-vinh-3_1_sqrzie.png',32),(21,'https://res.cloudinary.com/di6h4mtfa/image/upload/v1725537429/cinema-images/35/extras/tra-vinh-3_1_sqrzie.png',33),(22,'https://res.cloudinary.com/di6h4mtfa/image/upload/v1725537429/cinema-images/35/extras/tra-vinh-3_1_sqrzie.png',33),(23,'https://res.cloudinary.com/di6h4mtfa/image/upload/v1725537429/cinema-images/35/extras/tra-vinh-3_1_sqrzie.png',34),(24,'https://res.cloudinary.com/di6h4mtfa/image/upload/v1725537429/cinema-images/35/extras/tra-vinh-3_1_sqrzie.png',34),(25,'https://res.cloudinary.com/di6h4mtfa/image/upload/v1725537429/cinema-images/35/extras/tra-vinh-3_1_sqrzie.png',35),(26,'https://res.cloudinary.com/di6h4mtfa/image/upload/v1725537429/cinema-images/35/extras/tra-vinh-3_1_sqrzie.png',35),(27,'https://res.cloudinary.com/di6h4mtfa/image/upload/v1725537429/cinema-images/35/extras/tra-vinh-3_1_sqrzie.png',36),(28,'https://res.cloudinary.com/di6h4mtfa/image/upload/v1725537429/cinema-images/35/extras/tra-vinh-3_1_sqrzie.png',36),(29,'https://res.cloudinary.com/di6h4mtfa/image/upload/v1725537429/cinema-images/35/extras/tra-vinh-3_1_sqrzie.png',37),(30,'https://res.cloudinary.com/di6h4mtfa/image/upload/v1725537429/cinema-images/35/extras/tra-vinh-3_1_sqrzie.png',38),(31,'https://res.cloudinary.com/di6h4mtfa/image/upload/v1725537429/cinema-images/35/extras/tra-vinh-3_1_sqrzie.png',38),(32,'https://res.cloudinary.com/di6h4mtfa/image/upload/v1725537429/cinema-images/35/extras/tra-vinh-3_1_sqrzie.png',1),(33,'https://res.cloudinary.com/di6h4mtfa/image/upload/v1725537429/cinema-images/35/extras/tra-vinh-3_1_sqrzie.png',1),(34,'https://res.cloudinary.com/di6h4mtfa/image/upload/v1725537429/cinema-images/35/extras/tra-vinh-3_1_sqrzie.png',2),(35,'https://res.cloudinary.com/di6h4mtfa/image/upload/v1725537429/cinema-images/35/extras/tra-vinh-3_1_sqrzie.png',3),(36,'https://res.cloudinary.com/di6h4mtfa/image/upload/v1725537429/cinema-images/35/extras/tra-vinh-3_1_sqrzie.png',5),(37,'https://res.cloudinary.com/di6h4mtfa/image/upload/v1725537429/cinema-images/35/extras/tra-vinh-3_1_sqrzie.png',5),(38,'https://res.cloudinary.com/di6h4mtfa/image/upload/v1725537429/cinema-images/35/extras/tra-vinh-3_1_sqrzie.png',9),(39,'https://res.cloudinary.com/di6h4mtfa/image/upload/v1725537429/cinema-images/35/extras/tra-vinh-3_1_sqrzie.png',10),(40,'https://res.cloudinary.com/di6h4mtfa/image/upload/v1725537429/cinema-images/35/extras/tra-vinh-3_1_sqrzie.png',30);
 /*!40000 ALTER TABLE `cinema_images` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -175,10 +174,10 @@ DROP TABLE IF EXISTS `city`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `city` (
-  `id` int NOT NULL AUTO_INCREMENT,
-  `name` varchar(255) DEFAULT NULL,
-  `postal_code` varchar(255) DEFAULT NULL,
-  PRIMARY KEY (`id`)
+                        `id` int NOT NULL AUTO_INCREMENT,
+                        `name` varchar(255) DEFAULT NULL,
+                        `postal_code` varchar(255) DEFAULT NULL,
+                        PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=41 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -200,12 +199,12 @@ DROP TABLE IF EXISTS `combo`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `combo` (
-  `id` bigint NOT NULL AUTO_INCREMENT,
-  `description` varchar(255) DEFAULT NULL,
-  `price` int DEFAULT NULL,
-  `title` varchar(255) DEFAULT NULL,
-  `img_url` varchar(255) DEFAULT NULL,
-  PRIMARY KEY (`id`)
+                         `id` bigint NOT NULL AUTO_INCREMENT,
+                         `description` varchar(255) DEFAULT NULL,
+                         `price` int DEFAULT NULL,
+                         `title` varchar(255) DEFAULT NULL,
+                         `img_url` varchar(255) DEFAULT NULL,
+                         PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=19 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -227,20 +226,20 @@ DROP TABLE IF EXISTS `event`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `event` (
-  `id` bigint NOT NULL AUTO_INCREMENT,
-  `price` int DEFAULT NULL,
-  `movie_id` bigint DEFAULT NULL,
-  `room_id` bigint DEFAULT NULL,
-  `start_date` date DEFAULT NULL,
-  `start_time` varchar(20) DEFAULT NULL,
-  `sub_type_id` int DEFAULT NULL,
-  PRIMARY KEY (`id`),
-  KEY `FKo2xb2v3munbkxledunsapvbqy` (`room_id`),
-  KEY `FKk878ajfp17ncw8p3sf96ube6b` (`movie_id`),
-  KEY `FKnbo4edbw4rmq7xeir87c2f64l` (`sub_type_id`),
-  CONSTRAINT `FKk878ajfp17ncw8p3sf96ube6b` FOREIGN KEY (`movie_id`) REFERENCES `movie` (`id`),
-  CONSTRAINT `FKnbo4edbw4rmq7xeir87c2f64l` FOREIGN KEY (`sub_type_id`) REFERENCES `subtitle_type` (`id`),
-  CONSTRAINT `FKo2xb2v3munbkxledunsapvbqy` FOREIGN KEY (`room_id`) REFERENCES `room` (`id`)
+                         `id` bigint NOT NULL AUTO_INCREMENT,
+                         `price` int DEFAULT NULL,
+                         `movie_id` bigint DEFAULT NULL,
+                         `room_id` bigint DEFAULT NULL,
+                         `start_date` date DEFAULT NULL,
+                         `start_time` varchar(20) DEFAULT NULL,
+                         `sub_type_id` int DEFAULT NULL,
+                         PRIMARY KEY (`id`),
+                         KEY `FKo2xb2v3munbkxledunsapvbqy` (`room_id`),
+                         KEY `FKk878ajfp17ncw8p3sf96ube6b` (`movie_id`),
+                         KEY `FKnbo4edbw4rmq7xeir87c2f64l` (`sub_type_id`),
+                         CONSTRAINT `FKk878ajfp17ncw8p3sf96ube6b` FOREIGN KEY (`movie_id`) REFERENCES `movie` (`id`),
+                         CONSTRAINT `FKnbo4edbw4rmq7xeir87c2f64l` FOREIGN KEY (`sub_type_id`) REFERENCES `subtitle_type` (`id`),
+                         CONSTRAINT `FKo2xb2v3munbkxledunsapvbqy` FOREIGN KEY (`room_id`) REFERENCES `room` (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=174 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -262,9 +261,9 @@ DROP TABLE IF EXISTS `genre`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `genre` (
-  `id` int NOT NULL AUTO_INCREMENT,
-  `name` varchar(255) DEFAULT NULL,
-  PRIMARY KEY (`id`)
+                         `id` int NOT NULL AUTO_INCREMENT,
+                         `name` varchar(255) DEFAULT NULL,
+                         PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -286,19 +285,19 @@ DROP TABLE IF EXISTS `movie`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `movie` (
-  `id` bigint NOT NULL AUTO_INCREMENT,
-  `cast` varchar(255) DEFAULT NULL,
-  `description` varchar(500) DEFAULT NULL,
-  `director` varchar(255) DEFAULT NULL,
-  `duration_minutes` int NOT NULL,
-  `is_showing` bit(1) NOT NULL,
-  `language` varchar(20) DEFAULT NULL,
-  `poster_url` varchar(255) DEFAULT NULL,
-  `rating` varchar(20) DEFAULT NULL,
-  `release_date` date DEFAULT NULL,
-  `title` varchar(255) DEFAULT NULL,
-  `trailer` varchar(255) DEFAULT NULL,
-  PRIMARY KEY (`id`)
+                         `id` bigint NOT NULL AUTO_INCREMENT,
+                         `cast` varchar(255) DEFAULT NULL,
+                         `description` varchar(500) DEFAULT NULL,
+                         `director` varchar(255) DEFAULT NULL,
+                         `duration_minutes` int NOT NULL,
+                         `is_showing` bit(1) NOT NULL,
+                         `language` varchar(20) DEFAULT NULL,
+                         `poster_url` varchar(255) DEFAULT NULL,
+                         `rating` varchar(20) DEFAULT NULL,
+                         `release_date` date DEFAULT NULL,
+                         `title` varchar(255) DEFAULT NULL,
+                         `trailer` varchar(255) DEFAULT NULL,
+                         PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=65 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -308,7 +307,7 @@ CREATE TABLE `movie` (
 
 LOCK TABLES `movie` WRITE;
 /*!40000 ALTER TABLE `movie` DISABLE KEYS */;
-INSERT INTO `movie` VALUES (16,'Tom Holland, Samuel L. Jackson, Zendaya, Cobie Smulders','Following the events of Avengers: Endgame, Spider-Man must step up to take on new threats in a world that has changed forever.','Jon Watts',129,_binary '','EN','spridermanfarhome.jpeg','C13','2023-05-02','Spider-Man: Far From Home','https://www.youtube.com/watch?v=Nt9L1jCKGnE&ab_channel=SonyPicturesEntertainment'),(20,'Chris Pratt, Anya Taylor-Joy, Charlie Day, …','Câu chuyện về cuộc phiêu lưu của anh em Super Mario đến vương quốc Nấm.','Aaron Horvath, Michael Jelenic',92,_binary '','EN','mario.jpg','P','2023-05-01','PHIM ANH EM SUPER MARIO','https://www.youtube.com/watch?v=UGO_i2tf1BM'),(21,'Chris Pine, Michelle Rodriguez, Regé-Jean Page','Theo chân một tên trộm quyến rũ và một nhóm những kẻ bịp bợm nghiệp dư thực hiện vụ trộm sử thi nhằm lấy lại một di vật đã mất, nhưng mọi thứ trở nên nguy hiểm khó lường ','John Francis Daley, Jonathan Goldstein',134,_binary '','EN','nguctoivarong.jpeg','C13','2023-04-20','NGỤC TỐI & RỒNG: DANH DỰ CỦA KẺ TRỘM','https://www.youtube.com/watch?v=P4IA6pIVb-w'),(22,'Russell Crowe, Franco Nero…','Lấy cảm hứng từ những hồ sơ có thật của Cha Gabriele Amorth, Trưởng Trừ Tà của Vatican (Russell Crowe, đoạt giải Oscar®), bộ phim \"The Pope\'s Exorcist\" theo chân Amorth trong cuộc điều tra về vụ quỷ ám kinh hoàng của một cậu bé và dần khám phá ra những bí mật hàng thế kỷ mà Vatican đã cố gắng giấu kín.','Julius Avery',104,_binary '','EN','khactinhcuaquy.jpeg','C18','2023-05-04','KHẮC TINH CỦA QUỶ','https://www.youtube.com/watch?v=p4LAYNacgkI'),(23,'Dương Tử Quỳnh, Quan Kế Huy, Stephanie Hsu, James Hong, Jamie Lee Curtis,...','Một phụ nữ trung niên nhập cư người Trung Quốc bị cuốn vào một cuộc phiêu lưu điên cuồng, nơi cô ấy một mình giải cứu thế giới bằng cách khám phá các vũ trụ khác và các bản thể khác của chính cô.','Daniel Kwan, Daniel Scheinert',139,_binary '','EN','everythingallinonce.jpeg','C18','2023-05-05','CUỘC CHIẾN ĐA VŨ TRỤ','https://www.youtube.com/watch?v=4y5JUTzFlVs'),(24,'ANIME','\"Khóa Chặt Cửa Nào Suzume\" kể câu chuyện khi Suzume vô tình gặp một chàng trai trẻ ','Makoto Shinkai',122,_binary '','JP','khoachatcuasuzume.jpeg','P','2023-05-06','KHÓA CHẶT CỬA NÀO SUZUME','https://www.youtube.com/watch?v=CTxLZYbT9Rw'),(35,'ý Hải, Quốc Cường, Trung Dũng, Huy Khánh, Thanh Thức, Trần Kim Hải, Huỳnh Thi, Diệp Bảo Ngọc, Tú Tri, Quỳnh Như, Tạ Lâm, bé Thùy Linh…','Lật mặt 6 sẽ thuộc thể loại giật gân, tâm lý pha hành động, hài hước.','Lý Hải',132,_binary '','VN','latmat6.jpeg','C16','2023-04-28','LẬT MẶT 6: TẤM VÉ ĐỊNH MỆNH','https://www.youtube.com/watch?v=OobBWy3avUo'),(36,' Kim Bo Ra, Kim Jae Hyun','Lời đồn ma ám về nhà ga Oksu ngày càng nhiều khi những vụ án kinh hoàng liên tục xảy ra. Một đường ray cũ kỹ, một chiếc giếng bỏ hoang, những con số gây ám ảnh hay những vết thương kỳ dị trên thi thể người xấu số... Tất cả dẫn đến một bí mật đau lòng bị chôn vùi nhiều năm trước.','Jeong Yong Ki',80,_binary '','KR','tramtauma.jpeg','C18','2023-04-28','TRẠM TÀU MA','https://www.youtube.com/watch?v=WFJL_P4w228'),(37,'Anton Eldarov, Polina Gagarina, Aleksandr Gavrilin,…','Câu chuyện xoay quanh tình bạn của chú mèo Vincent và chú chuột Maurice. Vincent vừa nhận được công việc bảo vệ kiệt tác tranh Mona Lisa trong một viện bảo tàng, còn Maurice lại có niềm đam mê gặm nhấm bức tranh này. Mọi chuyện phức tạp hơn khi có người cũng đang nung nấu ý định cướp lấy tuyệt tác Mona Lisa. Liệu Vincent và đồng đội của mình có thể cứu lấy những kiệt tác của Davinci và bảo vệ danh cho bảo tàng không?','Vasiliy Rovenskiy',80,_binary '','EN','meosieuquay.jpeg','C13','2023-04-26','MÈO SIÊU QUẬY Ở VIỆN BẢO TÀNG','https://www.youtube.com/watch?v=yU7dSdeAH7U'),(38,'Matt Damon, Ben Affleck, Jason Bateman, Chris Messina, Matthew Maher, Marlon Wayans, Jay Mohr, Julius Tennon, Chris Tucker, Viola Davis','Từ đạo diễn đã từng đoạt giải thưởng Ben Affleck, AIR hé lộ mối quan hệ đột phá giữa huyền thoại Michael Jordan khi mới bắt đầu sự nghiệp và bộ phận bóng rổ còn non trẻ của Nike, đã làm thay đổi thế giới thể thao và văn hóa đương đại với thương hiệu Air Jordan. Câu chuyện cảm động này kể về sự đánh cược khi đặt lên bàn cân tình hình kinh doanh của cả công ty, tầm nhìn vĩ đại của một người mẹ biết giá trị và tài năng của con trai mình, và một siêu sao bóng rổ đã trở thành huyền thoại.','Ben Affleck',112,_binary '','EN','airlegend.jpeg','C18','2023-04-14','AIR - THEO ĐUỔI MỘT HUYỀN THOẠI','https://www.youtube.com/watch?v=0h9vZ52Vals'),(39,'Thái Hòa, Thu Trang, Tiến Luật, NSND Hồng Vân, Huỳnh Phương, Vinh Râu, Thái Vũ,...','Lấy cảm hứng từ web drama Chuyện Xóm Tui, phiên bản điện ảnh sẽ mang một màu sắc hoàn toàn khác: hài hước hơn, gần gũi và nhiều cảm xúc hơn Bộ phim là câu chuyện của Nhót - người phụ nữ “chưa kịp già” đã sắp bị mãn kinh, vội vàng đi tìm chồng. Nhưng sâu thẳm trong cô, là khao khát muốn có một đứa con và luôn muốn hàn gắn với người cha suốt ngày say xỉn của mình.','Vũ Ngọc Đãng',112,_binary '','VN','connhotmotchong.jpeg','C16','2023-04-28','CON NHÓT MÓT CHỒNG','https://www.youtube.com/watch?v=3OGtcxl_8Ro'),(40,'Vin Diesel, Jason Momoa, Brie Larson,…   Hành Động, Tội phạm','Dom Toretto và gia đình của anh ấy bị trở thành mục tiêu của người con trai đầy thù hận của ông trùm ma túy Hernan Reyes.','Louis Leterrier',141,_binary '','EN','fastandfurios10.jpeg','C16','2023-05-19','FAST AND FURIOUS X','https://www.youtube.com/watch?v=Jphd23nUCLs'),(41,'','Phim điện ảnh Doraemon: Nobita Và Vùng Đất Lý Tưởng Trên Bầu Trời kể câu chuyện khi Nobita tìm thấy một hòn đảo hình lưỡi liềm trên trời mây. Ở nơi đó, tất cả đều hoàn hảo… đến mức cậu nhóc Nobita mê ngủ ngày cũng có thể trở thành một thần đồng toán học, một siêu sao thể thao. Cả hội Doraemon cùng sử dụng một món bảo bối độc đáo chưa từng xuất hiện trước đây để đến với vương quốc tuyệt vời này.','Takumi Doyama',108,_binary '','JP','doraemonNobita.jpeg','P','2023-05-26','PHIM ĐIỆN ẢNH DORAEMON: NOBITA VÀ VÙNG ĐẤT LÝ TƯỞNG TRÊN BẦU TRỜI','https://www.youtube.com/watch?v=8-KHCOIEkRQ&ab_channel=CGVCinemasVietnam'),(42,'Halle Bailey, Jonah Hauer-King, Daveed Diggs, Awkwafina, Jacob Tremblay, Noma Dumezweni, Art Malik, with Javier Bardem and Melissa McCarthy','“Nàng Tiên Cá” là câu chuyện được yêu thích về Ariel - một nàng tiên cá trẻ xinh đẹp và mạnh mẽ với khát khao phiêu lưu. Ariel là con gái út của Vua Triton và cũng là người ngang ngạnh nhất, nàng khao khát khám phá về thế giới bên kia đại dương. Trong một lần ghé thăm đất liền, nàng đã phải lòng Hoàng tử Eric bảnh bao.','Rob Marshall',135,_binary '','EN','nangtienca.jpeg','C13','2023-05-26','NÀNG TIÊN CÁ','https://www.youtube.com/watch?v=R2cjgaopZcg&ab_channel=CGVCinemasVietnam'),(43,'Chris Pratt, Zoe Saldana, Dave Bautista','Cho dù vũ trụ này có bao la đến đâu, các Vệ Binh của chúng ta cũng không thể trốn chạy mãi mãi. Vệ Binh Dải Ngân Hà 3 dự kiến khởi chiếu tại rạp từ 03.05.2023.',' James Gunn',149,_binary '','EN','vebinhdainganha3.png','C13','2023-05-03','VỆ BINH DẢI NGÂN HÀ 3','https://www.youtube.com/watch?v=O402pXqj79c&ab_channel=CGVCinemasVietnam'),(44,'ulio Cesar, Josh Lucas','Quái Vật Đen xoay quanh câu chuyện khi kỳ nghỉ bình dị của gia đình Oilman Paul Sturges biến thành cơn ác mộng. Bởi họ đã gặp phải một con cá mập Megalodon hung dữ, không từ bất kỳ khoảnh khắc nào để bảo vệ lãnh thổ của mình. Bị mắc kẹt và tấn công liên tục, Paul và gia đình của mình phải tìm cách để an toàn sống sót trở về bờ trước khi con cá mập khát máu này tấn công lần nữa','Adrian Grunberg',100,_binary '','EN','quaivatden.jpeg','C18','2023-05-12','QUÁI VẬT ĐEN','https://www.youtube.com/watch?v=GBh3CLB46UQ&ab_channel=CGVCinemasVietnam'),(46,'Masaya Fukunishi, Yoshiaki Hasegawa, Katsuhisa Hoki, Tetsu Inada, Ryota Iwasaki, Shinichiro Kamio, Mitsuaki Kanuka, Jun Kasama, Subaru Kimura,..','Bộ phim hoạt hình chuyển thể từ loạt truyện tranh “Slam Dunk” nổi tiếng của Takehiko Inoue, khắc họa quá trình trưởng thành cá nhân của những học sinh trung học cống hiến tuổi trẻ cho bóng rổ. Phim theo chân Ryota Miyagi, hậu vệ của đội bóng rổ trường trung học Shohoku. ','Takehiko Inoue, Yasuyuki Ebara',124,_binary '','JP','cuuprodautien.jpeg','C13','2023-04-14','PHIM CÚ ÚP RỔ ĐẦU TIÊN','https://www.youtube.com/watch?v=NEa0J_Q-NIY');
+INSERT INTO `movie` VALUES (16,'Tom Holland, Samuel L. Jackson, Zendaya, Cobie Smulders','Following the events of Avengers: Endgame, Spider-Man must step up to take on new threats in a world that has changed forever.','Jon Watts',129,_binary '','EN','http://res.cloudinary.com/di6h4mtfa/image/upload/v1725532278/6dea0749-6ed9-4415-956f-bb3f6a939ad4.jpg','C13','2023-05-02','Spider-Man: Far From Home','https://www.youtube.com/watch?v=Nt9L1jCKGnE&ab_channel=SonyPicturesEntertainment'),(20,'Chris Pratt, Anya Taylor-Joy, Charlie Day, …','Câu chuyện về cuộc phiêu lưu của anh em Super Mario đến vương quốc Nấm.','Aaron Horvath, Michael Jelenic',92,_binary '','EN','http://res.cloudinary.com/di6h4mtfa/image/upload/v1725532302/5fe5e22c-e480-4102-b8e1-1104b5211c24.jpg','P','2023-05-01','PHIM ANH EM SUPER MARIO','https://www.youtube.com/watch?v=UGO_i2tf1BM'),(21,'Chris Pine, Michelle Rodriguez, Regé-Jean Page','Theo chân một tên trộm quyến rũ và một nhóm những kẻ bịp bợm nghiệp dư thực hiện vụ trộm sử thi nhằm lấy lại một di vật đã mất, nhưng mọi thứ trở nên nguy hiểm khó lường ','John Francis Daley, Jonathan Goldstein',134,_binary '','EN','http://res.cloudinary.com/di6h4mtfa/image/upload/v1725532447/defde939-d25f-49c5-a9b1-698b74284129.jpg','C13','2023-04-20','NGỤC TỐI & RỒNG: DANH DỰ CỦA KẺ TRỘM','https://www.youtube.com/watch?v=P4IA6pIVb-w'),(22,'Russell Crowe, Franco Nero…','Lấy cảm hứng từ những hồ sơ có thật của Cha Gabriele Amorth, Trưởng Trừ Tà của Vatican (Russell Crowe, đoạt giải Oscar®), bộ phim \"The Pope\'s Exorcist\" theo chân Amorth trong cuộc điều tra về vụ quỷ ám kinh hoàng của một cậu bé và dần khám phá ra những bí mật hàng thế kỷ mà Vatican đã cố gắng giấu kín.','Julius Avery',104,_binary '','EN','http://res.cloudinary.com/di6h4mtfa/image/upload/v1725532459/c359e688-b70f-4534-aa56-224751e13871.jpg','C18','2023-05-04','KHẮC TINH CỦA QUỶ','https://www.youtube.com/watch?v=p4LAYNacgkI'),(23,'Dương Tử Quỳnh, Quan Kế Huy, Stephanie Hsu, James Hong, Jamie Lee Curtis,...','Một phụ nữ trung niên nhập cư người Trung Quốc bị cuốn vào một cuộc phiêu lưu điên cuồng, nơi cô ấy một mình giải cứu thế giới bằng cách khám phá các vũ trụ khác và các bản thể khác của chính cô.','Daniel Kwan, Daniel Scheinert',139,_binary '','EN','http://res.cloudinary.com/di6h4mtfa/image/upload/v1725532470/865cb4b7-a775-4a41-8193-12d25ff61419.jpg','C18','2023-05-05','CUỘC CHIẾN ĐA VŨ TRỤ','https://www.youtube.com/watch?v=4y5JUTzFlVs'),(24,'ANIME','\"Khóa Chặt Cửa Nào Suzume\" kể câu chuyện khi Suzume vô tình gặp một chàng trai trẻ ','Makoto Shinkai',122,_binary '','JP','http://res.cloudinary.com/di6h4mtfa/image/upload/v1725532481/ad741caf-c539-4374-9338-3ed801d146c3.jpg','P','2023-05-06','KHÓA CHẶT CỬA NÀO SUZUME','https://www.youtube.com/watch?v=CTxLZYbT9Rw'),(35,'ý Hải, Quốc Cường, Trung Dũng, Huy Khánh, Thanh Thức, Trần Kim Hải, Huỳnh Thi, Diệp Bảo Ngọc, Tú Tri, Quỳnh Như, Tạ Lâm, bé Thùy Linh…','Lật mặt 6 sẽ thuộc thể loại giật gân, tâm lý pha hành động, hài hước.','Lý Hải',132,_binary '','VN','http://res.cloudinary.com/di6h4mtfa/image/upload/v1725532496/790380e0-478f-41b2-9c65-b4024518de51.jpg','C16','2023-04-28','LẬT MẶT 6: TẤM VÉ ĐỊNH MỆNH','https://www.youtube.com/watch?v=OobBWy3avUo'),(36,' Kim Bo Ra, Kim Jae Hyun','Lời đồn ma ám về nhà ga Oksu ngày càng nhiều khi những vụ án kinh hoàng liên tục xảy ra. Một đường ray cũ kỹ, một chiếc giếng bỏ hoang, những con số gây ám ảnh hay những vết thương kỳ dị trên thi thể người xấu số... Tất cả dẫn đến một bí mật đau lòng bị chôn vùi nhiều năm trước.','Jeong Yong Ki',80,_binary '','KR','http://res.cloudinary.com/di6h4mtfa/image/upload/v1725532506/86812dec-3e5c-44e8-825a-48a5785367ef.jpg','C18','2023-04-28','TRẠM TÀU MA','https://www.youtube.com/watch?v=WFJL_P4w228'),(37,'Anton Eldarov, Polina Gagarina, Aleksandr Gavrilin,…','Câu chuyện xoay quanh tình bạn của chú mèo Vincent và chú chuột Maurice. Vincent vừa nhận được công việc bảo vệ kiệt tác tranh Mona Lisa trong một viện bảo tàng, còn Maurice lại có niềm đam mê gặm nhấm bức tranh này. Mọi chuyện phức tạp hơn khi có người cũng đang nung nấu ý định cướp lấy tuyệt tác Mona Lisa. Liệu Vincent và đồng đội của mình có thể cứu lấy những kiệt tác của Davinci và bảo vệ danh cho bảo tàng không?','Vasiliy Rovenskiy',80,_binary '','EN','http://res.cloudinary.com/di6h4mtfa/image/upload/v1725532518/3d658d32-7726-435f-ac70-ca9758f06b89.jpg','C13','2023-04-26','MÈO SIÊU QUẬY Ở VIỆN BẢO TÀNG','https://www.youtube.com/watch?v=yU7dSdeAH7U'),(38,'Matt Damon, Ben Affleck, Jason Bateman, Chris Messina, Matthew Maher, Marlon Wayans, Jay Mohr, Julius Tennon, Chris Tucker, Viola Davis','Từ đạo diễn đã từng đoạt giải thưởng Ben Affleck, AIR hé lộ mối quan hệ đột phá giữa huyền thoại Michael Jordan khi mới bắt đầu sự nghiệp và bộ phận bóng rổ còn non trẻ của Nike, đã làm thay đổi thế giới thể thao và văn hóa đương đại với thương hiệu Air Jordan. Câu chuyện cảm động này kể về sự đánh cược khi đặt lên bàn cân tình hình kinh doanh của cả công ty, tầm nhìn vĩ đại của một người mẹ biết giá trị và tài năng của con trai mình, và một siêu sao bóng rổ đã trở thành huyền thoại.','Ben Affleck',112,_binary '','EN','http://res.cloudinary.com/di6h4mtfa/image/upload/v1725532533/648b4504-cf28-475c-96cd-479150e8683e.jpg','C18','2023-04-14','AIR - THEO ĐUỔI MỘT HUYỀN THOẠI','https://www.youtube.com/watch?v=0h9vZ52Vals'),(39,'Thái Hòa, Thu Trang, Tiến Luật, NSND Hồng Vân, Huỳnh Phương, Vinh Râu, Thái Vũ,...','Lấy cảm hứng từ web drama Chuyện Xóm Tui, phiên bản điện ảnh sẽ mang một màu sắc hoàn toàn khác: hài hước hơn, gần gũi và nhiều cảm xúc hơn Bộ phim là câu chuyện của Nhót - người phụ nữ “chưa kịp già” đã sắp bị mãn kinh, vội vàng đi tìm chồng. Nhưng sâu thẳm trong cô, là khao khát muốn có một đứa con và luôn muốn hàn gắn với người cha suốt ngày say xỉn của mình.','Vũ Ngọc Đãng',112,_binary '','VN','http://res.cloudinary.com/di6h4mtfa/image/upload/v1725532544/076cc377-4e21-4dba-aa80-1a046e9d36a5.jpg','C16','2023-04-28','CON NHÓT MÓT CHỒNG','https://www.youtube.com/watch?v=3OGtcxl_8Ro'),(40,'Vin Diesel, Jason Momoa, Brie Larson,…   Hành Động, Tội phạm','Dom Toretto và gia đình của anh ấy bị trở thành mục tiêu của người con trai đầy thù hận của ông trùm ma túy Hernan Reyes.','Louis Leterrier',141,_binary '','EN','http://res.cloudinary.com/di6h4mtfa/image/upload/v1725532555/c4b05485-796a-4a91-8b2f-7c44f9037dd4.jpg','C16','2023-05-19','FAST AND FURIOUS X','https://www.youtube.com/watch?v=Jphd23nUCLs'),(41,'','Phim điện ảnh Doraemon: Nobita Và Vùng Đất Lý Tưởng Trên Bầu Trời kể câu chuyện khi Nobita tìm thấy một hòn đảo hình lưỡi liềm trên trời mây. Ở nơi đó, tất cả đều hoàn hảo… đến mức cậu nhóc Nobita mê ngủ ngày cũng có thể trở thành một thần đồng toán học, một siêu sao thể thao. Cả hội Doraemon cùng sử dụng một món bảo bối độc đáo chưa từng xuất hiện trước đây để đến với vương quốc tuyệt vời này.','Takumi Doyama',108,_binary '','JP','http://res.cloudinary.com/di6h4mtfa/image/upload/v1725532566/fc83d7aa-a695-478f-8255-aa878fc642d7.jpg','P','2023-05-26','PHIM ĐIỆN ẢNH DORAEMON: NOBITA VÀ VÙNG ĐẤT LÝ TƯỞNG TRÊN BẦU TRỜI','https://www.youtube.com/watch?v=8-KHCOIEkRQ&ab_channel=CGVCinemasVietnam'),(42,'Halle Bailey, Jonah Hauer-King, Daveed Diggs, Awkwafina, Jacob Tremblay, Noma Dumezweni, Art Malik, with Javier Bardem and Melissa McCarthy','“Nàng Tiên Cá” là câu chuyện được yêu thích về Ariel - một nàng tiên cá trẻ xinh đẹp và mạnh mẽ với khát khao phiêu lưu. Ariel là con gái út của Vua Triton và cũng là người ngang ngạnh nhất, nàng khao khát khám phá về thế giới bên kia đại dương. Trong một lần ghé thăm đất liền, nàng đã phải lòng Hoàng tử Eric bảnh bao.','Rob Marshall',135,_binary '','EN','http://res.cloudinary.com/di6h4mtfa/image/upload/v1725532819/ddd8c2f4-1060-4f0c-bdfa-cdde729f210e.jpg','C13','2023-05-26','NÀNG TIÊN CÁ','https://www.youtube.com/watch?v=R2cjgaopZcg&ab_channel=CGVCinemasVietnam'),(43,'Chris Pratt, Zoe Saldana, Dave Bautista','Cho dù vũ trụ này có bao la đến đâu, các Vệ Binh của chúng ta cũng không thể trốn chạy mãi mãi. Vệ Binh Dải Ngân Hà 3 dự kiến khởi chiếu tại rạp từ 03.05.2023.',' James Gunn',149,_binary '','EN','http://res.cloudinary.com/di6h4mtfa/image/upload/v1725532831/06789885-b081-4584-9c50-d5831790354a.png','C13','2023-05-03','VỆ BINH DẢI NGÂN HÀ 3','https://www.youtube.com/watch?v=O402pXqj79c&ab_channel=CGVCinemasVietnam'),(44,'ulio Cesar, Josh Lucas','Quái Vật Đen xoay quanh câu chuyện khi kỳ nghỉ bình dị của gia đình Oilman Paul Sturges biến thành cơn ác mộng. Bởi họ đã gặp phải một con cá mập Megalodon hung dữ, không từ bất kỳ khoảnh khắc nào để bảo vệ lãnh thổ của mình. Bị mắc kẹt và tấn công liên tục, Paul và gia đình của mình phải tìm cách để an toàn sống sót trở về bờ trước khi con cá mập khát máu này tấn công lần nữa','Adrian Grunberg',100,_binary '','EN','http://res.cloudinary.com/di6h4mtfa/image/upload/v1725534543/e321b2a8-e199-4d04-895a-571211bc8be4.jpg','C18','2023-05-12','QUÁI VẬT ĐEN','https://www.youtube.com/watch?v=GBh3CLB46UQ&ab_channel=CGVCinemasVietnam'),(46,'Masaya Fukunishi, Yoshiaki Hasegawa, Katsuhisa Hoki, Tetsu Inada, Ryota Iwasaki, Shinichiro Kamio, Mitsuaki Kanuka, Jun Kasama, Subaru Kimura,..','Bộ phim hoạt hình chuyển thể từ loạt truyện tranh “Slam Dunk” nổi tiếng của Takehiko Inoue, khắc họa quá trình trưởng thành cá nhân của những học sinh trung học cống hiến tuổi trẻ cho bóng rổ. Phim theo chân Ryota Miyagi, hậu vệ của đội bóng rổ trường trung học Shohoku. ','Takehiko Inoue, Yasuyuki Ebara',124,_binary '','JP','http://res.cloudinary.com/di6h4mtfa/image/upload/v1725534554/e9d90f89-017e-432f-aeaf-c3d29a6f6187.jpg','C13','2023-04-14','PHIM CÚ ÚP RỔ ĐẦU TIÊN','https://www.youtube.com/watch?v=NEa0J_Q-NIY');
 /*!40000 ALTER TABLE `movie` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -320,12 +319,12 @@ DROP TABLE IF EXISTS `movie_genre`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `movie_genre` (
-  `movie_id` bigint NOT NULL,
-  `genre_id` int NOT NULL,
-  PRIMARY KEY (`movie_id`,`genre_id`),
-  KEY `FK86p3roa187k12avqfl28klp1q` (`genre_id`),
-  CONSTRAINT `FK86p3roa187k12avqfl28klp1q` FOREIGN KEY (`genre_id`) REFERENCES `genre` (`id`),
-  CONSTRAINT `FKp6vjabv2e2435at1hnuxg64yv` FOREIGN KEY (`movie_id`) REFERENCES `movie` (`id`)
+                               `movie_id` bigint NOT NULL,
+                               `genre_id` int NOT NULL,
+                               PRIMARY KEY (`movie_id`,`genre_id`),
+                               KEY `FK86p3roa187k12avqfl28klp1q` (`genre_id`),
+                               CONSTRAINT `FK86p3roa187k12avqfl28klp1q` FOREIGN KEY (`genre_id`) REFERENCES `genre` (`id`),
+                               CONSTRAINT `FKp6vjabv2e2435at1hnuxg64yv` FOREIGN KEY (`movie_id`) REFERENCES `movie` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -347,9 +346,9 @@ DROP TABLE IF EXISTS `role`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `role` (
-  `id` int NOT NULL AUTO_INCREMENT,
-  `name` varchar(255) DEFAULT NULL,
-  PRIMARY KEY (`id`)
+                        `id` int NOT NULL AUTO_INCREMENT,
+                        `name` varchar(255) DEFAULT NULL,
+                        PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -371,13 +370,13 @@ DROP TABLE IF EXISTS `room`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `room` (
-  `id` bigint NOT NULL AUTO_INCREMENT,
-  `capacity` varchar(255) DEFAULT NULL,
-  `name` varchar(255) DEFAULT NULL,
-  `cinema_id` bigint DEFAULT NULL,
-  PRIMARY KEY (`id`),
-  KEY `FK838jvntrkjvmbpm310wsdad1r` (`cinema_id`),
-  CONSTRAINT `FK838jvntrkjvmbpm310wsdad1r` FOREIGN KEY (`cinema_id`) REFERENCES `cinema` (`id`)
+                        `id` bigint NOT NULL AUTO_INCREMENT,
+                        `capacity` varchar(255) DEFAULT NULL,
+                        `name` varchar(255) DEFAULT NULL,
+                        `cinema_id` bigint DEFAULT NULL,
+                        PRIMARY KEY (`id`),
+                        KEY `FK838jvntrkjvmbpm310wsdad1r` (`cinema_id`),
+                        CONSTRAINT `FK838jvntrkjvmbpm310wsdad1r` FOREIGN KEY (`cinema_id`) REFERENCES `cinema` (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=62 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -399,15 +398,15 @@ DROP TABLE IF EXISTS `seat`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `seat` (
-  `id` bigint NOT NULL AUTO_INCREMENT,
-  `column_num` int NOT NULL,
-  `row_num` int NOT NULL,
-  `seat_name` varchar(255) DEFAULT NULL,
-  `type` smallint DEFAULT NULL,
-  `room_id` bigint DEFAULT NULL,
-  PRIMARY KEY (`id`),
-  KEY `FKd7f42843rt05tt66t6vcb7s9u` (`room_id`),
-  CONSTRAINT `FKd7f42843rt05tt66t6vcb7s9u` FOREIGN KEY (`room_id`) REFERENCES `room` (`id`)
+                        `id` bigint NOT NULL AUTO_INCREMENT,
+                        `column_num` int NOT NULL,
+                        `row_num` int NOT NULL,
+                        `seat_name` varchar(255) DEFAULT NULL,
+                        `type` smallint DEFAULT NULL,
+                        `room_id` bigint DEFAULT NULL,
+                        PRIMARY KEY (`id`),
+                        KEY `FKd7f42843rt05tt66t6vcb7s9u` (`room_id`),
+                        CONSTRAINT `FKd7f42843rt05tt66t6vcb7s9u` FOREIGN KEY (`room_id`) REFERENCES `room` (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=1794 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -429,10 +428,10 @@ DROP TABLE IF EXISTS `setting`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `setting` (
-  `key` varchar(100) NOT NULL,
-  `type` varchar(255) NOT NULL,
-  `value` varchar(1000) NOT NULL,
-  PRIMARY KEY (`key`)
+                           `key` varchar(100) NOT NULL,
+                           `type` varchar(255) NOT NULL,
+                           `value` varchar(1000) NOT NULL,
+                           PRIMARY KEY (`key`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -454,9 +453,9 @@ DROP TABLE IF EXISTS `subtitle_type`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `subtitle_type` (
-  `id` int NOT NULL AUTO_INCREMENT,
-  `name` varchar(255) DEFAULT NULL,
-  PRIMARY KEY (`id`)
+                                 `id` int NOT NULL AUTO_INCREMENT,
+                                 `name` varchar(255) DEFAULT NULL,
+                                 PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -478,18 +477,18 @@ DROP TABLE IF EXISTS `ticket`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `ticket` (
-  `id` bigint NOT NULL AUTO_INCREMENT,
-  `qr_code` varchar(255) DEFAULT NULL,
-  `booking_id` bigint DEFAULT NULL,
-  `user_id` bigint DEFAULT NULL,
-  `create_time` datetime(6) DEFAULT NULL,
-  `bank` varchar(255) DEFAULT NULL,
-  `phone_number` varchar(255) DEFAULT NULL,
-  PRIMARY KEY (`id`),
-  KEY `FKrg7x158t96nucwslhq2bad6qm` (`booking_id`),
-  KEY `FKntdk71xc348htxtr66qu07goi` (`user_id`),
-  CONSTRAINT `FKntdk71xc348htxtr66qu07goi` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`),
-  CONSTRAINT `FKrg7x158t96nucwslhq2bad6qm` FOREIGN KEY (`booking_id`) REFERENCES `booking` (`id`)
+                          `id` bigint NOT NULL AUTO_INCREMENT,
+                          `qr_code` varchar(255) DEFAULT NULL,
+                          `booking_id` bigint DEFAULT NULL,
+                          `user_id` bigint DEFAULT NULL,
+                          `create_time` datetime(6) DEFAULT NULL,
+                          `bank` varchar(255) DEFAULT NULL,
+                          `phone_number` varchar(255) DEFAULT NULL,
+                          PRIMARY KEY (`id`),
+                          KEY `FKrg7x158t96nucwslhq2bad6qm` (`booking_id`),
+                          KEY `FKntdk71xc348htxtr66qu07goi` (`user_id`),
+                          CONSTRAINT `FKntdk71xc348htxtr66qu07goi` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`),
+                          CONSTRAINT `FKrg7x158t96nucwslhq2bad6qm` FOREIGN KEY (`booking_id`) REFERENCES `booking` (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=17 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -511,16 +510,16 @@ DROP TABLE IF EXISTS `token`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `token` (
-  `id` int NOT NULL AUTO_INCREMENT,
-  `expired` bit(1) NOT NULL,
-  `revoked` bit(1) NOT NULL,
-  `token` varchar(255) DEFAULT NULL,
-  `type` varchar(255) DEFAULT NULL,
-  `user_id` bigint DEFAULT NULL,
-  PRIMARY KEY (`id`),
-  KEY `FKl10xjn274m2rkxo54knt2xqvy` (`user_id`),
-  CONSTRAINT `FKl10xjn274m2rkxo54knt2xqvy` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=1066 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+                         `id` int NOT NULL AUTO_INCREMENT,
+                         `expired` bit(1) NOT NULL,
+                         `revoked` bit(1) NOT NULL,
+                         `token` varchar(255) DEFAULT NULL,
+                         `type` varchar(255) DEFAULT NULL,
+                         `user_id` bigint DEFAULT NULL,
+                         PRIMARY KEY (`id`),
+                         KEY `FKl10xjn274m2rkxo54knt2xqvy` (`user_id`),
+                         CONSTRAINT `FKl10xjn274m2rkxo54knt2xqvy` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=1067 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -529,7 +528,7 @@ CREATE TABLE `token` (
 
 LOCK TABLES `token` WRITE;
 /*!40000 ALTER TABLE `token` DISABLE KEYS */;
-INSERT INTO `token` VALUES (1051,_binary '',_binary '','eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ0aHVhbm5nbzMwNzIwMkBnbWFpbC5jb20iLCJpYXQiOjE2ODY4MTY2NTUsImV4cCI6MTY4NjgyMDI1NX0.8Y7scasKMP2lX2eqFYqM54Dv2pdNwMERGP9ZudsFyj0','BEARER',4),(1052,_binary '',_binary '','eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ0aHVhbm5nbzMwNzIwMkBnbWFpbC5jb20iLCJpYXQiOjE2ODY4MTY5MDMsImV4cCI6MTY4NjgyMDUwM30.x-QngAIPkEZMmGQNkYPZ-7arWmhHQpEEAY02r5471Iw','BEARER',4),(1053,_binary '',_binary '','eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ0aHVhbm5nbzMwNzIwMkBnbWFpbC5jb20iLCJpYXQiOjE2ODY4MjUzODEsImV4cCI6MTY4NjgyODk4MX0.rBE84Eoi5kOYS_-LHlxc28TYkM19kxNkIeesGYwevto','BEARER',4),(1054,_binary '',_binary '','eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ0aHVhbm5nbzMwNzIwMkBnbWFpbC5jb20iLCJpYXQiOjE2ODY4MjU4OTAsImV4cCI6MTY4NjgyOTQ5MH0.emQApnukiBlqPKH6CBbJRtna7sYME95jSrMPNL3Sxk8','BEARER',4),(1055,_binary '',_binary '','eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ0aHVhbm5nbzMwNzIwMkBnbWFpbC5jb20iLCJpYXQiOjE2ODY4MjYwNDEsImV4cCI6MTY4NjgyOTY0MX0.1NMAQaTJJS_Eyahm_IBo4HnIMJ5RkTSp3QQHPfA4VsA','BEARER',4),(1056,_binary '',_binary '','eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ0aHVhbm5nbzMwNzIwMkBnbWFpbC5jb20iLCJpYXQiOjE2ODY4MjYyMTIsImV4cCI6MTY4NjgyOTgxMn0._nFp1d4mas3miIkpRpWVboR-lWc70HNDQU5qUlMr-f4','BEARER',4),(1057,_binary '',_binary '','eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ0aHVhbm5nbzMwNzIwMkBnbWFpbC5jb20iLCJpYXQiOjE2ODY4MjY0OTksImV4cCI6MTY4NjgzMDA5OX0.SEmh3iGQNPrxEXSkMk21gnAun7PxQ7BHgiYdlEtkDLY','BEARER',4),(1058,_binary '',_binary '','eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ0aHVhbm5nbzMwNzIwMkBnbWFpbC5jb20iLCJpYXQiOjE2ODY4MjY3NjYsImV4cCI6MTY4NjgzMDM2Nn0.NkpOykSetMUSKVAmXCKr09lsSgyLdyxtrn_pOiAhlA8','BEARER',4),(1059,_binary '',_binary '','eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ0aHVhbm5nbzMwNzIwMkBnbWFpbC5jb20iLCJpYXQiOjE2ODY4MjczNzQsImV4cCI6MTY4NjgzMDk3NH0.E7A6afr1OdE5G5yHAeYu3HFfWXuxu-PCCe22ZMbQfi0','BEARER',4),(1060,_binary '',_binary '','eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ0aHVhbm5nbzMwNzIwMkBnbWFpbC5jb20iLCJpYXQiOjE2ODY4MjgxMjUsImV4cCI6MTY4NjgzMTcyNX0.9da3XRAjQz5gtGurP4k4VJw7WZYgurGJqL7DrMpfBNw','BEARER',4),(1061,_binary '',_binary '','eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ0aHVhbm5nbzMwNzIwMkBnbWFpbC5jb20iLCJpYXQiOjE2ODY4MzA2MTQsImV4cCI6MTY4NjgzNDIxNH0.oWpm-z-OTmZk56BU3LCuWFxXJXAVFyU1g9ZIdZGugm8','BEARER',4),(1062,_binary '',_binary '','eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ0aHVhbm5nbzMwNzIwMkBnbWFpbC5jb20iLCJpYXQiOjE2ODY4MzE1MDYsImV4cCI6MTY4NjgzNTEwNn0.xJ5B50JsxvwegpAcdumq3qDUJTC656Cx2NoPmq9CUGo','BEARER',4),(1063,_binary '',_binary '','eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ0aHVhbm5nbzMwNzIwMkBnbWFpbC5jb20iLCJpYXQiOjE2ODY4MzI1MTMsImV4cCI6MTY4NjgzNjExM30.yG7QzRA1iyTRuzO1d_ikjWPKy0Al_8F9ya2w6NyYIsg','BEARER',4),(1064,_binary '',_binary '','eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ0aHVhbm5nbzMwNzIwMkBnbWFpbC5jb20iLCJpYXQiOjE2ODY4MzI1ODcsImV4cCI6MTY4NjgzNjE4N30.zdqxUXcqqiisgp8mNBYkzPtl67REXWRStu7P3we0-BY','BEARER',4),(1065,_binary '\0',_binary '\0','eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ0aHVhbm5nbzMwNzIwMkBnbWFpbC5jb20iLCJpYXQiOjE2ODY4MzQyMDcsImV4cCI6MTY4NjgzNzgwN30.QnHce1-DCdbiCPLECbkxrpkGN6zSH8Fpi36XRCJbcxA','BEARER',4);
+INSERT INTO `token` VALUES (1051,_binary '',_binary '','eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ0aHVhbm5nbzMwNzIwMkBnbWFpbC5jb20iLCJpYXQiOjE2ODY4MTY2NTUsImV4cCI6MTY4NjgyMDI1NX0.8Y7scasKMP2lX2eqFYqM54Dv2pdNwMERGP9ZudsFyj0','BEARER',4),(1052,_binary '',_binary '','eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ0aHVhbm5nbzMwNzIwMkBnbWFpbC5jb20iLCJpYXQiOjE2ODY4MTY5MDMsImV4cCI6MTY4NjgyMDUwM30.x-QngAIPkEZMmGQNkYPZ-7arWmhHQpEEAY02r5471Iw','BEARER',4),(1053,_binary '',_binary '','eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ0aHVhbm5nbzMwNzIwMkBnbWFpbC5jb20iLCJpYXQiOjE2ODY4MjUzODEsImV4cCI6MTY4NjgyODk4MX0.rBE84Eoi5kOYS_-LHlxc28TYkM19kxNkIeesGYwevto','BEARER',4),(1054,_binary '',_binary '','eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ0aHVhbm5nbzMwNzIwMkBnbWFpbC5jb20iLCJpYXQiOjE2ODY4MjU4OTAsImV4cCI6MTY4NjgyOTQ5MH0.emQApnukiBlqPKH6CBbJRtna7sYME95jSrMPNL3Sxk8','BEARER',4),(1055,_binary '',_binary '','eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ0aHVhbm5nbzMwNzIwMkBnbWFpbC5jb20iLCJpYXQiOjE2ODY4MjYwNDEsImV4cCI6MTY4NjgyOTY0MX0.1NMAQaTJJS_Eyahm_IBo4HnIMJ5RkTSp3QQHPfA4VsA','BEARER',4),(1056,_binary '',_binary '','eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ0aHVhbm5nbzMwNzIwMkBnbWFpbC5jb20iLCJpYXQiOjE2ODY4MjYyMTIsImV4cCI6MTY4NjgyOTgxMn0._nFp1d4mas3miIkpRpWVboR-lWc70HNDQU5qUlMr-f4','BEARER',4),(1057,_binary '',_binary '','eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ0aHVhbm5nbzMwNzIwMkBnbWFpbC5jb20iLCJpYXQiOjE2ODY4MjY0OTksImV4cCI6MTY4NjgzMDA5OX0.SEmh3iGQNPrxEXSkMk21gnAun7PxQ7BHgiYdlEtkDLY','BEARER',4),(1058,_binary '',_binary '','eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ0aHVhbm5nbzMwNzIwMkBnbWFpbC5jb20iLCJpYXQiOjE2ODY4MjY3NjYsImV4cCI6MTY4NjgzMDM2Nn0.NkpOykSetMUSKVAmXCKr09lsSgyLdyxtrn_pOiAhlA8','BEARER',4),(1059,_binary '',_binary '','eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ0aHVhbm5nbzMwNzIwMkBnbWFpbC5jb20iLCJpYXQiOjE2ODY4MjczNzQsImV4cCI6MTY4NjgzMDk3NH0.E7A6afr1OdE5G5yHAeYu3HFfWXuxu-PCCe22ZMbQfi0','BEARER',4),(1060,_binary '',_binary '','eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ0aHVhbm5nbzMwNzIwMkBnbWFpbC5jb20iLCJpYXQiOjE2ODY4MjgxMjUsImV4cCI6MTY4NjgzMTcyNX0.9da3XRAjQz5gtGurP4k4VJw7WZYgurGJqL7DrMpfBNw','BEARER',4),(1061,_binary '',_binary '','eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ0aHVhbm5nbzMwNzIwMkBnbWFpbC5jb20iLCJpYXQiOjE2ODY4MzA2MTQsImV4cCI6MTY4NjgzNDIxNH0.oWpm-z-OTmZk56BU3LCuWFxXJXAVFyU1g9ZIdZGugm8','BEARER',4),(1062,_binary '',_binary '','eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ0aHVhbm5nbzMwNzIwMkBnbWFpbC5jb20iLCJpYXQiOjE2ODY4MzE1MDYsImV4cCI6MTY4NjgzNTEwNn0.xJ5B50JsxvwegpAcdumq3qDUJTC656Cx2NoPmq9CUGo','BEARER',4),(1063,_binary '',_binary '','eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ0aHVhbm5nbzMwNzIwMkBnbWFpbC5jb20iLCJpYXQiOjE2ODY4MzI1MTMsImV4cCI6MTY4NjgzNjExM30.yG7QzRA1iyTRuzO1d_ikjWPKy0Al_8F9ya2w6NyYIsg','BEARER',4),(1064,_binary '',_binary '','eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ0aHVhbm5nbzMwNzIwMkBnbWFpbC5jb20iLCJpYXQiOjE2ODY4MzI1ODcsImV4cCI6MTY4NjgzNjE4N30.zdqxUXcqqiisgp8mNBYkzPtl67REXWRStu7P3we0-BY','BEARER',4),(1065,_binary '\0',_binary '\0','eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ0aHVhbm5nbzMwNzIwMkBnbWFpbC5jb20iLCJpYXQiOjE2ODY4MzQyMDcsImV4cCI6MTY4NjgzNzgwN30.QnHce1-DCdbiCPLECbkxrpkGN6zSH8Fpi36XRCJbcxA','BEARER',4),(1066,_binary '\0',_binary '\0','eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ0aHVhbjIwMjJAZ21haWwuY29tIiwiaWF0IjoxNzI1NTMyMjQwLCJleHAiOjE3MjU1MzU4NDB9.QtBLkyMrFr5Zgm5N9k8AKgymSyiVfUxXK-ncL8K-DZA','BEARER',1);
 /*!40000 ALTER TABLE `token` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -541,19 +540,19 @@ DROP TABLE IF EXISTS `user`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `user` (
-  `id` bigint NOT NULL AUTO_INCREMENT,
-  `email` varchar(50) DEFAULT NULL,
-  `first_name` varchar(255) NOT NULL,
-  `last_name` varchar(255) NOT NULL,
-  `password` varchar(255) DEFAULT NULL,
-  `phone_number` varchar(20) DEFAULT NULL,
-  `photo` varchar(255) DEFAULT NULL,
-  `status` bit(1) NOT NULL,
-  `verification_code` varchar(255) DEFAULT NULL,
-  `forgot_password` varchar(255) DEFAULT NULL,
-  PRIMARY KEY (`id`),
-  UNIQUE KEY `UK_ob8kqyqqgmefl0aco34akdtpe` (`email`),
-  UNIQUE KEY `UK_4bgmpi98dylab6qdvf9xyaxu4` (`phone_number`)
+                        `id` bigint NOT NULL AUTO_INCREMENT,
+                        `email` varchar(50) DEFAULT NULL,
+                        `first_name` varchar(255) NOT NULL,
+                        `last_name` varchar(255) NOT NULL,
+                        `password` varchar(255) DEFAULT NULL,
+                        `phone_number` varchar(20) DEFAULT NULL,
+                        `photo` varchar(255) DEFAULT NULL,
+                        `status` bit(1) NOT NULL,
+                        `verification_code` varchar(255) DEFAULT NULL,
+                        `forgot_password` varchar(255) DEFAULT NULL,
+                        PRIMARY KEY (`id`),
+                        UNIQUE KEY `UK_ob8kqyqqgmefl0aco34akdtpe` (`email`),
+                        UNIQUE KEY `UK_4bgmpi98dylab6qdvf9xyaxu4` (`phone_number`)
 ) ENGINE=InnoDB AUTO_INCREMENT=21 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -563,7 +562,7 @@ CREATE TABLE `user` (
 
 LOCK TABLES `user` WRITE;
 /*!40000 ALTER TABLE `user` DISABLE KEYS */;
-INSERT INTO `user` VALUES (1,'thuan2022@gmail.com','thu','thu','$2a$10$cbC3GxjMi3OPWPFFVm2fwuvRa3MobBwzgvT8DNlQJTjNaHFABqKOK','0919462412','vebinhdainganha3.png',_binary '',NULL,NULL),(2,'thuan2023@gmail.com','thuaaa','aaaaaa','$2a$10$1.r10G2FWq6faHp36RKU2uqNVYPXkfsazzT43Q1YTwvXfhMz2AKqm',NULL,'nangtienca.jpeg',_binary '',NULL,NULL),(4,'thuanngo307202@gmail.com','van','ngo','$2a$10$rWcdFPwNbwvpPwPaYtlECeoNbB0HxUydXXJQLA0oUzgoPvUdrg6z2',NULL,'avatar.png',_binary '',NULL,NULL),(9,'thu2k2@gmail.com','van','ann','$2a$10$b2BoD9DW5CY/7473izAJG.E7hFDxsG9zsdFBRmHV00YN2q3FUyppa',NULL,'avatar2.jpeg',_binary '',NULL,NULL),(12,'thuanngo722@yahoo.com','van','truc','$2a$10$wIxyuRCKtMo7f35NM2.Aheu3cNJzdl2Vbpb6cc3f8OMteyu3oKd7e',NULL,'quanlongloe.jpeg',_binary '',NULL,NULL),(15,'kanna.allada@gmail.com','thuan','truc','$2a$10$9BTtGD.MGZagoFXwKjwSOu8KdmZOTeRwtTsAj/yXFoWEREYORoAUC',NULL,'avatar.png',_binary '',NULL,NULL),(18,'thuan2021@gmail.com','thuan','NGU','$2a$10$p/dvPXyoez7owYlrbiy7SeahcKMalmwzlmlqGrPpLr3xH39cFieOy',NULL,'aokhoac2.jpeg',_binary '',NULL,NULL),(19,'thuan2020@gmail.com','thanh','truc','$2a$10$fab1HNYfY4ovsrZ2R6Pqeu/35zjlKuOTJYvaWm39NV.8Dl3ekIMvy',NULL,'avatar.png',_binary '',NULL,NULL),(20,'n20dccn153@student.ptithcm.edu.vn','thuan','af','$2a$10$kRf2fPJOdEgSgDQAOhtm..KGleH3qnXDH4uo1DQLmTDOVZzwxubbK',NULL,'quanlongloe.jpeg',_binary '','BytRrSIFAwAk6ro1aq2OwiurFfE3Nxrg8lKHE9UOvxpaC9zmhjrNCpuzzT0H6LVS','KRE3wPbrtho4iCksbz52NH4SzencPiipOn49AcGSyJRiUNiYdLW09IZXBFyszX6y');
+INSERT INTO `user` VALUES (1,'thuan2022@gmail.com','thu','thu','$2a$10$cbC3GxjMi3OPWPFFVm2fwuvRa3MobBwzgvT8DNlQJTjNaHFABqKOK','0919462412','https://res.cloudinary.com/di6h4mtfa/image/upload/v1725537439/user-photos-2/12/quanlongloe_ogfqib.jpg',_binary '',NULL,NULL),(2,'thuan2023@gmail.com','thuaaa','aaaaaa','$2a$10$1.r10G2FWq6faHp36RKU2uqNVYPXkfsazzT43Q1YTwvXfhMz2AKqm',NULL,'https://res.cloudinary.com/di6h4mtfa/image/upload/v1725537439/user-photos-2/12/quanlongloe_ogfqib.jpg',_binary '',NULL,NULL),(4,'thuanngo307202@gmail.com','van','ngo','$2a$10$rWcdFPwNbwvpPwPaYtlECeoNbB0HxUydXXJQLA0oUzgoPvUdrg6z2',NULL,'https://res.cloudinary.com/di6h4mtfa/image/upload/v1725537439/user-photos-2/12/quanlongloe_ogfqib.jpg',_binary '',NULL,NULL),(9,'thu2k2@gmail.com','van','ann','$2a$10$b2BoD9DW5CY/7473izAJG.E7hFDxsG9zsdFBRmHV00YN2q3FUyppa',NULL,'https://res.cloudinary.com/di6h4mtfa/image/upload/v1725537439/user-photos-2/12/quanlongloe_ogfqib.jpg',_binary '',NULL,NULL),(12,'thuanngo722@yahoo.com','van','truc','$2a$10$wIxyuRCKtMo7f35NM2.Aheu3cNJzdl2Vbpb6cc3f8OMteyu3oKd7e',NULL,'https://res.cloudinary.com/di6h4mtfa/image/upload/v1725537439/user-photos-2/12/quanlongloe_ogfqib.jpg',_binary '',NULL,NULL),(15,'kanna.allada@gmail.com','thuan','truc','$2a$10$9BTtGD.MGZagoFXwKjwSOu8KdmZOTeRwtTsAj/yXFoWEREYORoAUC',NULL,'https://res.cloudinary.com/di6h4mtfa/image/upload/v1725537439/user-photos-2/12/quanlongloe_ogfqib.jpg',_binary '',NULL,NULL),(18,'thuan2021@gmail.com','thuan','NGU','$2a$10$p/dvPXyoez7owYlrbiy7SeahcKMalmwzlmlqGrPpLr3xH39cFieOy',NULL,'https://res.cloudinary.com/di6h4mtfa/image/upload/v1725537439/user-photos-2/12/quanlongloe_ogfqib.jpg',_binary '',NULL,NULL),(19,'thuan2020@gmail.com','thanh','truc','$2a$10$fab1HNYfY4ovsrZ2R6Pqeu/35zjlKuOTJYvaWm39NV.8Dl3ekIMvy',NULL,'https://res.cloudinary.com/di6h4mtfa/image/upload/v1725537439/user-photos-2/12/quanlongloe_ogfqib.jpg',_binary '',NULL,NULL),(20,'n20dccn153@student.ptithcm.edu.vn','thuan','af','$2a$10$kRf2fPJOdEgSgDQAOhtm..KGleH3qnXDH4uo1DQLmTDOVZzwxubbK',NULL,'https://res.cloudinary.com/di6h4mtfa/image/upload/v1725537439/user-photos-2/12/quanlongloe_ogfqib.jpg',_binary '','BytRrSIFAwAk6ro1aq2OwiurFfE3Nxrg8lKHE9UOvxpaC9zmhjrNCpuzzT0H6LVS','KRE3wPbrtho4iCksbz52NH4SzencPiipOn49AcGSyJRiUNiYdLW09IZXBFyszX6y');
 /*!40000 ALTER TABLE `user` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -575,12 +574,12 @@ DROP TABLE IF EXISTS `users_roles`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `users_roles` (
-  `user_id` bigint NOT NULL,
-  `role_id` int NOT NULL,
-  PRIMARY KEY (`user_id`,`role_id`),
-  KEY `FKt4v0rrweyk393bdgt107vdx0x` (`role_id`),
-  CONSTRAINT `FKb1ip7h4hxtw8hw3axfhvxwl8` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`),
-  CONSTRAINT `FKt4v0rrweyk393bdgt107vdx0x` FOREIGN KEY (`role_id`) REFERENCES `role` (`id`)
+                               `user_id` bigint NOT NULL,
+                               `role_id` int NOT NULL,
+                               PRIMARY KEY (`user_id`,`role_id`),
+                               KEY `FKt4v0rrweyk393bdgt107vdx0x` (`role_id`),
+                               CONSTRAINT `FKb1ip7h4hxtw8hw3axfhvxwl8` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`),
+                               CONSTRAINT `FKt4v0rrweyk393bdgt107vdx0x` FOREIGN KEY (`role_id`) REFERENCES `role` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -603,4 +602,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2023-06-15 22:13:56
+-- Dump completed on 2024-09-05 21:24:42

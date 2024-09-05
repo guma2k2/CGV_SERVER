@@ -1,5 +1,6 @@
 package com.movie.backend.service;
 
+import com.cloudinary.Cloudinary;
 import com.movie.backend.dto.CinemaDTO;
 import com.movie.backend.entity.*;
 import com.movie.backend.exception.CinemaException;
@@ -20,10 +21,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.time.LocalDate;
-import java.util.Comparator;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
@@ -41,6 +39,9 @@ public class CinemaService {
 
     @Autowired
     private CinemaRepository cinemaRepository;
+
+    @Autowired
+    private Cloudinary cloudinary;
 
     public List<CinemaDTO> findByDateAndCity( LocalDate date ,
                                               String cityName ,
@@ -136,70 +137,37 @@ public class CinemaService {
 
     public void saveImages(MultipartFile mainImageMultipart, MultipartFile[] extraImageMultiparts, String[] imageIDs, String[] imageNames, Long cinemaId) throws IOException {
         Cinema cinema = cinemaRepository.findById(cinemaId).orElseThrow(() -> new CinemaException("Cinema not found"));
-//        log.info(mainImageMultipart.getOriginalFilename());
-//        for(MultipartFile multipartFile : extraImageMultiparts) {
-//            log.info(multipartFile.getOriginalFilename());
-//        }
         setMainImageName(mainImageMultipart, cinema);
         setExistingExtraImageNames(imageIDs, imageNames, cinema);
         setNewExtraImageNames(extraImageMultiparts, cinema);
-        Cinema savedCinema = cinemaRepository.save(cinema);
-        saveUploadedImages(mainImageMultipart, extraImageMultiparts, savedCinema);
-        deleteExtraImagesWeredRemovedOnForm(cinema);
+        cinemaRepository.save(cinema);
 
     }
 
-    private void deleteExtraImagesWeredRemovedOnForm(Cinema cinema) {
-        String extraImageDir = "cinema-images/" + cinema.getId() + "/extras";
-        Path dirPath = Paths.get(extraImageDir);
 
-        try {
-            Files.list(dirPath).forEach(file -> {
-                String filename = file.toFile().getName();
 
-                if (!cinema.containsImageName(filename)) {
-                    try {
-                        Files.delete(file);
-                        log.info("Deleted extra image: " + filename);
-
-                    } catch (IOException e) {
-                        log.error("Could not delete extra image: " + filename);
-                    }
-                }
-
-            });
-        } catch (IOException ex) {
-            log.error("Could not list directory: " + dirPath);
-        }
-    }
-
-    private void saveUploadedImages(MultipartFile mainImageMultipart, MultipartFile[] extraImageMultiparts, Cinema savedCinema) throws IOException {
-        if (!mainImageMultipart.isEmpty()) {
-            String fileName = StringUtils.cleanPath(mainImageMultipart.getOriginalFilename());
-            String uploadDir = "cinema-images/" + savedCinema.getId();
-
-            FileUploadUtil.cleanDir(uploadDir);
-            FileUploadUtil.saveFile(uploadDir, fileName, mainImageMultipart);
-        }
-
-        if (extraImageMultiparts.length > 0) {
-            String uploadDir = "cinema-images/" + savedCinema.getId() + "/extras";
-
-            for (MultipartFile multipartFile : extraImageMultiparts) {
-                if (multipartFile.isEmpty()) continue;
-                String fileName = StringUtils.cleanPath(multipartFile.getOriginalFilename());
-                FileUploadUtil.saveFile(uploadDir, fileName, multipartFile);
-            }
-        }
-    }
 
     private void setNewExtraImageNames(MultipartFile[] extraImageMultiparts, Cinema cinema) {
         if (extraImageMultiparts.length > 0) {
             for (MultipartFile multipartFile : extraImageMultiparts) {
                 if (!multipartFile.isEmpty()) {
-                    String fileName = StringUtils.cleanPath(multipartFile.getOriginalFilename());
-                    if (!cinema.containsImageName(fileName)) {
-                        cinema.addExtraImage(fileName);
+                    HashMap<String, String> map = new HashMap<>();
+                    String fileId = UUID.randomUUID().toString();
+                    map.put("public_id", fileId);
+                    map.put("resource_type", "auto");
+                    Map uploadResult = null;
+                    try {
+                        uploadResult = cloudinary.uploader()
+                                .upload(multipartFile.getBytes(), map);
+                    } catch (IOException e) {
+                        log.error(e.getMessage());
+                    }
+                    String url = uploadResult
+                            .get("url")
+                            .toString();
+
+                    if (!cinema.containsImageName(url)) {
+                        cinema.addExtraImage(url);
                     }
                 }
             }
@@ -222,8 +190,22 @@ public class CinemaService {
 
     private void setMainImageName(MultipartFile mainImageMultipart, Cinema cinema) {
         if (!mainImageMultipart.isEmpty()) {
-            String fileName = StringUtils.cleanPath(mainImageMultipart.getOriginalFilename());
-            cinema.setImage_url(fileName);
+
+            HashMap<String, String> map = new HashMap<>();
+            String fileId = UUID.randomUUID().toString();
+            map.put("public_id", fileId);
+            map.put("resource_type", "auto");
+            Map uploadResult = null;
+            try {
+                uploadResult = cloudinary.uploader()
+                        .upload(mainImageMultipart.getBytes(), map);
+            } catch (IOException e) {
+                log.error(e.getMessage());
+            }
+            String url = uploadResult
+                    .get("url")
+                    .toString();
+            cinema.setImage_url(url);
         }
 
     }
