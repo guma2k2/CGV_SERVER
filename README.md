@@ -49,10 +49,7 @@ The Booking movie website is a comprehensive full-stack application designed to 
 ![ERD diagram](screenshots/ERD-diagram.png)
 
 #### Usecasae diagram
-![Security diagram](screenshots/usecase-diagram.png)
-
-#### Sequence diagram
-![Security diagram](screenshots/sequence-diagram.drawio.png)
+![Security diagram](screenshots/Usecase-movie-diagram.png)
 
 
 
