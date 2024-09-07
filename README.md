@@ -7,9 +7,9 @@
 - [Technologies Used](#technologies-used)
     - [Backend (Movie-api)]
     - [Frontend (Movie-ui)]
-- [User interfaces](#Userinterfaces)
+- [User interfaces](#user-interfaces)
 - [Demo](#Demo)
-- [System design](#Systemdesign)
+- [System design](#system-design)
 - [License](#license)
 - [Getting Started](#getting-started)
 - [Contributors](#contributors)
