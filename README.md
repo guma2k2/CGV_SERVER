@@ -41,6 +41,9 @@ The Booking movie website is a comprehensive full-stack application designed to 
 - Thymeleaf
 - Bootstrap
 
+## Demo
+- Link: https://youtu.be/rFPXV3SIjfA
+
 ## User interfaces
 - Ideas from https://www.cgv.vn
 
