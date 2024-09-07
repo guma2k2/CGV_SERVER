@@ -19,7 +19,8 @@ The Booking movie website is a comprehensive full-stack application designed to 
 - Use Spring Security with JWT to secure user information.
 - Use WebSocket to display real-time booking status.
 - Use Spring Mail for account registration and password recovery.
-- Additionally, the project also builds an Admin page for managing movies and showtimes.
+- The project also builds an Admin page for managing movies, cinemas, rooms, events for booking movie.
+- User with account can booking ticket online.
 - Analytics: View statistics by custom date ranges.
 
 ## Technologies Used
@@ -37,7 +38,7 @@ The Booking movie website is a comprehensive full-stack application designed to 
 
 ### Frontend (Elearning-fe)
 
-- Thynmleaf
+- Thymeleaf
 - Bootstrap
 
 ## User interfaces
