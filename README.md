@@ -44,6 +44,32 @@ The Booking movie website is a comprehensive full-stack application designed to 
 ## User interfaces
 - Ideas from https://www.cgv.vn
 
+#### Home 
+![ERD diagram](screenshots/Home.png)
+
+#### Login
+![ERD diagram](screenshots/Login.png)
+
+#### Register
+![ERD diagram](screenshots/Register.png)
+
+#### Search movie ticket by cinema
+![ERD diagram](screenshots/searchCinema1.png)
+
+![ERD diagram](screenshots/searchCinema2.png)
+
+#### Booking ticket
+![ERD diagram](screenshots/bookingMovive.png)
+
+#### Dashboard (Admin)
+![ERD diagram](screenshots/Dashboard.png)
+
+#### Manage movie
+![ERD diagram](screenshots/ManageMovie.png)
+
+#### Manage event
+![ERD diagram](screenshots/ManageEvent.png)
+
 ## System design
 
 #### ERD diagram
