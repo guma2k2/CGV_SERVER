@@ -9,6 +9,7 @@
     - [Frontend (Movie-ui)]
 - [User interfaces](#User interfaces)
 - [Demo](#Demo)
+- [System design](#System design)
 - [License](#license)
 - [Getting Started](#getting-started)
 - [Contributors](#contributors)
