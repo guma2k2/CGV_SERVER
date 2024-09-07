@@ -4,10 +4,11 @@
 
 - [Overview](#overview)
 - [Features](#features)
-- [User interfaces](#features)
 - [Technologies Used](#technologies-used)
     - [Backend (Movie-api)]
     - [Frontend (Movie-ui)]
+- [User interfaces](#User interfaces)
+- [Demo](#Demo)
 - [License](#license)
 - [Getting Started](#getting-started)
 - [Contributors](#contributors)
