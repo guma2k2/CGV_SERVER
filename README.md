@@ -95,6 +95,7 @@ This project is licensed under the Apache License 2.0. See the [LICENSE](LICENSE
 To get started with the Elearning project, follow the setup instructions in the respective directories:
 - Clone this project
 - Run cmd : docker compose up -d --build
+- Access the link: http://localhost:8000/vincinema
 
 ## Contributors
 
