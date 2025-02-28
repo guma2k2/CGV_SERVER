@@ -18,6 +18,8 @@ jobs:
       #     port: 22
       #     script: |
       #       echo "✅ SSH Connection Successful!"
+      - name: Install SSH Client
+        run: sudo apt-get update && sudo apt-get install -y openssh-client
       - name: Debug SSH Connection
         run: |
           echo "$SSH_PRIVATE_KEY" > private_key
