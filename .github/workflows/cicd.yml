@@ -9,15 +9,24 @@ jobs:
     steps:
       - name: Checkout source
         uses: actions/checkout@v3
-      - name: Deploy via SSH
-        uses: appleboy/ssh-action@v1.0.3
-        with:
-          host: ${{ secrets.SSH_HOST }}
-          username: ${{ secrets.SSH_USER }}
-          key: ${{ secrets.SSH_PRIVATE_KEY }}
-          port: 22
-          script: |
-            echo "✅ SSH Connection Successful!"
+      - name: Debug Network
+        run: |
+          echo "Pinging server..."
+          ping -c 4 ${{ secrets.SSH_HOST }} || echo "Ping failed"
+      
+          echo "Checking if SSH port 22 is open..."
+          nc -zv ${{ secrets.SSH_HOST }} 22 || echo "Port 22 closed or unreachable"
+
+
+      # - name: Deploy via SSH
+      #   uses: appleboy/ssh-action@v1.0.3
+      #   with:
+      #     host: ${{ secrets.SSH_HOST }}
+      #     username: ${{ secrets.SSH_USER }}
+      #     key: ${{ secrets.SSH_PRIVATE_KEY }}
+      #     port: 22
+      #     script: |
+      #       echo "✅ SSH Connection Successful!"
       # - name: Setup Java
       #   uses: actions/setup-java@v3
       #   with:
