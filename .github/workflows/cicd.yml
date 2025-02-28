@@ -9,24 +9,15 @@ jobs:
     steps:
       - name: Checkout source
         uses: actions/checkout@v3
-      - name: Get GitHub Actions IP
-        run: curl ifconfig.me
-      - name: executing remote ssh commands using password
-        uses: appleboy/ssh-action@v1.2.1
+      - name: Deploy via SSH
+        uses: appleboy/ssh-action@v1.2.0
         with:
           host: ${{ secrets.SSH_HOST }}
           username: ${{ secrets.SSH_USER }}
-          password: ${{ secrets.SSH_PASSWORD }}
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
           port: 22
-          script: whoami
-      # - name: Deploy via SSH
-      #   uses: appleboy/ssh-action@v1.2.1
-      #   with:
-      #     host: ${{ secrets.SSH_HOST }}
-      #     username: ${{ secrets.SSH_USER }}
-      #     key: ${{ secrets.SSH_PRIVATE_KEY }}
-      #     script: |
-      #       echo "✅ SSH Connection Successful!"
+          script: |
+            echo "✅ SSH Connection Successful!"
       # - name: Setup Java
       #   uses: actions/setup-java@v3
       #   with:
