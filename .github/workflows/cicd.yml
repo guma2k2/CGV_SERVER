@@ -17,6 +17,7 @@ jobs:
           host: ${{ secrets.SSH_HOST }}
           username: ${{ secrets.SSH_USER }}
           password: ${{ secrets.SSH_PASSWORD }}
+          port: 22
           script: whoami
       # - name: Deploy via SSH
       #   uses: appleboy/ssh-action@v1.2.1
