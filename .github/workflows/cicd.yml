@@ -9,13 +9,9 @@ jobs:
     steps:
       - name: Checkout source
         uses: actions/checkout@v3
-      - name: Debug Network
-        run: |
-          echo "Pinging server..."
-          ping -c 4 192.168.1.123 || echo "Ping failed"
-      
-          echo "Checking if SSH port 22 is open..."
-          nc -zv 192.168.1.123 22 || echo "Port 22 closed or unreachable"
+      - name: Test Internet Access
+        run: ping -c 4 google.com
+
 
 
       # - name: Deploy via SSH
