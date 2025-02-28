@@ -12,10 +12,10 @@ jobs:
       - name: Debug Network
         run: |
           echo "Pinging server..."
-          ping -c 4 ${{ secrets.SSH_HOST }} || echo "Ping failed"
+          ping -c 4 192.168.1.123 || echo "Ping failed"
       
           echo "Checking if SSH port 22 is open..."
-          nc -zv ${{ secrets.SSH_HOST }} 22 || echo "Port 22 closed or unreachable"
+          nc -zv 192.168.1.123 22 || echo "Port 22 closed or unreachable"
 
 
       # - name: Deploy via SSH
