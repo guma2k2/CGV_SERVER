@@ -9,20 +9,15 @@ jobs:
     steps:
       - name: Checkout source
         uses: actions/checkout@v3
-      - name: Test Internet Access
-        run: ping google.com
-
-
-
-      # - name: Deploy via SSH
-      #   uses: appleboy/ssh-action@v1.0.3
-      #   with:
-      #     host: ${{ secrets.SSH_HOST }}
-      #     username: ${{ secrets.SSH_USER }}
-      #     key: ${{ secrets.SSH_PRIVATE_KEY }}
-      #     port: 22
-      #     script: |
-      #       echo "✅ SSH Connection Successful!"
+      - name: Deploy via SSH
+        uses: appleboy/ssh-action@v1.0.3
+        with:
+          host: ${{ secrets.SSH_HOST }}
+          username: ${{ secrets.SSH_USER }}
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          port: 22
+          script: |
+            echo "✅ SSH Connection Successful!"
       # - name: Setup Java
       #   uses: actions/setup-java@v3
       #   with:
