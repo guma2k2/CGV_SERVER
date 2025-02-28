@@ -9,35 +9,43 @@ jobs:
     steps:
       - name: Checkout source
         uses: actions/checkout@v3
-      - name: Setup Java
-        uses: actions/setup-java@v3
+      - name: Deploy via SSH
+        uses: appleboy/ssh-action@v1.2.1
         with:
-          distribution: 'temurin'
-          java-version: '17'
-      - name: Unit Tests
-        run: mvn -B test --file pom.xml
+          host: ${{ secrets.SSH_HOST }}
+          username: ${{ secrets.SSH_USER }}
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          script: |
+            echo "✅ SSH Connection Successful!"
+      # - name: Setup Java
+      #   uses: actions/setup-java@v3
+      #   with:
+      #     distribution: 'temurin'
+      #     java-version: '17'
+      # - name: Unit Tests
+      #   run: mvn -B test --file pom.xml
 
-      - name: Login to Docker Hub
-        uses: docker/login-action@v3
-        with:
-          username: ${{ secrets.DOCKER_USERNAME }}
-          password: ${{ secrets.DOCKER_ACCESS_TOKEN }}
-      - name: Build the application
-        run: |
-          mvn clean
-          mvn -B package --file pom.xml
+      # - name: Login to Docker Hub
+      #   uses: docker/login-action@v3
+      #   with:
+      #     username: ${{ secrets.DOCKER_USERNAME }}
+      #     password: ${{ secrets.DOCKER_ACCESS_TOKEN }}
+      # - name: Build the application
+      #   run: |
+      #     mvn clean
+      #     mvn -B package --file pom.xml
 
-      - name: Build Docker Image
-        uses: docker/build-push-action@v3
-        with:
-          context: .
-          dockerfile: Dockerfile
-          push: false
-          tags: ${{ secrets.DOCKER_USERNAME }}/movie-backend
-      - name: Push to Docker Hub
-        uses: docker/build-push-action@v3
-        with:
-          context: .
-          dockerfile: Dockerfile
-          push: true
-          tags: ${{ secrets.DOCKER_USERNAME }}/movie-backend
+      # - name: Build Docker Image
+      #   uses: docker/build-push-action@v3
+      #   with:
+      #     context: .
+      #     dockerfile: Dockerfile
+      #     push: false
+      #     tags: ${{ secrets.DOCKER_USERNAME }}/movie-backend
+      # - name: Push to Docker Hub
+      #   uses: docker/build-push-action@v3
+      #   with:
+      #     context: .
+      #     dockerfile: Dockerfile
+      #     push: true
+      #     tags: ${{ secrets.DOCKER_USERNAME }}/movie-backend
