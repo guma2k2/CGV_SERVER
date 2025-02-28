@@ -1,6 +1,6 @@
 # Booking movie ticket website
 
-## Table of Content
+## Table of Contents
 
 - [Overview](#overview)
 - [Features](#features)
