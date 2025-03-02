@@ -28,12 +28,9 @@ public class Ticket {
     private String qrCode ;
 
     private String phoneNumber;
+
     private String bank;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name ="user_id")
-    @JsonIgnore
-    private User user ;
     @OneToOne(fetch = FetchType.LAZY)
     @JsonIgnore
     private Booking booking ;

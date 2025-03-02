@@ -11,15 +11,21 @@ import java.util.List;
 @Repository
 public interface TicketRepository extends JpaRepository<Ticket,Long> {
 
-    @Query("SELECT t FROM Ticket t WHERE t.user.id = :id")
-    public List<Ticket> findByUser(@Param("id") Long id);
+    @Query("""
+    SELECT t 
+    FROM Ticket t 
+    INNER JOIN t.booking b 
+    INNER JOIN b.user u 
+    WHERE u.id = :id
+    """)
+    List<Ticket> findByUser(@Param("id") Long id);
 
     @Query("SELECT t FROM Ticket t " +
             "INNER JOIN t.booking b " +
             "INNER JOIN b.event e " +
             "WHERE e.id = :id")
-    public List<Ticket> findByEvent(@Param("id")Long eventId);
+    List<Ticket> findByEvent(@Param("id")Long eventId);
 
     @Query("SELECT t FROM Ticket t WHERE t.createdTime BETWEEN :startDate AND :endDate")
-    public List<Ticket> findByDateMovie(@Param("startDate")LocalDateTime startDate, @Param("endDate")LocalDateTime endDate) ;
+    List<Ticket> findByDateMovie(@Param("startDate")LocalDateTime startDate, @Param("endDate")LocalDateTime endDate) ;
 }

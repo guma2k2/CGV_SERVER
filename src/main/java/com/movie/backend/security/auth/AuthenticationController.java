@@ -1,5 +1,7 @@
 package com.movie.backend.security.auth;
 
+import com.movie.backend.dto.ProfileResponse;
+import com.movie.backend.dto.ProfileUpdateRequest;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
@@ -17,12 +19,12 @@ public class AuthenticationController {
 
     @PostMapping("/register")
     public ResponseEntity<?> register(
-            @RequestBody RegisterRequest request,
-            HttpServletRequest servletRequest
+            @RequestBody RegisterRequest request
     ) {
         try {
-            return ResponseEntity.ok(service.register(request, servletRequest));
+            return ResponseEntity.ok(service.register(request));
         } catch (Exception e) {
+            System.out.println(e.getMessage());
             return ResponseEntity.badRequest().body(e.getMessage());
         }
     }
@@ -33,6 +35,29 @@ public class AuthenticationController {
         } catch (Exception e) {
             return ResponseEntity.badRequest().body(e.getMessage());
         }
+    }
+
+    @PostMapping("/outbound/authentication")
+    ResponseEntity<AuthenticationResponse> outboundAuthenticate(
+            @RequestParam String code
+    ){
+        AuthenticationResponse result = service.outboundAuthenticate(code);
+        return ResponseEntity.ok().body(result);
+    }
+
+
+    @PutMapping("/profile")
+    ResponseEntity<AuthenticationResponse> updateProfile(
+            @RequestBody ProfileUpdateRequest request
+    ){
+        AuthenticationResponse result = service.updateProfile(request);
+        return ResponseEntity.ok().body(result);
+    }
+
+    @GetMapping("/profile")
+    ResponseEntity<ProfileResponse> updateProfile(
+    ){
+        return ResponseEntity.ok().body(service.getProfile());
     }
 
     @PostMapping("/resetPassword")

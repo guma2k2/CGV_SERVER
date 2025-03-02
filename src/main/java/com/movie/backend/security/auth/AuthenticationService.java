@@ -1,7 +1,6 @@
 package com.movie.backend.security.auth;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.movie.backend.dto.UserDTO;
+import com.movie.backend.dto.*;
 import com.movie.backend.entity.Role;
 import com.movie.backend.entity.User;
 import com.movie.backend.exception.HeaderNotFoundException;
@@ -11,27 +10,27 @@ import com.movie.backend.repository.RoleRepository;
 import com.movie.backend.repository.UserRepository;
 
 import com.movie.backend.security.config.JwtService;
-import com.movie.backend.security.token.Token;
-import com.movie.backend.security.token.TokenRepository;
-import com.movie.backend.security.token.TokenType;
 import com.movie.backend.service.UserService;
 import com.movie.backend.ultity.RandomString;
 import jakarta.mail.MessagingException;
 import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpServletResponse;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpHeaders;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.*;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.util.LinkedMultiValueMap;
+import org.springframework.util.MultiValueMap;
+import org.springframework.web.client.RestTemplate;
+import org.springframework.web.util.UriComponentsBuilder;
 
-import javax.management.JMException;
-import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 
 @Service
@@ -39,7 +38,6 @@ import java.io.UnsupportedEncodingException;
 @Slf4j
 public class AuthenticationService {
     private final UserRepository repository;
-    private final TokenRepository tokenRepository;
     private final PasswordEncoder passwordEncoder;
     private final JwtService jwtService;
     private final AuthenticationManager authenticationManager;
@@ -47,13 +45,29 @@ public class AuthenticationService {
     @Autowired
     private ModelMapper modelMapper;
 
+    private final RestTemplate restTemplate;
+
+    private static final  String EXCHANGE_TOKEN_URL = "https://oauth2.googleapis.com/token";
+    private static final String EXCHANGE_USER_INFO_URL = "https://www.googleapis.com/oauth2/v1/userinfo";
+
+    @Value("${outbound.identity.client-id}")
+    protected String CLIENT_ID;
+
+    @Value("${outbound.identity.client-secret}")
+    protected String CLIENT_SECRET;
+
+    @Value("${outbound.identity.redirect-uri}")
+    protected String REDIRECT_URI;
+
+
+    private static final String GRANT_TYPE = "authorization_code";
     private final RoleRepository roleRepository;
     private final UserRepository userRepository;
 
     @Autowired
     private UserService userService;
 
-    public String register(RegisterRequest request, HttpServletRequest servletRequest) throws Exception {
+    public String register(RegisterRequest request) {
         log.info(request.getEmail());
         if(userRepository.findByEmail(request.getEmail()).isPresent()){
             throw  new UserException("The email was exited");
@@ -65,13 +79,15 @@ public class AuthenticationService {
                 .firstName(request.getFirstName())
                 .lastName(request.getLastName())
                 .email(request.getEmail())
+                .photo("")
+                .phone_number("")
                 .verificationCode(randomCode)
                 .password(passwordEncoder.encode(request.getPassword()))
                 .status(false)
                 .build();
         user.addRole(role);
         userRepository.save(user);
-        userService.sendVerificationEmail(servletRequest, user);
+        userService.sendVerificationEmail(user);
         return "Send request success" ;
     }
     @Transactional
@@ -87,7 +103,6 @@ public class AuthenticationService {
             UserDTO userDTO = modelMapper.map(customer , UserDTO.class);
             var jwtToken = jwtService.generateToken(customer);
             var refreshToken = jwtService.generateRefreshToken(customer);
-            saveUserToken(customer, jwtToken);
             return AuthenticationResponse.builder()
                     .accessToken(jwtToken)
                     .refreshToken(refreshToken)
@@ -109,8 +124,6 @@ public class AuthenticationService {
         UserDTO userDTO = modelMapper.map(user , UserDTO.class);
         var jwtToken = jwtService.generateToken(user);
         var refreshToken = jwtService.generateRefreshToken(user);
-        revokeAllUserTokens(user);
-        saveUserToken(user, jwtToken);
         return AuthenticationResponse.builder()
                 .accessToken(jwtToken)
                 .refreshToken(refreshToken)
@@ -118,27 +131,9 @@ public class AuthenticationService {
                 .build();
     }
 
-    private void saveUserToken(User user, String jwtToken) {
-        var token = Token.builder()
-                .user(user)
-                .token(jwtToken)
-                .type(TokenType.BEARER)
-                .expired(false)
-                .revoked(false)
-                .build();
-        tokenRepository.save(token);
-    }
 
-    private void revokeAllUserTokens(User user) {
-        var validUserTokens = tokenRepository.findAllValidTokenByUser(user.getId());
-        if (validUserTokens.isEmpty())
-            return;
-        validUserTokens.forEach(token -> {
-            token.setExpired(true);
-            token.setRevoked(true);
-        });
-        tokenRepository.saveAll(validUserTokens);
-    }
+
+
     public AuthenticationResponse refreshToken(
             HttpServletRequest request
     )  {
@@ -158,8 +153,6 @@ public class AuthenticationService {
             UserDTO userDTO = modelMapper.map(user , UserDTO.class);
             if (jwtService.isTokenValid(refreshToken, user)) {
                 var accessToken = jwtService.generateToken(user);
-                revokeAllUserTokens(user);
-                saveUserToken(user, accessToken);
                 authResponse = AuthenticationResponse.builder()
                         .accessToken(accessToken)
                         .refreshToken(refreshToken)
@@ -175,7 +168,7 @@ public class AuthenticationService {
 
     public String resetPassword(String email) throws MessagingException, UnsupportedEncodingException {
         String code = userService.updatePasswordCustomer(email);
-        String link = "http://localhost:8000/vincinema" +  "/reset_password?token=" + code;
+        String link = "http://localhost:8000" +  "/reset_password?token=" + code;
         userService.sendVerifyPassword(email, link);
         return "Send request success";
     }
@@ -192,5 +185,83 @@ public class AuthenticationService {
     public String confirmPassword(String password, String token) {
         userService.updatePasswordReset(token,password);
         return "Success";
+    }
+
+    public ProfileResponse getProfile() {
+        String email = SecurityContextHolder.getContext().getAuthentication().getName();
+        log.info(email);
+        User user = userRepository.findByEmail(email).orElseThrow();
+        return ProfileResponse.fromUser(user);
+    }
+
+    public AuthenticationResponse updateProfile(ProfileUpdateRequest request) {
+        String email = SecurityContextHolder.getContext().getAuthentication().getName();
+        log.info(email);
+        User user = userRepository.findByEmail(email).orElseThrow();
+        user.setFirstName(request.firstName());
+        user.setLastName(request.lastName());
+        user.setPhone_number(request.phoneNumber());
+        if (!request.password().isBlank()) {
+            user.setPassword(passwordEncoder.encode(request.password()));
+        }
+        User updatedUser = userRepository.saveAndFlush(user);
+        UserDTO userDTO = modelMapper.map(updatedUser , UserDTO.class);
+        var jwtToken = jwtService.generateToken(user);
+        var refreshToken = jwtService.generateRefreshToken(user);
+        return AuthenticationResponse.builder()
+                .accessToken(jwtToken)
+                .refreshToken(refreshToken)
+                .user(userDTO)
+                .build();
+    }
+
+    public AuthenticationResponse outboundAuthenticate(String code) {
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_FORM_URLENCODED);
+
+        MultiValueMap<String, String> map = new LinkedMultiValueMap<>();
+        map.add("code", code);
+        map.add("client_id", CLIENT_ID);
+        map.add("client_secret", CLIENT_SECRET);
+        map.add("redirect_uri", REDIRECT_URI);
+        map.add("grant_type", GRANT_TYPE);
+
+        HttpEntity<MultiValueMap<String, String>> entity = new HttpEntity<>(map, headers);
+        ResponseEntity<ExchangeTokenResponse> exchange = restTemplate.exchange(EXCHANGE_TOKEN_URL, HttpMethod.POST, entity, ExchangeTokenResponse.class);
+
+        ExchangeTokenResponse response = exchange.getBody();
+        if (response != null) {
+            UriComponentsBuilder builder = UriComponentsBuilder.fromHttpUrl(EXCHANGE_USER_INFO_URL)
+                    .queryParam("alt", "json")
+                    .queryParam("access_token", response.accessToken());
+
+            // Perform the GET request directly without HttpEntity
+            OutboundUserResponse userInfo = restTemplate.getForObject(builder.toUriString(), OutboundUserResponse.class);
+            log.info(userInfo.email());
+            if (userInfo != null) {
+                User user = userRepository.findByEmail(userInfo.email()).orElseGet(
+                        () -> {
+                            User newUser = User.builder()
+                                    .status(true)
+                                    .firstName(userInfo.familyName())
+                                    .lastName(userInfo.givenName())
+                                    .email(userInfo.email())
+                                    .photo(userInfo.picture())
+                                    .build();
+                            Role role = roleRepository.findByName("CLIENT");
+                            newUser.addRole(role);
+                            return userRepository.saveAndFlush(newUser);
+                        });
+                UserDTO userDTO = modelMapper.map(user , UserDTO.class);
+                var jwtToken = jwtService.generateToken(user);
+                var refreshToken = jwtService.generateRefreshToken(user);
+                return AuthenticationResponse.builder()
+                        .accessToken(jwtToken)
+                        .refreshToken(refreshToken)
+                        .user(userDTO)
+                        .build();
+            }
+        }
+        return null;
     }
 }

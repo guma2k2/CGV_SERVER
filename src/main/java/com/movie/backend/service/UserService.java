@@ -49,6 +49,9 @@ public class UserService {
     private ModelMapper modelMapper;
 
     @Autowired
+    private MailService mailService;
+
+    @Autowired
     private PasswordEncoder passwordEncoder ;
 
     @Autowired
@@ -209,33 +212,31 @@ public class UserService {
         mailSender.send(message);
     }
 
-    public void sendVerificationEmail(HttpServletRequest request, User user)
-            throws  UnsupportedEncodingException, MessagingException {
-        JavaMailSenderImpl mailSender = MailUtil.prepareMailSender(settingService);
-        String toAddress = user.getEmail();
 
-        // Lấy đoạn text đã được lưu trong phần setting
-        String subject = settingService.getCustomerVerifySubject();
-
-        // Lấy nội dung trong phần setting
-        String content = settingService.getCustomerVerifyContent();
-
-        MimeMessage message = mailSender.createMimeMessage();
-        MimeMessageHelper helper = new MimeMessageHelper(message,true, "UTF-8");
-
-        helper.setFrom(settingService.getFromAddress(), settingService.getSenderName());
-        helper.setTo(toAddress);
-        helper.setSubject(subject);
-
-        content = content.replace("[[name]]", user.getFullName());
-
+    public void sendVerificationEmail(User user) {
+        String subject = "Account Verification";
         String verifyURL = "http://localhost:8000/vincinema" + "/verify?code=" + user.getVerificationCode();
+        String htmlMessage = "<html>"
+                + "<body style=\"font-family: Arial, sans-serif;\">"
+                + "<div style=\"background-color: #f5f5f5; padding: 20px;\">"
+                + "<h2 style=\"color: #333;\">Welcome to our app!</h2>"
+                + "<p style=\"font-size: 16px;\">Please click the link below to continue:</p>"
+                + "<div style=\"background-color: #fff; padding: 20px; border-radius: 5px; box-shadow: 0 0 10px rgba(0,0,0,0.1);\">"
+                + "<h3 style=\"color: #333;\">Link:</h3>"
+                + "<p style=\"font-size: 18px; font-weight: bold; color: #007bff;\">" + verifyURL + "</p>"
+                + "</div>"
+                + "</div>"
+                + "</body>"
+                + "</html>";
 
-        content = content.replace("[[URL]]", verifyURL);
-
-        helper.setText(content, true);
-        mailSender.send(message);
+        try {
+            mailService.sendEmail(user.getEmail(), subject, htmlMessage);
+        } catch (MessagingException e) {
+            // Handle email sending exception
+            e.printStackTrace();
+        }
     }
+
     public String updatePasswordCustomer(String email) {
         Optional<User> customer = userRepository.findByEmail(email);
         if(customer.isPresent()){

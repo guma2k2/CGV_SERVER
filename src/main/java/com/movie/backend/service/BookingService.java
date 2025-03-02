@@ -91,7 +91,6 @@ public class BookingService {
                     .builder()
                     .booking(booking)
                     .seat(seat)
-                    .event(event)
                     .build();
             bookingSeats.add(bookingSeat);
         });

@@ -7,6 +7,9 @@ import com.movie.backend.repository.BookingComboRepository;
 import com.movie.backend.repository.BookingRepository;
 import com.movie.backend.repository.TicketRepository;
 import com.movie.backend.repository.UserRepository;
+import com.movie.backend.ultity.VNPayConfig;
+import com.movie.backend.ultity.VNPayUtils;
+import jakarta.servlet.http.HttpServletRequest;
 import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,6 +25,9 @@ import java.util.stream.Collectors;
 @Service
 @Slf4j
 public class TicketService {
+
+    @Autowired
+    private VNPayConfig vnPayConfig;
     @Autowired
     private UserRepository userRepository;
     @Autowired
@@ -65,7 +71,6 @@ public class TicketService {
         Ticket ticket = Ticket.builder()
                 .bank(ticketDTO.getBank())
                 .booking(booking)
-                .user(user)
                 .qrCode(qrCode)
                 .build();
         ticketRepository.save(ticket);
@@ -131,6 +136,23 @@ public class TicketService {
             }
         }
         return sales;
+    }
+
+    public VNPayResponse createVNPayPayment(PaymentRequestVM request, HttpServletRequest httpServletRequest) {
+        long amount = request.amount() * 100L;
+        String bankCode = request.bankCode();
+        Map<String, String> vnpParamsMap = vnPayConfig.getVNPayConfig(request);
+        vnpParamsMap.put("vnp_Amount", String.valueOf(amount));
+        if (bankCode != null && !bankCode.isEmpty()) {
+            vnpParamsMap.put("vnp_BankCode", bankCode);
+        }
+        vnpParamsMap.put("vnp_IpAddr", VNPayUtils.getIpAddress(httpServletRequest));
+        //build query url
+        String queryUrl = VNPayUtils.getPaymentURL(vnpParamsMap, true);
+        String hashData = VNPayUtils.getPaymentURL(vnpParamsMap, false);
+        queryUrl += "&vnp_SecureHash=" + VNPayUtils.hmacSHA512(vnPayConfig.getSecretKey(), hashData);
+        String paymentUrl = vnPayConfig.getVnp_PayUrl() + "?" + queryUrl;
+        return new VNPayResponse("ok", "success", paymentUrl);
     }
 
 }
