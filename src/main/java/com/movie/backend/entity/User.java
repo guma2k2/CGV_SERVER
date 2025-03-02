@@ -1,15 +1,10 @@
 package com.movie.backend.entity;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
-import com.movie.backend.security.token.Token;
-import com.movie.backend.ultity.FileUploadUtil;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.hibernate.annotations.Cascade;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -32,7 +27,6 @@ public class User implements UserDetails {
     @Column(name = "last_name" , nullable = false)
     private String lastName ;
     private String password;
-
     @Column(length = 20 , unique = true)
     private String email;
 
@@ -40,10 +34,6 @@ public class User implements UserDetails {
 
     @Column(length = 20 , unique = true)
     private String phone_number ;
-
-    @OneToMany(mappedBy = "user")
-    @JsonManagedReference
-    private List<Token> token = new ArrayList<>();
 
     private boolean status;
 

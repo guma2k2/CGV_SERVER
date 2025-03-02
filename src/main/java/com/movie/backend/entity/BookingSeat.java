@@ -23,14 +23,8 @@ public class BookingSeat {
     @JoinColumn(name = "seat_id")
     private Seat seat ;
 
-    @ManyToOne
-    private Event event ;
 
-    public  BookingSeat(Seat seat , Booking booking) {
-        this.seat = seat;
-        this.booking = booking;
-        this.event = booking.getEvent();
-    }
+
 
     public BookingSeat() {
     }

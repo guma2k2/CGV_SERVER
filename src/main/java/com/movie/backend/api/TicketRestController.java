@@ -1,9 +1,12 @@
 package com.movie.backend.api;
 
+import com.movie.backend.dto.PaymentRequestVM;
 import com.movie.backend.dto.SalesByCinema;
 import com.movie.backend.dto.TicketDTO;
+import com.movie.backend.dto.VNPayResponse;
 import com.movie.backend.entity.Ticket;
 import com.movie.backend.service.TicketService;
+import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -18,6 +21,12 @@ import java.util.List;
 public class TicketRestController {
     @Autowired
     private TicketService ticketService;
+
+
+    @PostMapping("/vn-pay")
+    public ResponseEntity<VNPayResponse> pay(@RequestBody PaymentRequestVM request, HttpServletRequest httpServletRequest) {
+        return ResponseEntity.ok().body(ticketService.createVNPayPayment(request, httpServletRequest));
+    }
 
 
     @PostMapping("/create")

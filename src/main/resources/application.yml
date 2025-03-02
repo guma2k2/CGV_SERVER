@@ -25,10 +25,37 @@ spring:
     password: 'password'
     username: root
     url: jdbc:mysql://localhost:3306/movie_app
+  mail:
+    properties:
+      mail:
+        smtp:
+          starttls:
+            enable: 'true'
+          auth: 'true'
+    host: smtp.gmail.com
+    username: 'thuanngo3072002@gmail.com'
+    password: 'vhro flua bbql umbp'
+    port: '587'
   cloudinary:
     api:
       secret: u3aoCSJzt31lcqOJBsgykwTq81o
       key: '593637822396816'
     name: di6h4mtfa
+ui:
+  url: "http://localhost:8000"
+outbound:
+  identity:
+    client-id: "432352633789-2sr5oickn1f17lbrg8f689tn3fnhv5hu.apps.googleusercontent.com"
+    client-secret: "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"
+    redirect-uri: "${ui.url}/authenticate"
 server:
   port : 8080
+payment:
+  vnPay:
+    url: "https://sandbox.vnpayment.vn/paymentv2/vpcpay.html"
+    tmnCode: "EDT2E52Y"
+    secretKey: "VGC6H4EJ834TXE5USIHM20W3FH4469VW"
+    returnUrl: "http://localhost:8000/vn-pay-callback"
+    version: "2.1.0"
+    command: "pay"
+    orderType: "bill"

@@ -1,6 +1,5 @@
 package com.movie.backend.dto;
 
-import com.movie.backend.entity.Event;
 import lombok.Data;
 
 import java.time.LocalDateTime;
