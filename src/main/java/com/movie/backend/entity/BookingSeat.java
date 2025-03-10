@@ -1,15 +1,15 @@
 package com.movie.backend.entity;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
+import lombok.*;
 
-@Data
 @Builder
 @Table(name = "booking_seat")
 @Entity
 @AllArgsConstructor
+@NoArgsConstructor
+@Getter
+@Setter
 public class BookingSeat {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -23,9 +23,4 @@ public class BookingSeat {
     @JoinColumn(name = "seat_id")
     private Seat seat ;
 
-
-
-
-    public BookingSeat() {
-    }
 }

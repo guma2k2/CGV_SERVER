@@ -13,9 +13,7 @@ public class BookingDTO {
     private UserDTO user;
     private LocalDateTime created_time;
     private Long total_amount;
-
     private String seats;
-
     List<ComboDTO> combos;
 
 }

@@ -34,8 +34,8 @@ public class UserRestController {
 
     @GetMapping("/paginate")
     public DataContent findPaginate(@RequestParam("pageNum")int pageNum ,
-                                    @RequestParam("sortDir") String sortDir,
-                                    @RequestParam("sortField") String sortField,
+                                    @RequestParam(value = "sortDir", required = false) String sortDir,
+                                    @RequestParam(value = "sortField", required = false) String sortField,
                                     @RequestParam("keyword") String keyword ) {
         return userService.findAll(pageNum, sortDir, sortField, keyword) ;
     }

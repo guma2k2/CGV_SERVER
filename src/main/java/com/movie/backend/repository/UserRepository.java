@@ -21,7 +21,6 @@ public interface UserRepository extends JpaRepository<User, Long> {
     @Query("SELECT u FROM User u WHERE CONCAT(u.firstName, ',' , u.lastName) LIKE %:keyword% OR u.email  LIKE %:keyword%")
     public Page<User> listAll(@Param("keyword") String keyword , Pageable pageable) ;
 
-
     @Modifying
     @Query("UPDATE User u SET u.status = :status WHERE u.id = :userId")
     public void updateStatus(@Param("userId") Long userId , @Param("status") boolean status) ;

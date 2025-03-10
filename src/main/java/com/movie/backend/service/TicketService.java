@@ -7,6 +7,7 @@ import com.movie.backend.repository.BookingComboRepository;
 import com.movie.backend.repository.BookingRepository;
 import com.movie.backend.repository.TicketRepository;
 import com.movie.backend.repository.UserRepository;
+import com.movie.backend.ultity.RandomString;
 import com.movie.backend.ultity.VNPayConfig;
 import com.movie.backend.ultity.VNPayUtils;
 import jakarta.servlet.http.HttpServletRequest;
@@ -42,6 +43,8 @@ public class TicketService {
     private ModelMapper modelMapper;
     @Autowired
     private BookingComboRepository bookingComboRepository;
+
+
     public List<TicketDTO> findByUserId(Long userId) {
         if (userId == null) {
             throw new UserException("The id of user cannot found");
@@ -64,14 +67,12 @@ public class TicketService {
 
     public void saveTicket(TicketDTO ticketDTO) {
         Long bookingId = ticketDTO.getBookingId();
-        Long userId = ticketDTO.getUserId();
-        String qrCode = ticketDTO.getQrCode();
-        User user = userRepository.findById(userId).orElseThrow() ;
+        String randomCode = RandomString.make(12);
         Booking booking = bookingRepository.findById(bookingId).orElseThrow();
         Ticket ticket = Ticket.builder()
                 .bank(ticketDTO.getBank())
                 .booking(booking)
-                .qrCode(qrCode)
+                .qrCode(randomCode)
                 .build();
         ticketRepository.save(ticket);
     }
