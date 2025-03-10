@@ -199,6 +199,18 @@ public class MovieService {
         Movie movie = movieRepository.findById(movieId).orElseThrow();
         return modelMapper.map(movie,MovieDTO.class);
     }
+
+    public List<MovieDTO> findByTitle(String title) {
+        return movieRepository.findByTitle(title)
+                .stream()
+                .map(movie -> modelMapper.map(movie,MovieDTO.class))
+                .collect(Collectors.toList());
+    }
+
+    public void deleteMovie(Long movieId) {
+        Movie movie = movieRepository.findById(movieId).orElseThrow(() -> new MovieException("movie not found")) ;
+        movieRepository.delete(movie);
+    }
     public List<MovieDTO> findBeforeDate() {
         return movieRepository.findBeforeDate()
                 .stream()
@@ -213,17 +225,7 @@ public class MovieService {
                 .collect(Collectors.toList());
     }
 
-    public List<MovieDTO> findByTitle(String title) {
-        return movieRepository.findByTitle(title)
-                .stream()
-                .map(movie -> modelMapper.map(movie,MovieDTO.class))
-                .collect(Collectors.toList());
-    }
 
-    public void deleteMovie(Long movieId) {
-        Movie movie = movieRepository.findById(movieId).orElseThrow(() -> new MovieException("movie not found")) ;
-        movieRepository.delete(movie);
-    }
 
     @Transactional
     public void updateStatus(Long movieId, boolean status) {

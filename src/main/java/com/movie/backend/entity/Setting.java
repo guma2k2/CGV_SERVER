@@ -1,15 +1,14 @@
 package com.movie.backend.entity;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 @Table(name = "setting")
 @Entity
 @AllArgsConstructor
 @NoArgsConstructor
-@Data
+@Getter
+@Setter
 public class Setting {
     @Id
     @Column( name = "`key`",nullable = false , unique = true , length = 100)

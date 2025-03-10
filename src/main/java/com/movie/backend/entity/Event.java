@@ -3,10 +3,7 @@ package com.movie.backend.entity;
 import com.fasterxml.jackson.annotation.*;
 import com.movie.backend.dto.CinemaDTO;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.time.Duration;
 import java.time.LocalDate;
@@ -18,7 +15,8 @@ import java.util.List;
 
 @Entity
 @Table(name = "event")
-@Data
+@Getter
+@Setter
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder

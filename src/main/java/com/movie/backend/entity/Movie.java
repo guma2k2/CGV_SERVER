@@ -3,10 +3,7 @@ package com.movie.backend.entity;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.movie.backend.ultity.FileUploadUtil;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.time.LocalDate;
 import java.util.HashSet;
@@ -15,7 +12,8 @@ import java.util.Set;
 
 @Entity
 @Table(name = "movie")
-@Data
+@Getter
+@Setter
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
