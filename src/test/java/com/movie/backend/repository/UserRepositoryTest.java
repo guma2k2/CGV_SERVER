@@ -28,13 +28,13 @@ public class UserRepositoryTest {
         User user1 = new User();
         user1.setFirstName("John");
         user1.setLastName("Doe");
-        user1.setEmail("john.doe@example.com");
+        user1.setEmail("doe@gmail.com");
         userRepository.save(user1);
 
         User user2 = new User();
         user2.setFirstName("Jane");
         user2.setLastName("Smith");
-        user2.setEmail("jane.smith@example.com");
+        user2.setEmail("smith@gmail.com");
         userRepository.save(user2);
     }
 
@@ -57,7 +57,7 @@ public class UserRepositoryTest {
     @Test
     void listAll_ShouldReturnUsersMatchingEmail() {
         // Given
-        String keyword = "jane.smith@example.com";
+        String keyword = "smith@gmail.com";
         Pageable pageable = PageRequest.of(0, 10);
 
         // When
@@ -66,7 +66,7 @@ public class UserRepositoryTest {
         // Then
         assertThat(result).isNotEmpty();
         assertThat(result.getContent()).hasSize(1);
-        assertThat(result.getContent().get(0).getEmail()).isEqualTo("jane.smith@example.com");
+        assertThat(result.getContent().get(0).getEmail()).isEqualTo("smith@gmail.com");
     }
 
     @Test
