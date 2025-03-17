@@ -29,6 +29,10 @@ public class EventRepositoryTest {
     @Autowired
     private EventRepository eventRepository;
 
+    @Autowired
+    private RoomRepository roomRepository;
+
+
     private Cinema cinema;
     private Room room;
     private Event event1, event2;
@@ -43,9 +47,9 @@ public class EventRepositoryTest {
 
         // Create and save Room
         room = new Room();
-        room.setId(1L);
         room.setName("IMAX");
         room.setCinema(cinema);
+        room = roomRepository.saveAndFlush(room);
 
         // Create and save Event 1
         event1 = new Event();
