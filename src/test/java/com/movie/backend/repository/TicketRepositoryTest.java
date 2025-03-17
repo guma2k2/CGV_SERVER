@@ -51,11 +51,11 @@ public class TicketRepositoryTest {
         user.setFirstName("asfa@asdfasf");
         user.setLastName("asfa@asdfasf");
 
-        user = userRepository.save(user); // Save user first
+        user = userRepository.saveAndFlush(user); // Save user first
 
         event = new Event();
         event.setId(1L);
-        event = eventRepository.save(event); // Save event first
+        event = eventRepository.saveAndFlush(event); // Save event first
 
         booking = new Booking();
         booking.setId(1L);
