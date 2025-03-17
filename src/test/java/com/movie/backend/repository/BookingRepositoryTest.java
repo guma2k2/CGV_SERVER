@@ -42,17 +42,16 @@ public class BookingRepositoryTest {
     void setUp() {
         // Create and save a User
         user = new User();
-        user.setId(1L);
         user.setFirstName("testuser");
         user.setLastName("testuser");
 
         user.setEmail("testuser@example.com");
-        userRepository.save(user);
+        user = userRepository.saveAndFlush(user);
 
         // Create and save an Event
         event = new Event();
         event.setStart_date(LocalDateTime.now().toLocalDate());
-        eventRepository.saveAndFlush(event);
+        event = eventRepository.saveAndFlush(event);
 
         // Create and save a Booking associated with the Event
         booking = new Booking();
