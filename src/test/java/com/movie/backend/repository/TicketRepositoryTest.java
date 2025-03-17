@@ -46,7 +46,6 @@ public class TicketRepositoryTest {
     @BeforeEach
     void setUp() {
         user = new User();
-        user.setId(1L);
         user.setEmail("asfa@asdfasf");
         user.setFirstName("asfa@asdfasf");
         user.setLastName("asfa@asdfasf");
@@ -58,13 +57,11 @@ public class TicketRepositoryTest {
         event = eventRepository.saveAndFlush(event); // Save event first
 
         booking = new Booking();
-        booking.setId(1L);
         booking.setUser(user);
         booking.setEvent(event);
         booking = bookingRepository.save(booking); // Save booking before ticket
 
         ticket = new Ticket();
-        ticket.setId(1L);
         ticket.setBooking(booking);
         ticket.setCreatedTime(LocalDateTime.now().minusDays(3));
 
@@ -74,7 +71,7 @@ public class TicketRepositoryTest {
 
     @Test
     void testFindByUser() {
-        Long userId = 1L;
+        Long userId = user.getId();
         List<Ticket> tickets = ticketRepository.findByUser(userId);
         assertNotNull(tickets);
         assertFalse(tickets.isEmpty());
