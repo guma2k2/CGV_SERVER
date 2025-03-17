@@ -7,6 +7,7 @@ import com.movie.backend.repository.BookingComboRepository;
 import com.movie.backend.repository.BookingRepository;
 import com.movie.backend.repository.TicketRepository;
 import com.movie.backend.repository.UserRepository;
+import com.movie.backend.ultity.DateTimeUtil;
 import com.movie.backend.ultity.RandomString;
 import com.movie.backend.ultity.VNPayConfig;
 import com.movie.backend.ultity.VNPayUtils;
@@ -55,6 +56,8 @@ public class TicketService {
             Long bookingId = ticket.getBooking().getId();
             ticketDTO.setBookingId(bookingId);
             ticketDTO.setUserId(userId);
+            String createdAt = DateTimeUtil.formatLocalDateTime(ticket.getCreatedTime());
+            ticketDTO.setCreatedAt(createdAt);
             List<BookingComboDTO> comboDTOS = bookingComboRepository.findByBooking(bookingId)
                     .stream()
                     .map(bookingCombo ->  modelMapper.map(bookingCombo, BookingComboDTO.class))
