@@ -53,6 +53,10 @@ jobs:
         run: |
           mvn clean
           mvn -B package --file pom.xml
+        env:
+          SPRING_DATASOURCE_URL: jdbc:mysql://127.0.0.1:3306/testdb?useSSL=false&allowPublicKeyRetrieval=true
+          SPRING_DATASOURCE_USERNAME: testuser
+          SPRING_DATASOURCE_PASSWORD: testpassword
 
       - name: Build Docker Image
         uses: docker/build-push-action@v3
