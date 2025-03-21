@@ -201,7 +201,7 @@ public class AuthenticationService {
         user.setFirstName(request.firstName());
         user.setLastName(request.lastName());
         user.setPhone_number(request.phoneNumber());
-        if (!request.password().isBlank()) {
+        if (request.password() != null) {
             user.setPassword(passwordEncoder.encode(request.password()));
         }
         User updatedUser = userRepository.saveAndFlush(user);

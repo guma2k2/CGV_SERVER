@@ -55,7 +55,7 @@ public class AuthenticationController {
     }
 
     @GetMapping("/profile")
-    ResponseEntity<ProfileResponse> updateProfile(
+    ResponseEntity<ProfileResponse> getProfile(
     ){
         return ResponseEntity.ok().body(service.getProfile());
     }

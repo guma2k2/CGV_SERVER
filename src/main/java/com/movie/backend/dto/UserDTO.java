@@ -20,6 +20,7 @@ public class UserDTO {
     private boolean status;
     private String photo;
     private String photosImagePath;
+    private String phone_number;
     private String verificationCode;
     private String forgotPassword ;
     private Set<RoleDTO> roles ;

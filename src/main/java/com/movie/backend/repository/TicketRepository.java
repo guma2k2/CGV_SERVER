@@ -26,6 +26,13 @@ public interface TicketRepository extends JpaRepository<Ticket,Long> {
             "WHERE e.id = :id")
     List<Ticket> findByEvent(@Param("id")Long eventId);
 
-    @Query("SELECT t FROM Ticket t WHERE t.createdTime BETWEEN :startDate AND :endDate")
+    @Query("""
+        SELECT t 
+        FROM Ticket t 
+        join fetch t.booking b
+        join fetch b.event e 
+        join fetch e.movie m
+        WHERE t.createdTime BETWEEN :startDate AND :endDate
+    """)
     List<Ticket> findByDateMovie(@Param("startDate")LocalDateTime startDate, @Param("endDate")LocalDateTime endDate) ;
 }
