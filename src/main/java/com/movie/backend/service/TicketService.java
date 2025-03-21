@@ -13,13 +13,18 @@ import com.movie.backend.ultity.VNPayConfig;
 import com.movie.backend.ultity.VNPayUtils;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.poi.ss.usermodel.*;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -44,6 +49,9 @@ public class TicketService {
     private ModelMapper modelMapper;
     @Autowired
     private BookingComboRepository bookingComboRepository;
+
+    private final static String ticketCountKey = "ticketCount";
+    private final static String totalRevenueKey = "totalRevenue";
 
 
     public List<TicketDTO> findByUserId(Long userId) {
@@ -91,56 +99,38 @@ public class TicketService {
         ticketDTO.setCombos(comboDTOS);
         return ticketDTO ;
     }
-    public List<SalesByCinema> report(LocalDate startDate, LocalDate endDate, Long cinemaId) {
-        // convert localDate to localDateTime. Because the field `createdTime` in Ticket(Table) is localDateTime
+    public List<SaleByMovie> reportByMovie(LocalDate startDate, LocalDate endDate) {
         LocalDateTime startDateTime = startDate.atStartOfDay();
         LocalDateTime endDateTime = endDate.atStartOfDay();
+        List<Ticket> tickets = ticketRepository.findByDateMovie(startDateTime, endDateTime);
+        Map<Movie, Map<String, Object>> revenueByMovie = tickets.stream()
+                .collect(Collectors.groupingBy(
+                        ticket -> ticket.getBooking().getEvent().getMovie(),
+                        Collectors.collectingAndThen(
+                                Collectors.toList(),
+                                ticketList -> {
+                                    int ticketCount = ticketList.size();
+                                    long totalRevenue = (long) ticketList.stream()
+                                            .mapToDouble(t -> t.getBooking().getTotal_amount())
+                                            .sum();
+                                    Map<String, Object> result = new HashMap<>();
+                                    result.put(ticketCountKey, ticketCount);
+                                    result.put(totalRevenueKey, totalRevenue);
+                                    return result;
+                                }
+                        )
+                ));
 
-        // get Cinema by id
-        CinemaDTO cinema = cinemaService.get(cinemaId);
-
-        // get list ticket from startDate to endDate
-        List<Ticket> tickets = ticketRepository.findByDateMovie(startDateTime, endDateTime)
-                .stream()
-                .filter(ticket -> ticket.getBooking().getEvent().getRoom().getCinema().getId().equals(cinemaId))
-                .collect(Collectors.toList());
-
-        // Because you want to get report by `day`, but in one day, the cinema can have many tickets
-        // So you need to map to a day with sum of price per ticket
-        Map<LocalDate, Long> revenueByDate = tickets.stream()
-                .filter(ticket -> ticket.getCreatedTime().isAfter(startDateTime.minusDays(1))
-                        && ticket.getCreatedTime().isBefore(endDateTime.plusDays(1)))
-                .collect(Collectors
-                        .groupingBy(ticket -> ticket.getCreatedTime().toLocalDate(),
-                                Collectors.summingLong(ticket -> ticket.getBooking().getTotal_amount())));
-        List<SalesByCinema> sales = new ArrayList<>();
-
-        // when you use googleChart, in case of the request with `startDate and endDate`
-        // but in one day of those request and ticket was not have this day so the chart will not have one of day
-        // in request
-        // So you need to add all day in range of request in response
-        while (!startDate.isAfter(endDate)) {
-            // Do something with the current date, such as print it
-            sales.add(new SalesByCinema(startDate));
-            // Increment the current date by one day
-            startDate = startDate.plusDays(1);
-        }
-        // get the revenue in range of request `startDate and endDate`
-        for (Map.Entry<LocalDate, Long> entry : revenueByDate.entrySet()) {
-            LocalDate date = entry.getKey();
-            Long total = entry.getValue();
-            SalesByCinema sale = new SalesByCinema(date);
-            int itemIndex = sales.indexOf(sale);
-            if(itemIndex >= 0) {
-                SalesByCinema salesByCinema = sales.get(itemIndex) ;
-                salesByCinema.setCinemaId(cinema.getId());
-                salesByCinema.setCinemaName(cinema.getName());
-                salesByCinema.setDate(date);
-                salesByCinema.setTotalAmount(total);
-            }
-        }
+        List<SaleByMovie> sales = new ArrayList<>();
+        revenueByMovie.forEach((movie, data) -> {
+            int ticketCount = (int) data.get(ticketCountKey);
+            Long totalRevenue = (Long) data.get(totalRevenueKey);
+            SaleByMovie sale = new SaleByMovie(movie.getId(), movie.getTitle(), movie.getPoster_url(), ticketCount, totalRevenue);
+            sales.add(sale);
+        });
         return sales;
     }
+
 
     public VNPayResponse createVNPayPayment(PaymentRequestVM request, HttpServletRequest httpServletRequest) {
         long amount = request.amount() * 100L;
@@ -159,4 +149,58 @@ public class TicketService {
         return new VNPayResponse("ok", "success", paymentUrl);
     }
 
+    public byte[] exportByMovie(List<SaleByMovie> request) {
+        Workbook workbook = new XSSFWorkbook();
+        Sheet sheet = workbook.createSheet("Statistics");
+
+        // Create Header Row
+        Row headerRow = sheet.createRow(0);
+        CellStyle headerStyle = workbook.createCellStyle();
+        Font headerFont = workbook.createFont();
+        headerFont.setBold(true);
+        headerStyle.setFont(headerFont);
+
+        Cell headerCell = headerRow.createCell(0);
+        headerCell.setCellValue("Stt");
+        headerCell.setCellStyle(headerStyle);
+
+        headerCell = headerRow.createCell(1);
+        headerCell.setCellValue("Tên khóa học");
+        headerCell.setCellStyle(headerStyle);
+
+        headerCell = headerRow.createCell(2);
+        headerCell.setCellValue("Số lượng");
+        headerCell.setCellStyle(headerStyle);
+
+        headerCell = headerRow.createCell(3);
+        headerCell.setCellValue("Tổng tiền (đồng)");
+        headerCell.setCellStyle(headerStyle);
+
+        // Populate Data Rows
+        int rowIdx = 1;
+        for (SaleByMovie stat : request) {
+            Row row = sheet.createRow(rowIdx);
+            row.createCell(0).setCellValue(rowIdx);
+            row.createCell(1).setCellValue(stat.title());
+            row.createCell(2).setCellValue(stat.ticketCount());
+            row.createCell(3).setCellValue(stat.ticketCount());
+            rowIdx++;
+        }
+
+        // Auto-size Columns
+        sheet.autoSizeColumn(0);
+        sheet.autoSizeColumn(1);
+        sheet.autoSizeColumn(2);
+
+        // Write to ByteArrayOutputStream
+        ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+        try {
+            workbook.write(outputStream);
+            workbook.close();
+
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        return outputStream.toByteArray();
+    }
 }

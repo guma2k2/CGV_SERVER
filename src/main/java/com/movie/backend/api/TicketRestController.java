@@ -1,18 +1,18 @@
 package com.movie.backend.api;
 
 import com.movie.backend.dto.PaymentRequestVM;
-import com.movie.backend.dto.SalesByCinema;
+import com.movie.backend.dto.SaleByMovie;
 import com.movie.backend.dto.TicketDTO;
 import com.movie.backend.dto.VNPayResponse;
-import com.movie.backend.entity.Ticket;
 import com.movie.backend.service.TicketService;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.List;
 
 @RestController
@@ -45,11 +45,16 @@ public class TicketRestController {
         return ticketService.findById(ticketId);
     }
 
-    @GetMapping("/admin/between/{startDate}/{endDate}/where/{cinemaId}")
-    public List<SalesByCinema> salesByCinemas(@PathVariable("startDate")LocalDate startDate,
-                                              @PathVariable("endDate")LocalDate endDate,
-                                              @PathVariable("cinemaId")Long cinemaId) {
-        return ticketService.report(startDate, endDate, cinemaId);
+    @GetMapping("/admin/revenue/between/{startDate}/{endDate}")
+    public List<SaleByMovie> getRevenueByMovie(@PathVariable("startDate")LocalDate startDate,
+                                            @PathVariable("endDate")LocalDate endDate) {
+        return ticketService.reportByMovie(startDate, endDate);
     }
-
+    @PostMapping("/admin/revenue/file")
+    public ResponseEntity<byte[]> exportByMovie(@RequestBody List<SaleByMovie> request) {
+        byte[] datas = ticketService.exportByMovie(request);
+        HttpHeaders headers = new HttpHeaders();
+        headers.add("Content-Disposition", "attachment; filename=statistics.xlsx");
+        return new ResponseEntity<>(datas, headers, HttpStatus.OK);
+    }
 }
