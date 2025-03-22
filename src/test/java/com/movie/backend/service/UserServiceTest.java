@@ -76,7 +76,7 @@ public class UserServiceTest {
 
         userDTO = new UserDTO(1L, "John", "Doe", "John Doe",
                 "john.doe@example.com", "password123", true,
-                "photo.jpg", "/images/photo.jpg", "verif123",
+                "photo.jpg", "/images/photo.jpg", "01231414" ,  "verif123",
                 "forgot123", Set.of(new RoleDTO(1, "CLIENT")));
     }
 

@@ -80,7 +80,7 @@ public class UserControllerTest {
         roles1.add(new RoleDTO(1, "CLIENT"));
 
         UserDTO user1 = new UserDTO(1L, "John", "Doe", "John Doe", "john.doe@example.com", "password123", true,
-                "john_photo.jpg", "/images/john.jpg", "verif123", "forgot123", roles1);
+                "john_photo.jpg","/images/john.jpg", "0141412141" ,"verif123", "forgot123", roles1);
         pageableData.setResults(Collections.singletonList(user1));
 
         log.info(pageableData.toString());
