@@ -149,6 +149,7 @@ public class MovieService {
     }
 
     public List<MovieDTO> listAll() {
+        log.info("called this api");
         return movieRepository.findAll()
                 .stream()
                 .map(movie -> modelMapper.map(movie,MovieDTO.class))
