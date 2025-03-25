@@ -2,12 +2,15 @@ package com.movie.backend.api;
 
 
 import com.movie.backend.dto.BookingDTO;
+import com.movie.backend.dto.DataContent;
 import com.movie.backend.exception.BookingException;
 import com.movie.backend.service.BookingService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @CrossOrigin
@@ -30,5 +33,10 @@ public class BookingRestController {
     @DeleteMapping("/delete/booking/{id}")
     public void deleteById(@PathVariable("id")Long id) {
         bookingService.deleteByBookingId(id);
+    }
+    @GetMapping("/admin/bookings/paginate")
+    public DataContent get() {
+        DataContent dataContent = bookingService.findAll();
+        return dataContent;
     }
 }

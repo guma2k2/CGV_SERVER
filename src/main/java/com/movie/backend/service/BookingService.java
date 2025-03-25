@@ -1,17 +1,20 @@
 package com.movie.backend.service;
 
-import com.movie.backend.dto.BookingComboDTO;
-import com.movie.backend.dto.BookingDTO;
-import com.movie.backend.dto.ComboDTO;
+import com.movie.backend.dto.*;
 import com.movie.backend.entity.*;
 import com.movie.backend.exception.BookingException;
 import com.movie.backend.exception.EventValidException;
+import com.movie.backend.exception.MovieException;
 import com.movie.backend.exception.UserException;
 import com.movie.backend.repository.*;
 import jakarta.transaction.Transactional;
 import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
@@ -46,7 +49,6 @@ public class BookingService {
 
     @Autowired
     private EventRepository eventRepository;
-
 
     @Autowired
     private ModelMapper modelMapper ;
@@ -113,7 +115,6 @@ public class BookingService {
         Booking savedBooking = bookingRepository.save(booking);
         bookingSeatRepository.saveAll(bookingSeats);
         bookingComboRepository.saveAll(bookingCombos);
-//        log.info(String.valueOf(booking.getId()));
         return savedBooking.getId();
     }
 
@@ -141,5 +142,35 @@ public class BookingService {
         bookingSeatRepository.deleteByBooking(bookingId);
         bookingComboRepository.deleteByBooking(bookingId);
         bookingRepository.deleteBookingById(bookingId);
+    }
+
+    public DataContent findAll() {
+        int pageNum = 1;
+        Sort sort = Sort.by("id").descending() ;
+        Pageable pageable = PageRequest.of(pageNum - 1 , 5  , sort );
+        Page<Booking> pages = bookingRepository.findAll(pageable) ;
+        int total = pages.getTotalPages();
+        int totalElements = (int) pages.getTotalElements();
+
+        List<BookingDTO> bookingDTOS = pages.getContent()
+                .stream()
+                .map(booking -> {
+                    BookingDTO bookingDTO = modelMapper.map(booking, BookingDTO.class);
+                    EventDTO eventDTO = modelMapper.map(booking.getEvent(), EventDTO.class);
+                    List<ComboDTO> comboDTOS = bookingComboRepository.findByBooking(booking.getId()).stream().map(bookingCombo -> modelMapper.map(bookingCombo.getCombo(), ComboDTO.class)).toList();
+                    bookingDTO.setEvent(eventDTO);
+                    bookingDTO.setCombos(comboDTOS);
+                    return bookingDTO;
+                })
+                .collect(Collectors.toList());
+        Paginate paginate = Paginate.builder()
+                .currentPage(0)
+                .sortDir("desc")
+                .sortField("id")
+                .totalPage(total)
+                .totalElements(totalElements)
+                .sizePage(5)
+                .build();
+        return new DataContent(paginate , bookingDTOS);
     }
 }

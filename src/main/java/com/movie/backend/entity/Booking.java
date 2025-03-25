@@ -34,6 +34,10 @@ public class Booking {
     @JsonFormat(pattern = "dd/mm/yyyy hh:mm")
     private LocalDateTime created_time = LocalDateTime.now();
     private Long total_amount;
+
+    @Enumerated(EnumType.STRING)
+    private BookingStatus status;
+
     private String seats;
 
     @OneToMany(mappedBy = "booking", fetch = FetchType.LAZY , cascade = CascadeType.ALL)
