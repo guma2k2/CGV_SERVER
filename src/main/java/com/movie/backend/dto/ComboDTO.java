@@ -13,6 +13,5 @@ public class ComboDTO {
 
     private String img_url ;
     private int quantity ;
-
     private Long subTotal;
 }

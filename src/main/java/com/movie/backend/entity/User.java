@@ -24,6 +24,7 @@ public class User implements UserDetails {
 
     @Column(name = "last_name" , nullable = false)
     private String lastName ;
+
     private String password;
     @Column(length = 20 , unique = true)
     private String email;
@@ -38,21 +39,14 @@ public class User implements UserDetails {
     private String verificationCode;
     private String forgotPassword ;
 
-    @ManyToMany(fetch = FetchType.EAGER,cascade=CascadeType.ALL)
-    @JoinTable(name = "users_roles",
-            joinColumns = @JoinColumn(name = "user_id"),
-            inverseJoinColumns = @JoinColumn(name = "role_id"))
-
-    @Builder.Default
-    private Set<Role> roles = new HashSet<>();
+    @Enumerated(EnumType.STRING)
+    private ERole role;
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         List<SimpleGrantedAuthority> grantedAuthorities = new ArrayList<>();
-        for(Role role : roles) {
-            SimpleGrantedAuthority simpleGrantedAuthority = new SimpleGrantedAuthority(role.getName());
-            grantedAuthorities.add(simpleGrantedAuthority);
-        }
+        SimpleGrantedAuthority simpleGrantedAuthority = new SimpleGrantedAuthority(role.name());
+        grantedAuthorities.add(simpleGrantedAuthority);
         return grantedAuthorities;
     }
 
@@ -86,9 +80,6 @@ public class User implements UserDetails {
         return this.firstName + " " + this.lastName;
     }
 
-    public void addRole(Role role) {
-        roles.add(role);
-    }
     @Transient
     public String getPhotosImagePath() {
         if (id == null || photo == null) return "https://www.pngitem.com/pimgs/m/150-1503945_transparent-user-png-default-user-image-png-png.png";

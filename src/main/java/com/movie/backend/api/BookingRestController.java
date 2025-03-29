@@ -35,8 +35,14 @@ public class BookingRestController {
         bookingService.deleteByBookingId(id);
     }
     @GetMapping("/admin/bookings/paginate")
-    public DataContent get() {
-        DataContent dataContent = bookingService.findAll();
+    public DataContent get(@RequestParam(value = "pageNum", required = false, defaultValue = "1")Integer pageNum) {
+        DataContent dataContent = bookingService.findAll(pageNum);
         return dataContent;
+    }
+
+    @GetMapping("/admin/bookings/{bookingId}")
+    public BookingDTO get(@PathVariable("bookingId") Long bookingId) {
+        BookingDTO bookingDTO = bookingService.get(bookingId);
+        return bookingDTO;
     }
 }

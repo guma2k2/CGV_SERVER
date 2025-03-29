@@ -1,11 +1,9 @@
 package com.movie.backend.dto;
 
-import com.movie.backend.entity.Role;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.util.HashSet;
 import java.util.Set;
 @Data
 @AllArgsConstructor
@@ -23,5 +21,5 @@ public class UserDTO {
     private String phone_number;
     private String verificationCode;
     private String forgotPassword ;
-    private Set<RoleDTO> roles ;
+    private String role;
 }

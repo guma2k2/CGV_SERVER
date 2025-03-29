@@ -15,4 +15,5 @@ public class BookingDTO {
     private String seats;
     List<ComboDTO> combos;
     private String status;
+    private String createdTimeFormatted;
 }
