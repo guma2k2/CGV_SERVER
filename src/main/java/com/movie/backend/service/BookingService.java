@@ -7,6 +7,7 @@ import com.movie.backend.exception.EventValidException;
 import com.movie.backend.exception.MovieException;
 import com.movie.backend.exception.UserException;
 import com.movie.backend.repository.*;
+import com.movie.backend.ultity.DateTimeUtil;
 import jakarta.transaction.Transactional;
 import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
@@ -144,8 +145,7 @@ public class BookingService {
         bookingRepository.deleteBookingById(bookingId);
     }
 
-    public DataContent findAll() {
-        int pageNum = 1;
+    public DataContent findAll(Integer pageNum) {
         Sort sort = Sort.by("id").descending() ;
         Pageable pageable = PageRequest.of(pageNum - 1 , 5  , sort );
         Page<Booking> pages = bookingRepository.findAll(pageable) ;
@@ -160,11 +160,12 @@ public class BookingService {
                     List<ComboDTO> comboDTOS = bookingComboRepository.findByBooking(booking.getId()).stream().map(bookingCombo -> modelMapper.map(bookingCombo.getCombo(), ComboDTO.class)).toList();
                     bookingDTO.setEvent(eventDTO);
                     bookingDTO.setCombos(comboDTOS);
+                    bookingDTO.setCreatedTimeFormatted(DateTimeUtil.formatLocalDateTimeBooking(booking.getCreated_time()));
                     return bookingDTO;
                 })
                 .collect(Collectors.toList());
         Paginate paginate = Paginate.builder()
-                .currentPage(0)
+                .currentPage(pageNum)
                 .sortDir("desc")
                 .sortField("id")
                 .totalPage(total)
@@ -172,5 +173,16 @@ public class BookingService {
                 .sizePage(5)
                 .build();
         return new DataContent(paginate , bookingDTOS);
+    }
+
+    public BookingDTO get(Long bookingId) {
+        Booking booking = bookingRepository.findById(bookingId).orElseThrow();
+        BookingDTO bookingDTO = modelMapper.map(booking, BookingDTO.class);
+        EventDTO eventDTO = modelMapper.map(booking.getEvent(), EventDTO.class);
+        List<ComboDTO> comboDTOS = bookingComboRepository.findByBooking(booking.getId()).stream().map(bookingCombo -> modelMapper.map(bookingCombo.getCombo(), ComboDTO.class)).toList();
+        bookingDTO.setEvent(eventDTO);
+        bookingDTO.setCombos(comboDTOS);
+        bookingDTO.setCreatedTimeFormatted(DateTimeUtil.formatLocalDateTimeBooking(booking.getCreated_time()));
+        return bookingDTO;
     }
 }

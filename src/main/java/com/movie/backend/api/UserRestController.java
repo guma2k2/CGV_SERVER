@@ -40,11 +40,6 @@ public class UserRestController {
         return userService.findAll(pageNum, sortDir, sortField, keyword) ;
     }
 
-    @GetMapping("/roles")
-    public List<RoleDTO> getRoles() {
-        return userService.getAllRole() ;
-    }
-
     @PostMapping("/save")
     public User saveUser(@RequestBody UserDTO userDTO) {
         return userService.saveUser(userDTO, null);

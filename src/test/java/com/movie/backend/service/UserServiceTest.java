@@ -4,25 +4,18 @@ package com.movie.backend.service;
 import com.cloudinary.Cloudinary;
 import com.movie.backend.dto.RoleDTO;
 import com.movie.backend.dto.UserDTO;
-import com.movie.backend.entity.Role;
 import com.movie.backend.entity.User;
 import com.movie.backend.exception.UserException;
-import com.movie.backend.repository.RoleRepository;
 import com.movie.backend.repository.UserRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.modelmapper.ModelMapper;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
-import java.time.LocalDate;
-import java.util.Collections;
-import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 

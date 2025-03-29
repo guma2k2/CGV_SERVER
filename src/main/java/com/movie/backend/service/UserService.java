@@ -3,19 +3,16 @@ package com.movie.backend.service;
 import com.cloudinary.Cloudinary;
 import com.movie.backend.dto.RoleDTO;
 import com.movie.backend.dto.UserDTO;
-import com.movie.backend.entity.Role;
+import com.movie.backend.entity.ERole;
 import com.movie.backend.entity.User;
 import com.movie.backend.exception.UserException;
-import com.movie.backend.repository.RoleRepository;
 import com.movie.backend.repository.UserRepository;
 import com.movie.backend.ultity.RandomString;
 import jakarta.mail.MessagingException;
 import jakarta.mail.internet.MimeMessage;
 import com.movie.backend.dto.DataContent;
 import com.movie.backend.dto.Paginate;
-import com.movie.backend.ultity.FileUploadUtil;
 import com.movie.backend.ultity.MailUtil;
-import jakarta.servlet.http.HttpServletRequest;
 import jakarta.transaction.Transactional;
 import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
@@ -29,7 +26,6 @@ import org.springframework.mail.javamail.JavaMailSenderImpl;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-import org.springframework.util.StringUtils;
 import org.springframework.web.multipart.MultipartFile;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
@@ -53,9 +49,6 @@ public class UserService {
 
     @Autowired
     private PasswordEncoder passwordEncoder ;
-
-    @Autowired
-    private RoleRepository roleRepository;
 
     @Autowired
     private Cloudinary cloudinary;
@@ -117,13 +110,6 @@ public class UserService {
         }
         userRepository.save(user);
     }
-    public List<RoleDTO> getAllRole() {
-        return roleRepository
-                .findAll()
-                .stream()
-                .map(role -> modelMapper.map(role, RoleDTO.class))
-                .collect(Collectors.toList());
-    }
     public User saveUser(UserDTO userDTO, Long userId ) {
         boolean update = userId != null ;
         String requestEmail = userDTO.getEmail() ;
@@ -148,17 +134,13 @@ public class UserService {
         String lastName = userDTO.getLastName();
         String email = userDTO.getEmail();
         String password = userDTO.getPassword() ;
-        Set<Role> roles = new HashSet<>() ;
-        for (RoleDTO role : userDTO.getRoles()) {
-            Role oldRole = roleRepository.findById(role.getId()).get();
-            roles.add(oldRole);
-        }
+
         if(update) {
             User oldUser = userRepository.findById(userId).orElseThrow(() -> new UserException("User not found"));
             oldUser.setFirstName(firstName);
             oldUser.setLastName(lastName);
             oldUser.setEmail(email);
-            oldUser.setRoles(roles);
+            oldUser.setRole(ERole.valueOf(userDTO.getRole()));
             oldUser.setStatus(true);
             if(password.equals("")) {
                 oldUser.setPassword(oldUser.getPassword());
@@ -173,7 +155,7 @@ public class UserService {
                 .firstName(firstName)
                 .lastName(lastName)
                 .email(email)
-                .roles(roles)
+                .role(ERole.valueOf(userDTO.getRole()))
                 .status(true)
                 .password(passwordEncoder.encode(password))
                 .build();

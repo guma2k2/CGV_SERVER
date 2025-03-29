@@ -6,6 +6,7 @@ import com.movie.backend.dto.DataContent;
 import com.movie.backend.dto.Paginate;
 import com.movie.backend.dto.RoleDTO;
 import com.movie.backend.dto.UserDTO;
+import com.movie.backend.entity.ERole;
 import com.movie.backend.entity.User;
 import com.movie.backend.security.config.JwtService;
 import com.movie.backend.service.UserService;
@@ -80,7 +81,7 @@ public class UserControllerTest {
         roles1.add(new RoleDTO(1, "CLIENT"));
 
         UserDTO user1 = new UserDTO(1L, "John", "Doe", "John Doe", "john.doe@example.com", "password123", true,
-                "john_photo.jpg","/images/john.jpg", "0141412141" ,"verif123", "forgot123", roles1);
+                "john_photo.jpg","/images/john.jpg", "0141412141" ,"verif123", "forgot123", ERole.ADMIN.name());
         pageableData.setResults(Collections.singletonList(user1));
 
         log.info(pageableData.toString());
