@@ -112,6 +112,7 @@ public class UserControllerTest {
         UserDTO userDTO = new UserDTO();
         userDTO.setFirstName("UpdatedFirst");
         userDTO.setLastName("UpdatedLast");
+        userDTO.setRole(ERole.ADMIN.name());
         userDTO.setEmail("updated@example.com");
 
         User updatedUser = new User();
@@ -119,6 +120,7 @@ public class UserControllerTest {
         updatedUser.setFirstName("UpdatedFirst");
         updatedUser.setLastName("UpdatedLast");
         updatedUser.setEmail("updated@example.com");
+        updatedUser.setRole(ERole.ADMIN);
 
         when(userService.saveUser(any(UserDTO.class), eq(userId))).thenReturn(updatedUser);
 
@@ -140,6 +142,7 @@ public class UserControllerTest {
         UserDTO userDTO = new UserDTO();
         userDTO.setFirstName("John");
         userDTO.setLastName("Doe");
+        userDTO.setRole(ERole.ADMIN.name());
         userDTO.setEmail("john.doe@example.com");
 
         User savedUser = new User();
@@ -147,6 +150,7 @@ public class UserControllerTest {
         savedUser.setFirstName("John");
         savedUser.setLastName("Doe");
         savedUser.setEmail("john.doe@example.com");
+        savedUser.setRole(ERole.ADMIN);
 
         when(userService.saveUser(any(UserDTO.class), any())).thenReturn(savedUser);
 
