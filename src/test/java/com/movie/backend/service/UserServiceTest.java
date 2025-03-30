@@ -4,6 +4,7 @@ package com.movie.backend.service;
 import com.cloudinary.Cloudinary;
 import com.movie.backend.dto.RoleDTO;
 import com.movie.backend.dto.UserDTO;
+import com.movie.backend.entity.ERole;
 import com.movie.backend.entity.User;
 import com.movie.backend.exception.UserException;
 import com.movie.backend.repository.UserRepository;
@@ -40,8 +41,7 @@ public class UserServiceTest {
     @Mock
     private PasswordEncoder passwordEncoder ;
 
-    @Mock
-    private RoleRepository roleRepository;
+
 
     @Mock
     private Cloudinary cloudinary;
@@ -52,10 +52,8 @@ public class UserServiceTest {
     private User user;
 
     private UserDTO userDTO;
-    private Role role;
     @BeforeEach
     void setUp() {
-        role = new Role(1, "CLIENT");
 
         user = User.builder()
                 .id(1L)
@@ -63,21 +61,20 @@ public class UserServiceTest {
                 .lastName("Doe")
                 .email("john.doe@example.com")
                 .password("encodedPassword123")
-                .roles(Set.of(role))
+                .role(ERole.CUSTOMER)
                 .status(true)
                 .build();
 
         userDTO = new UserDTO(1L, "John", "Doe", "John Doe",
                 "john.doe@example.com", "password123", true,
                 "photo.jpg", "/images/photo.jpg", "01231414" ,  "verif123",
-                "forgot123", Set.of(new RoleDTO(1, "CLIENT")));
+                "forgot123", ERole.CUSTOMER.name());
     }
 
     @Test
     void saveUser_ShouldCreateNewUser_WhenUserDoesNotExist() {
         // Given
         when(userRepository.findByEmail(userDTO.getEmail())).thenReturn(Optional.empty());
-        when(roleRepository.findById(1)).thenReturn(Optional.of(role));
         when(passwordEncoder.encode(userDTO.getPassword())).thenReturn("encodedPassword123");
         when(userRepository.save(any(User.class))).thenReturn(user);
 
