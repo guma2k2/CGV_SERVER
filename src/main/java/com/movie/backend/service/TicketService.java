@@ -12,6 +12,7 @@ import com.movie.backend.ultity.RandomString;
 import com.movie.backend.ultity.VNPayConfig;
 import com.movie.backend.ultity.VNPayUtils;
 import jakarta.servlet.http.HttpServletRequest;
+import jakarta.transaction.Transactional;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.poi.ss.usermodel.*;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
@@ -76,6 +77,7 @@ public class TicketService {
         return ticketDTOS;
     }
 
+    @Transactional
     public void saveTicket(TicketDTO ticketDTO) {
         Long bookingId = ticketDTO.getBookingId();
         String randomCode = RandomString.make(12);
@@ -83,8 +85,10 @@ public class TicketService {
         Ticket ticket = Ticket.builder()
                 .bank(ticketDTO.getBank())
                 .booking(booking)
+                .phoneNumber(ticketDTO.getPhoneNumber())
                 .qrCode(randomCode)
                 .build();
+        bookingRepository.updateBookingStatus(bookingId, BookingStatus.SUCCESS);
         ticketRepository.save(ticket);
     }
 
@@ -183,7 +187,7 @@ public class TicketService {
             row.createCell(0).setCellValue(rowIdx);
             row.createCell(1).setCellValue(stat.title());
             row.createCell(2).setCellValue(stat.ticketCount());
-            row.createCell(3).setCellValue(stat.ticketCount());
+            row.createCell(3).setCellValue(stat.totalRevenue());
             rowIdx++;
         }
 

@@ -64,8 +64,7 @@ public class MovieService {
         Movie checkMovieExit = movieRepository.getByTitle(requestTitle) ;
         if(update) {
             if(checkMovieExit != null ) {
-                if (checkMovieExit.getId() != movieId) {
-                    System.out.println("fuck you ");
+                if (!Objects.equals(checkMovieExit.getId(), movieId)) {
                     throw new MovieException("Title not valid") ;
                 }
             }
@@ -149,7 +148,7 @@ public class MovieService {
     }
 
     public List<MovieDTO> listAll() {
-        return movieRepository.findAll()
+        return movieRepository.findAllCustom()
                 .stream()
                 .map(movie -> modelMapper.map(movie,MovieDTO.class))
                 .collect(Collectors.toList());

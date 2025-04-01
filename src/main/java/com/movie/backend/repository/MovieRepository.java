@@ -23,6 +23,10 @@ public interface MovieRepository extends JpaRepository<Movie,Long> {
     public List<Movie> findAfterDate(); // movie will show soon
 
 
+
+    @Query("SELECT m FROM Movie m WHERE m.isShowing = true")
+    public List<Movie> findAllCustom(); // movie will show s
+
     @Query("SELECT m FROM Movie m WHERE m.title LIKE %:title% ")
     public Page<Movie> findAll(@Param("title")String title, Pageable pageable) ;
 

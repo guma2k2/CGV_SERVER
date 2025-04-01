@@ -1,6 +1,7 @@
 package com.movie.backend.repository;
 
 import com.movie.backend.entity.Booking;
+import com.movie.backend.entity.BookingStatus;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
@@ -25,7 +26,9 @@ public interface BookingRepository  extends JpaRepository<Booking,Long> {
             "AND b.id NOT IN (SELECT t.booking.id FROM Ticket t)")
     List<Booking> findAllBookingByDay() ;
 
-
+    @Modifying
+    @Query("update Booking b set b.status = :status WHERE b.id = :id")
+    void updateBookingStatus(@Param("id") Long bookingId, @Param("status")BookingStatus status);
 
 //    @Query("""
 //        select b
