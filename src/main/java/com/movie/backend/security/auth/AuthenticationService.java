@@ -192,12 +192,11 @@ public class AuthenticationService {
 
     public AuthenticationResponse updateProfile(ProfileUpdateRequest request) {
         String email = SecurityContextHolder.getContext().getAuthentication().getName();
-        log.info(email);
         User user = userRepository.findByEmail(email).orElseThrow();
         user.setFirstName(request.firstName());
         user.setLastName(request.lastName());
         user.setPhone_number(request.phoneNumber());
-        if (request.password() != null) {
+        if (request.password() != null && request.password() != "") {
             user.setPassword(passwordEncoder.encode(request.password()));
         }
         User updatedUser = userRepository.saveAndFlush(user);

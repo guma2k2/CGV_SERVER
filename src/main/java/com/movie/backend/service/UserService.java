@@ -116,16 +116,14 @@ public class UserService {
         Optional<User> checkUserExit = userRepository.findByEmail(requestEmail) ;
         if(update) {
             if(checkUserExit.isPresent() ) {
-                if (checkUserExit.get().getId() != userId) {
-//                    log.info(userDTO.getEmail());
-//                    log.info("errUpdate");
+                if (!Objects.equals(checkUserExit.get().getId(), userId)) {
+                    log.info(checkUserExit.get().getId().toString());
+                    log.info(userId + "");
                     throw new UserException("Email was not valid") ;
                 }
             }
         } else {
             if (checkUserExit.isPresent()) {
-//                log.info(userDTO.getEmail());
-//                log.info("errCreate");
                 throw new UserException("Email was not valid") ;
             }
         }
