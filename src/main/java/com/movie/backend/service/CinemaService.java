@@ -3,8 +3,10 @@ package com.movie.backend.service;
 import com.cloudinary.Cloudinary;
 import com.movie.backend.dto.CinemaDTO;
 import com.movie.backend.entity.*;
+import com.movie.backend.exception.BadRequestException;
 import com.movie.backend.exception.CinemaException;
 import com.movie.backend.exception.MovieException;
+import com.movie.backend.exception.NotFoundException;
 import com.movie.backend.repository.CinemaImageRepository;
 import com.movie.backend.repository.CinemaRepository;
 import com.movie.backend.repository.EventRepository;
@@ -91,9 +93,7 @@ public class CinemaService {
         Cinema checkCinema = cinemaRepository.findByName(cinemaDTO.getName()) ;
         if(update) {
             if(checkCinema != null ) {
-                if (checkCinema.getId() != cinemaId) {
-//                    log.info(String.valueOf(cinemaId));
-//                    log.info(String.valueOf(checkCinema.getId()));
+                if (!Objects.equals(checkCinema.getId(), cinemaId)) {
                     throw new CinemaException("Name of cinema  not valid") ;
                 }
             }
@@ -208,5 +208,13 @@ public class CinemaService {
             cinema.setImage_url(url);
         }
 
+    }
+
+    public void delete(Long cinemaId) {
+        Cinema cinema = cinemaRepository.findById(cinemaId).orElseThrow(() -> new NotFoundException("cinema not found")) ;
+        if (cinema.getRooms().size() > 0) {
+            throw new BadRequestException("this cinema had rooms");
+        }
+        cinemaRepository.delete(cinema);
     }
 }
