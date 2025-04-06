@@ -51,6 +51,9 @@ public class RoomRestController {
         return roomService.saveRoom(roomDTO, roomId) ;
     }
 
-
+    @DeleteMapping("/admin/room/delete/{roomId}")
+    public void delete(@PathVariable("roomId")Long roomId) {
+        roomService.delete(roomId);
+    }
 
 }

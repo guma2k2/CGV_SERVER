@@ -3,7 +3,9 @@ package com.movie.backend.service;
 
 import com.movie.backend.dto.RoomDTO;
 import com.movie.backend.entity.*;
+import com.movie.backend.exception.BadRequestException;
 import com.movie.backend.exception.MovieException;
+import com.movie.backend.exception.NotFoundException;
 import com.movie.backend.exception.RoomException;
 import com.movie.backend.repository.RoomRepository;
 import com.movie.backend.dto.DataContent;
@@ -17,6 +19,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.data.domain.Pageable;
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 @Service
@@ -38,7 +41,7 @@ public class RoomService {
         Room checkRoomExit = roomRepository.findByCinemaAndName(cinemaName, requestName);
         if(update) {
             if(checkRoomExit != null ) {
-                if (checkRoomExit.getId() != roomId) {
+                if (!Objects.equals(checkRoomExit.getId(), roomId)) {
                     throw new RoomException("Name not valid") ;
                 }
             }
@@ -117,6 +120,15 @@ public class RoomService {
                 .sizePage(roomPerPage)
                 .build();
         return new DataContent(paginate , rooms);
+    }
+
+
+    public void delete(Long roomId) {
+        Room room = roomRepository.findById(roomId).orElseThrow(() -> new NotFoundException("room not found")) ;
+        if (room.getSeats().size() > 0) {
+            throw new BadRequestException("this room had seats");
+        }
+        roomRepository.delete(room);
     }
 
 }

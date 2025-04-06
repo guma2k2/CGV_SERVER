@@ -71,4 +71,9 @@ public class CinemaRestController {
         return cinemaService.get(cinemaId) ;
     }
 
+    @DeleteMapping("/admin/cinema/delete/{cinemaId}")
+    public void delete(@PathVariable("cinemaId")Long cinemaId) {
+        cinemaService.delete(cinemaId);
+    }
+
 }

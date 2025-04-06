@@ -79,4 +79,12 @@ public interface EventRepository extends JpaRepository<Event,Long> {
 
 
 
+    @Query("""
+        select e 
+        from Event e 
+        join e.movie m 
+        where m.id = :movieId
+    """)
+    List<Event> findByMovie(@Param("movieId") Long movieId);
+
 }

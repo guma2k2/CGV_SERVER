@@ -115,6 +115,34 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
         return ResponseEntityBuilder.build(err);
     }
 
+
+    @ExceptionHandler({BadRequestException.class})
+    public ResponseEntity<Object> handleException(
+            BadRequestException ex) {
+        List<String> details = new ArrayList<>();
+        details.add(ex.getMessage());
+
+        ApiError err = new ApiError(
+                LocalDateTime.now(),
+                HttpStatus.BAD_REQUEST,
+                ex.getMessage(),
+                details);
+        return ResponseEntityBuilder.build(err);
+    }
+
+    @ExceptionHandler({NotFoundException.class})
+    public ResponseEntity<Object> handleException(
+            NotFoundException ex) {
+        List<String> details = new ArrayList<>();
+        details.add(ex.getMessage());
+        ApiError err = new ApiError(
+                LocalDateTime.now(),
+                HttpStatus.NOT_FOUND,
+                ex.getMessage(),
+                details);
+        return ResponseEntityBuilder.build(err);
+    }
+
     @ExceptionHandler({Exception.class})
     public ResponseEntity<Object> handleAll(Exception ex , WebRequest request) {
         List<String> detail = new ArrayList<>();

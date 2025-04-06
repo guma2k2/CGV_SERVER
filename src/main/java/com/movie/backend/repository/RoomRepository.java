@@ -27,4 +27,6 @@ public interface RoomRepository extends JpaRepository<Room,Long> {
 
     public Page<Room> findAll(Pageable pageable) ;
 
+
+
 }
