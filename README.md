@@ -38,6 +38,7 @@ The Booking movie website is a comprehensive full-stack application designed to 
 ## Features
 - Use Spring Security with JWT to secure user information.
 - Use WebSocket to display real-time booking status.
+- Upload files with Cloudinary.
 - Use Spring Mail for account registration and password recovery.
 - The project also builds an Admin page for managing movies, cinemas, rooms, events, bookings for booking movie.
 - User with account can booking ticket online and view payment history.
@@ -182,7 +183,7 @@ This project is licensed under the Apache License 2.0. See the [LICENSE](LICENSE
 To get started with the Elearning project, follow the setup instructions in the respective directories:
 - Clone this project
 - Run cmd : docker compose up -d --build
-- Access the link: http://localhost:8000/vincinema
+- Access the link: http://localhost:8000
 
 ## Contributors
 
