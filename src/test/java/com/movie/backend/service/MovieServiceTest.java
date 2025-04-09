@@ -23,10 +23,7 @@ import org.mockito.Mock;
 import org.springframework.beans.factory.annotation.Value;
 
 import java.time.LocalDate;
-import java.util.Arrays;
-import java.util.List;
-import java.util.NoSuchElementException;
-import java.util.Optional;
+import java.util.*;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
@@ -39,6 +36,9 @@ public class MovieServiceTest {
 
     @Mock
     private GenreRepository genreRepository ;
+
+    @Mock
+    private EventRepository eventRepository;
 
     @Mock
     private ModelMapper modelMapper;
@@ -110,6 +110,7 @@ public class MovieServiceTest {
     @Test
     void testDeleteMovie() {
         when(movieRepository.findById(1L)).thenReturn(Optional.of(movie));
+        when(eventRepository.findByMovie(1L)).thenReturn(Collections.emptyList());
         doNothing().when(movieRepository).delete(movie);
 
         movieService.deleteMovie(1L);
