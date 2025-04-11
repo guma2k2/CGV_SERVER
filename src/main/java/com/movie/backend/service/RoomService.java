@@ -10,6 +10,7 @@ import com.movie.backend.exception.RoomException;
 import com.movie.backend.repository.RoomRepository;
 import com.movie.backend.dto.DataContent;
 import com.movie.backend.dto.Paginate;
+import jakarta.transaction.Transactional;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -122,13 +123,13 @@ public class RoomService {
         return new DataContent(paginate , rooms);
     }
 
-
+    @Transactional
     public void delete(Long roomId) {
         Room room = roomRepository.findById(roomId).orElseThrow(() -> new NotFoundException("room not found")) ;
         if (room.getSeats().size() > 0) {
             throw new BadRequestException("this room had seats");
         }
-        roomRepository.delete(room);
+        roomRepository.deleteById(roomId);
     }
 
 }

@@ -85,7 +85,6 @@ public class TicketService {
         Ticket ticket = Ticket.builder()
                 .bank(ticketDTO.getBank())
                 .booking(booking)
-                .phoneNumber(ticketDTO.getPhoneNumber())
                 .qrCode(randomCode)
                 .build();
         bookingRepository.updateBookingStatus(bookingId, BookingStatus.SUCCESS);

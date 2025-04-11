@@ -11,6 +11,7 @@ import com.movie.backend.repository.CinemaImageRepository;
 import com.movie.backend.repository.CinemaRepository;
 import com.movie.backend.repository.EventRepository;
 import com.movie.backend.ultity.FileUploadUtil;
+import jakarta.transaction.Transactional;
 import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -210,11 +211,12 @@ public class CinemaService {
 
     }
 
+    @Transactional
     public void delete(Long cinemaId) {
         Cinema cinema = cinemaRepository.findById(cinemaId).orElseThrow(() -> new NotFoundException("cinema not found")) ;
         if (cinema.getRooms().size() > 0) {
             throw new BadRequestException("this cinema had rooms");
         }
-        cinemaRepository.delete(cinema);
+        cinemaRepository.deleteById(cinemaId);
     }
 }

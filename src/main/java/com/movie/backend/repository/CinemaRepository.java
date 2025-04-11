@@ -2,6 +2,7 @@ package com.movie.backend.repository;
 
 import com.movie.backend.entity.Cinema;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
@@ -20,4 +21,13 @@ public interface CinemaRepository  extends JpaRepository<Cinema, Long> {
             "WHERE cc.id = :cityId")
     public List<Cinema> findByCity(@Param("cityId") Integer id);
 
+
+
+    @Query("""
+        delete 
+        from Cinema c 
+        where c.id = :cinemaId
+    """)
+    @Modifying
+    void deleteById(@Param("cinemaId") Long cinemaId);
 }

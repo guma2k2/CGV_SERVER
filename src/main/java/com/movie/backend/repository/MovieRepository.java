@@ -35,4 +35,12 @@ public interface MovieRepository extends JpaRepository<Movie,Long> {
     @Modifying
     @Query("UPDATE Movie m SET m.isShowing = :status WHERE m.id = :movieId")
     public void updateStatus(@Param("movieId") Long movieId , @Param("status") boolean status) ;
+
+    @Query("""
+        delete 
+        from Movie c 
+        where c.id = :movieId
+    """)
+    @Modifying
+    void deleteById(@Param("movieId") Long movieId);
 }
