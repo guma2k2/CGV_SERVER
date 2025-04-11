@@ -25,8 +25,6 @@ public class Ticket {
 
     private String qrCode ;
 
-    private String phoneNumber;
-
     private String bank;
 
     @OneToOne(fetch = FetchType.LAZY)

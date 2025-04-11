@@ -211,13 +211,14 @@ public class MovieService {
                 .collect(Collectors.toList());
     }
 
+    @Transactional
     public void deleteMovie(Long movieId) {
         Movie movie = movieRepository.findById(movieId).orElseThrow(() -> new MovieException("movie not found")) ;
         List<Event> events = eventRepository.findByMovie(movieId);
         if (events.size() > 0) {
             throw new BadRequestException("This movie was belong to event");
         }
-        movieRepository.delete(movie);
+        movieRepository.deleteById(movieId);
     }
     public List<MovieDTO> findBeforeDate() {
         return movieRepository.findBeforeDate()
