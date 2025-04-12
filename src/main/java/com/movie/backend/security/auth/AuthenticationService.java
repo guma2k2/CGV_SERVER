@@ -75,8 +75,6 @@ public class AuthenticationService {
                 .firstName(request.getFirstName())
                 .lastName(request.getLastName())
                 .email(request.getEmail())
-                .photo("")
-                .phone_number("")
                 .role(ERole.CUSTOMER)
                 .verificationCode(randomCode)
                 .password(passwordEncoder.encode(request.getPassword()))
@@ -84,7 +82,7 @@ public class AuthenticationService {
                 .build();
         userRepository.save(user);
         userService.sendVerificationEmail(user);
-        return "Send request success" ;
+        return "Send request success, please check email to continue." ;
     }
     @Transactional
     public AuthenticationResponse verify(String verification){
