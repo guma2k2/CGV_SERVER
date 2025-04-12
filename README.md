@@ -101,6 +101,8 @@ Thêm phim
 Sửa phim
 ![ERD diagram](screenshots/EditMovie.png)
 
+
+
 #### Quản lý rạp chiếu
 Admin có thể thêm mới, sửa đổi, xóa bỏ và xem danh sách các rạp chiếu phim trong hệ thống.
 Danh sách rạp chiếu
