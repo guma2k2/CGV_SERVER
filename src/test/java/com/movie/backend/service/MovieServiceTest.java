@@ -111,10 +111,10 @@ public class MovieServiceTest {
     void testDeleteMovie() {
         when(movieRepository.findById(1L)).thenReturn(Optional.of(movie));
         when(eventRepository.findByMovie(1L)).thenReturn(Collections.emptyList());
-        doNothing().when(movieRepository).delete(movie);
+        doNothing().when(movieRepository).deleteById(1L);
 
         movieService.deleteMovie(1L);
 
-        verify(movieRepository, times(1)).delete(movie);
+        verify(movieRepository, times(1)).deleteById(1l);
     }
 }
