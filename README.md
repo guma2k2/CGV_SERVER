@@ -130,6 +130,8 @@ Thêm ghế
 Sửa ghế
 ![ERD diagram](screenshots/EditSeat.png)
 
+
+
 #### Quản lý lịch chiếu
 Admin có thể quản lý các suất chiếu bằng cách thêm mới, sửa đổi, xóa bỏ và xem danh sách các suất chiếu.
 Danh sách lịch chiếu theo rạp, phòng và ngày chiếu.
