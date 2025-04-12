@@ -37,6 +37,7 @@ public class User implements UserDetails {
     private boolean status;
 
     private String verificationCode;
+
     private String forgotPassword ;
 
     @Enumerated(EnumType.STRING)

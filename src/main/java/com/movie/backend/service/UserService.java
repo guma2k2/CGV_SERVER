@@ -195,7 +195,7 @@ public class UserService {
 
     public void sendVerificationEmail(User user) {
         String subject = "Account Verification";
-        String verifyURL = "http://localhost:8000/vincinema" + "/verify?code=" + user.getVerificationCode();
+        String verifyURL = "http://localhost:8000" + "/verify?code=" + user.getVerificationCode();
         String htmlMessage = "<html>"
                 + "<body style=\"font-family: Arial, sans-serif;\">"
                 + "<div style=\"background-color: #f5f5f5; padding: 20px;\">"
