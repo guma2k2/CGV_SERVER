@@ -82,7 +82,7 @@ public class BookingService {
                 .seats(seats)
                 .total_amount(bookingDTO.getTotal_amount())
                 .event(event)
-                .created_time(bookingDTO.getCreated_time())
+                .created_time(LocalDateTime.now())
                 .build();
 
         // handle  seat with  list seat from bookingDTO request

@@ -72,8 +72,8 @@ public class EventService {
             int oldDuration = e.getMovie().getDuration_minutes();
             LocalDateTime oldEndTime = oldStartTime.plusMinutes(oldDuration) ;
             if (updateEvent) {
-                if((eventId != e.getId()) && !(newStartTime.isBefore(oldStartTime) && newEndTime.isBefore(oldStartTime)
-                        || (newStartTime.isAfter(oldEndTime) && newEndTime.isAfter(oldEndTime))) ) {
+                if((!eventId.equals(e.getId())) && (!(newStartTime.isBefore(oldStartTime) && newEndTime.isBefore(oldStartTime)
+                        || (newStartTime.isAfter(oldEndTime) && newEndTime.isAfter(oldEndTime)))) ) {
                     log.error("err1");
                     throw  new EventValidException("Thời gian bắt đầu đã bị trùng với event với id :" + e.getId()) ;
                 }

@@ -104,7 +104,7 @@ public class TicketService {
     }
     public List<SaleByMovie> reportByMovie(LocalDate startDate, LocalDate endDate) {
         LocalDateTime startDateTime = startDate.atStartOfDay();
-        LocalDateTime endDateTime = endDate.atStartOfDay();
+        LocalDateTime endDateTime = endDate.atStartOfDay().plusDays(1);
         List<Ticket> tickets = ticketRepository.findByDateMovie(startDateTime, endDateTime);
         Map<Movie, Map<String, Object>> revenueByMovie = tickets.stream()
                 .collect(Collectors.groupingBy(
