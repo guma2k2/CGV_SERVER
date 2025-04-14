@@ -69,7 +69,7 @@ public class AuthenticationService {
         if(userRepository.findByEmail(request.getEmail()).isPresent()){
             throw  new UserException("The email was exited");
         }
-        // 1 : ADMIN // 2 : CLIENT
+        // 1 : ADMIN // 2 : CUSTOMER
         String randomCode = RandomString.make(64);
         var user = User.builder()
                 .firstName(request.getFirstName())
