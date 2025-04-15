@@ -79,15 +79,19 @@ The Booking movie website is a comprehensive full-stack application designed to 
 #### Xem doanh thu
 
 Doanh thu theo phim: Thống kê doanh thu của từng bộ phim, giúp xác định các phim bán chạy nhất.
+
 ![ERD diagram](screenshots/Dashboard.png)
 
 #### Quản lý người dùng
 Admin có thể xem danh sách người dùng, xem chi tiết, sửa thông tin người dùng.
 Danh sách người dùng
+
 ![ERD diagram](screenshots/ViewUser.png)
 Thêm người dùng
+
 ![ERD diagram](screenshots/AddUser.png)
 Sửa người dùng
+
 ![ERD diagram](screenshots/EditUser.png)
 
 
@@ -95,10 +99,13 @@ Sửa người dùng
 #### Quản lý phim
 Admin có thể thực hiện các thao tác như thêm phim mới, sửa thông tin phim, xóa phim và xem danh sách tất cả các phim hiện có trên hệ thống.
 Danh sách phim
+
 ![ERD diagram](screenshots/ViewMovie.png)
 Thêm phim
+
 ![ERD diagram](screenshots/AddMovie.png)
 Sửa phim
+
 ![ERD diagram](screenshots/EditMovie.png)
 
 
@@ -106,10 +113,13 @@ Sửa phim
 #### Quản lý rạp chiếu
 Admin có thể thêm mới, sửa đổi, xóa bỏ và xem danh sách các rạp chiếu phim trong hệ thống.
 Danh sách rạp chiếu
+
 ![ERD diagram](screenshots/ViewCinema.png)
 Thêm rạp chiếu
+
 ![ERD diagram](screenshots/AddCinema.png)
 Sửa rạp chiếu
+
 ![ERD diagram](screenshots/EditCinema.png)
 
 
@@ -117,19 +127,25 @@ Sửa rạp chiếu
 #### Quản lý phòng
 Admin có thể quản lý các phòng chiếu phim bằng cách thêm mới, sửa đổi, xóa bỏ và xem danh sách các phòng chiếu.
 Danh sách phòng
+
 ![ERD diagram](screenshots/ViewRoom.png)
 Thêm phòng
+
 ![ERD diagram](screenshots/AddRoom.png)
 Sửa phòng
+
 ![ERD diagram](screenshots/EditRoom.png)
 
 #### Quản lý ghế
 Admin cũng có thể quản lý danh sách ghế ngồi trong từng phòng chiếu.
 Danh sách ghế
+
 ![ERD diagram](screenshots/ViewSeat.png)
 Thêm ghế
+
 ![ERD diagram](screenshots/AddSeat.png)
 Sửa ghế
+
 ![ERD diagram](screenshots/EditSeat.png)
 
 
@@ -137,43 +153,56 @@ Sửa ghế
 #### Quản lý lịch chiếu
 Admin có thể quản lý các suất chiếu bằng cách thêm mới, sửa đổi, xóa bỏ và xem danh sách các suất chiếu.
 Danh sách lịch chiếu theo rạp, phòng và ngày chiếu.
+
 ![ERD diagram](screenshots/ViewEvent.png)
 Thêm lịch chiếu
+
 ![ERD diagram](screenshots/AddEvent.png)
 Sửa lịch chiếu
+
 ![ERD diagram](screenshots/EditEvent.png)
 
 
 #### Quản lý đơn hàng
 Admin có thể xem danh sách đơn hàng, xem chi tiết từng đơn hàng.
 Danh sách đơn hàng
+
 ![ERD diagram](screenshots/ViewBooking.png)
 Chi tiết đơn hàng
+
 ![ERD diagram](screenshots/ViewDetailBooking.png)
 
 ### Features of Customer
 #### Đăng nhập, đăng ký 
 Người dùng chỉ cần nhập email và mật khẩu đã đăng ký hoặc sử dụng tài khoản google để đăng nhập vào hệ thống. Giao diện đăng nhập thân thiện và dễ sử dụng.
+
 ![ERD diagram](screenshots/Login.png)
 Người dùng cần cung cấp các thông tin cơ bản như email, mật khẩu và họ tên để tạo tài khoản mới. Sau khi đăng ký thành công, người dùng có thể đăng nhập và sử dụng các tính năng của trang web.
+
 ![ERD diagram](screenshots/Register.png)
 Người dùng có thể lấy lại mật khẩu của tài khoản qua email đã đăng ký.
+
 ![ERD diagram](screenshots/ForgotPassword.png)
 #### Tìm kiếm phim
 Người dùng có thể tìm kiếm phim theo ngày khởi chiếu
+
 ![ERD diagram](screenshots/Home.png)
 #### Xem thông tin chi tiết phim
 Người dùng có thể xem thông tin chi tiết về mỗi bộ phim bao gồm tóm tắt nội dung, dàn diễn viên, đạo diễn, thời lượng, thể loại và trailer. Thông tin này giúp người dùng có cái nhìn tổng quan và quyết định xem có nên xem bộ phim đó hay không.
+
 ![ERD diagram](screenshots/ViewDetailMovie.png)
 #### Xem lịch chiếu
 Trang web cung cấp lịch chiếu phim theo ngày và theo rạp. Người dùng có thể chọn ngày chiếu để xem các phim đang chiếu trong ngày đó, hoặc chọn một bộ phim cụ thể để xem lịch chiếu tại các rạp. Tính năng này giúp người dùng dễ dàng lên kế hoạch xem phim theo thời gian biểu của mình.
+
 ![ERD diagram](screenshots/ViewEventCustomer.png)
 
 #### Đặt vé xem phim 
 Trang web cho phép người dùng đặt vé xem phim một cách dễ dàng. Người dùng có thể chọn rạp, chọn phim, chọn suất chiếu và chọn ghế ngồi theo sở thích. Ngoài ra, người dùng còn có thể chọn thêm các dịch vụ đi kèm như bỏng, nước. Sau khi hoàn tất việc chọn lựa, người dùng sẽ xác nhận đặt vé và thực hiện thanh toán qua VNPay.
+
 ![ERD diagram](screenshots/Booking.png)
 #### Xem lịch sử mua hàng
 Trang web cho phép người dùng xem lịch sử thanh toán để lấy QRCode.
+
 ![ERD diagram](screenshots/ViewHistory.png)
 
 
