@@ -5,6 +5,7 @@ import com.movie.backend.entity.ERole;
 import com.movie.backend.entity.User;
 import com.movie.backend.exception.HeaderNotFoundException;
 import com.movie.backend.exception.JwtException;
+import com.movie.backend.exception.NotFoundException;
 import com.movie.backend.exception.UserException;
 import com.movie.backend.repository.UserRepository;
 
@@ -183,8 +184,7 @@ public class AuthenticationService {
 
     public ProfileResponse getProfile() {
         String email = SecurityContextHolder.getContext().getAuthentication().getName();
-        log.info(email);
-        User user = userRepository.findByEmail(email).orElseThrow();
+        User user = userRepository.findByEmail(email).orElseThrow(() -> new NotFoundException("User not found"));
         return ProfileResponse.fromUser(user);
     }
 
