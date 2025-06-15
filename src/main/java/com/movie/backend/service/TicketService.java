@@ -149,6 +149,7 @@ public class TicketService {
         String hashData = VNPayUtils.getPaymentURL(vnpParamsMap, false);
         queryUrl += "&vnp_SecureHash=" + VNPayUtils.hmacSHA512(vnPayConfig.getSecretKey(), hashData);
         String paymentUrl = vnPayConfig.getVnp_PayUrl() + "?" + queryUrl;
+        log.info(paymentUrl);
         return new VNPayResponse("ok", "success", paymentUrl);
     }
 
